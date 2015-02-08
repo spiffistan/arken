@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  document: 
+  record: 
+  role: 1
+  linked_at: 2015-02-08 17:09:20
+  linked_by: 
+
+two:
+  document: 
+  record: 
+  role: 1
+  linked_at: 2015-02-08 17:09:20
+  linked_by: 

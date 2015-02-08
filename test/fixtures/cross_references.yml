@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  from_type: MyString
+  from_id: 1
+  to_type: MyString
+  to_id: MyString
+
+two:
+  from_type: MyString
+  from_id: 1
+  to_type: MyString
+  to_id: MyString
