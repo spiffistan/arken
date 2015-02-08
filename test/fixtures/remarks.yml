@@ -1,3 +1,17 @@
+# == Schema Information
+#
+# Table name: remarks
+#
+#  id              :integer          not null, primary key
+#  remarkable_type :string(255)
+#  remarkable_id   :integer
+#  text            :text
+#  type            :integer
+#  created_by_id   :integer
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
+#
+
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
 one:

@@ -1,3 +1,18 @@
+# == Schema Information
+#
+# Table name: fonds
+#
+#  id              :integer          not null, primary key
+#  parent_id       :integer
+#  title           :string(255)
+#  description     :text
+#  finalized_by_id :integer
+#  finalized_at    :datetime
+#  created_by_id   :integer
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
+#
+
 require 'test_helper'
 
 class FondsTest < ActiveSupport::TestCase

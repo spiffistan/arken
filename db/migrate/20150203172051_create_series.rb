@@ -19,7 +19,7 @@ class CreateSeries < ActiveRecord::Migration
       t.references :created_by
       t.timestamps
     end
-    add_index :series, :fond_id
+    add_index :series, :fonds_id
     add_index :series, :classification_system_id
   end
 end

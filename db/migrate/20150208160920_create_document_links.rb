@@ -9,7 +9,7 @@ class CreateDocumentLinks < ActiveRecord::Migration
 
       t.timestamps
     end
-    add_index :document_links, :document_id
+    add_index :document_links, :document_description_id
     add_index :document_links, :record_id
     add_index :document_links, :linked_by_id
   end

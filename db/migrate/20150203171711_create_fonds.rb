@@ -4,7 +4,7 @@ class CreateFonds < ActiveRecord::Migration
       t.references :parent
       t.string :title
       t.text :description
-      
+
       t.references :finalized_by
       t.datetime :finalized_at
       t.references :created_by

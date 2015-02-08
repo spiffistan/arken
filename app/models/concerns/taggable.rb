@@ -1,4 +1,5 @@
 module Taggable
+  
   extend ActiveSupport::Concern
 
   included do
@@ -15,4 +16,5 @@ module Taggable
   def tag_names
     tags.collect(&:name)
   end
+
 end
