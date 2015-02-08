@@ -2,7 +2,7 @@ class CreateDocumentObjects < ActiveRecord::Migration
   def change
     create_table :document_objects do |t|
 
-      t.references :document_object
+      t.belongs_to :record, index: true
 
       t.integer :version
       t.string :variant_format

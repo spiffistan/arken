@@ -1,14 +1,14 @@
 class CreateRemarks < ActiveRecord::Migration
   def change
     create_table :remarks do |t|
+
       t.string :remarkable_type
-      t.integer :remarkable_id
+      t.integer :remarkable_id, index: true
       t.text :text
       t.integer :type
-      t.references :created_by
+      t.belongs_to :created_by, index: true
 
       t.timestamps
     end
-    add_index :remarks, :created_by_id
   end
 end

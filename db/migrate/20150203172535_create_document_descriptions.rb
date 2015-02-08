@@ -11,9 +11,9 @@ class CreateDocumentDescriptions < ActiveRecord::Migration
       # t.string :document_medium # (B) NOTE: M2M, enum?
       # t.string :storage_location # (V) NOTE: ref. location?
 
-      t.references :author
-      t.references :preservation_and_disposal
-      t.references :screening
+      t.belongs_to :author, index: true
+      t.belongs_to :preservation_and_disposal, index: true
+      t.belongs_to :screening, index: true
 
       t.timestamps
     end

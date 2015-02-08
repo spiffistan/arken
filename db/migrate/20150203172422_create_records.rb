@@ -1,25 +1,22 @@
 class CreateRecords < ActiveRecord::Migration
   def change
     create_table :records do |t|
-      t.references :filing
-      t.references :series
-      t.references :classification
+      t.belongs_to :filing, index: true
+      t.belongs_to :series, index: true
+      t.belongs_to :classification, index: true
 
       t.string :identifier
       t.string :title
       t.string :official_title
       t.text :description
 
-      t.references :screening
-      t.references :preservation_and_disposal
+      t.belongs_to :screening, index: true
+      t.belongs_to :preservation_and_disposal, index: true
 
-      t.references :finalized_by
+      t.belongs_to :finalized_by, index: true
       t.datetime :finalized_at
-      t.references :created_by
+      t.belongs_to :created_by, index: true
       t.timestamps
-
     end
-    add_index :records, :filing_id
-    add_index :records, :series_id
   end
 end

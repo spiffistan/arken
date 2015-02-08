@@ -1,15 +1,15 @@
 class CreateClassifications < ActiveRecord::Migration
   def change
     create_table :classifications do |t|
-      t.references :parent
-      t.references :classification_system
-      
-      t.references :screening
-      t.references :preservation_and_disposal
+      t.belongs_to :parent, index: true
+      t.belongs_to :classification_system, index: true
 
-      t.references :finalized_by
+      t.belongs_to :screening, index: true
+      t.belongs_to :preservation_and_disposal, index: true
+
+      t.belongs_to :finalized_by, index: true
       t.datetime :finalized_at
-      t.references :created_by
+      t.belongs_to :created_by, index: true
       t.timestamps
     end
   end

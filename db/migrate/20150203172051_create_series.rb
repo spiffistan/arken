@@ -1,25 +1,25 @@
 class CreateSeries < ActiveRecord::Migration
   def change
     create_table :series do |t|
-      t.references :fonds
-      t.references :classification_system
-      t.references :precursor
-      t.references :successor
+
+      t.belongs_to :fonds, index: true
+      t.belongs_to :classification_system, index: true
+      t.belongs_to :precursor, index: true
+      t.belongs_to :successor, index: true
+
       t.string :title
       t.text :description
 
-      t.references :screening
-      t.references :preservation_and_disposal
+      t.belongs_to :screening, index: true
+      t.belongs_to :preservation_and_disposal, index: true
 
       t.datetime :records_period_start_at
       t.datetime :records_period_end_at
 
-      t.references :finalized_by
+      t.belongs_to :finalized_by, index: true
       t.datetime :finalized_at
-      t.references :created_by
+      t.belongs_to :created_by, index: true
       t.timestamps
     end
-    add_index :series, :fonds_id
-    add_index :series, :classification_system_id
   end
 end

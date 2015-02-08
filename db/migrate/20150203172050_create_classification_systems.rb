@@ -3,10 +3,12 @@ class CreateClassificationSystems < ActiveRecord::Migration
     create_table :classification_systems do |t|
       t.string :title
       t.text :description
-      t.references :finalized_by
+
+      t.belongs_to :finalized_by, index: true
       t.datetime :finalized_at
-      t.references :created_by
+      t.belongs_to :created_by, index: true
       t.timestamps
     end
+
   end
 end

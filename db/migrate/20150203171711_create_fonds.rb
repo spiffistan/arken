@@ -1,15 +1,14 @@
 class CreateFonds < ActiveRecord::Migration
   def change
     create_table :fonds do |t|
-      t.references :parent
+      t.belongs_to :parent, index: true
       t.string :title
       t.text :description
 
-      t.references :finalized_by
+      t.belongs_to :finalized_by, index: true
       t.datetime :finalized_at
-      t.references :created_by
+      t.belongs_to :created_by, index: true
       t.timestamps
     end
-    add_index :fonds, :parent_id
   end
 end
