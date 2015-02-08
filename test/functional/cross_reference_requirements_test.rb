@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class KeywordRequirementsTest < ActiveSupport::TestCase
+class CrossReferenceRequirementsTest < ActiveSupport::TestCase
 
   # == Structural requirements for Cross-reference
 
