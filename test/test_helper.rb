@@ -11,8 +11,6 @@ class ActiveSupport::TestCase
 
   # Add more helper methods to be used by all tests here...
 
+  NOT_YET_IMPLEMENTED = false
 
-  def NOT_YET_IMPLEMENTED
-    assert false
-  end
 end
