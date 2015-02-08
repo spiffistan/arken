@@ -2,7 +2,7 @@ class CreateSeries < ActiveRecord::Migration
   def change
     create_table :series do |t|
 
-      t.belongs_to :fonds, index: true
+      t.belongs_to :fonds, index: true, null: false
       t.belongs_to :classification_system, index: true
       t.belongs_to :precursor, index: true
       t.belongs_to :successor, index: true

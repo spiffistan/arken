@@ -19,6 +19,8 @@ class FondsRequirementsTest < ActiveSupport::TestCase
   test '5.2.3 (O)' do
     # A Fonds entity must consist of one or more fonds sections and a Fonds
     # section must form part of (only) one Fonds entity.
+
+    # NOTE: 'Fonds section' seems to be 'Series'
     NOT_YET_IMPLEMENTED
   end
 

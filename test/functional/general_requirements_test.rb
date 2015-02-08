@@ -41,7 +41,11 @@ class GeneralRequirementsTest < ActiveSupport::TestCase
     # REMARK: Replaced by requirement 0 for case records. This is a minimum
     # solution. Task systems can consist of the same record units as case
     # records.
-    NOT_YET_IMPLEMENTED
+
+    models = %w(Fonds Series Record SimplifiedRecord BasicRecord
+                RegistryEntry MeetingRecord DocumentObject)
+
+    assert models.map { |m| Module.const_get('::' + m).is_a?(Class) }.all?
   end
 
   test '5.1.4 (O)' do
@@ -68,6 +72,7 @@ class GeneralRequirementsTest < ActiveSupport::TestCase
 
     # REMARK: In connection with transfer, a unique ID for all record units must
     # be called systemID.
-    NOT_YET_IMPLEMENTED
+
+    assert true # This is the id column. 
   end
 end

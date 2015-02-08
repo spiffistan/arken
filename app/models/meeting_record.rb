@@ -1,11 +1,11 @@
 # == Schema Information
 #
-# Table name: filings
+# Table name: records
 #
 #  id                           :integer          not null, primary key
-#  parent_id                    :integer
-#  classification_id            :integer
+#  filing_id                    :integer
 #  series_id                    :integer
+#  classification_id            :integer
 #  identifier                   :string(255)
 #  title                        :string(255)
 #  official_title               :string(255)
@@ -19,9 +19,6 @@
 #  updated_at                   :datetime         not null
 #
 
-class Filing < ActiveRecord::Base
-  belongs_to :classification
-  belongs_to :series
-  belongs_to :parent
-  # attr_accessible :title, :body
+class MeetingRecord < BasicRecord
+
 end

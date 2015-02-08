@@ -1,9 +1,9 @@
 class CreateFilings < ActiveRecord::Migration
   def change
-    create_table :filings do |t|
+    create_table :files do |t|
       t.belongs_to :parent, index: true
-      t.belongs_to :classification, index: true
-      t.belongs_to :series, index: true
+      t.belongs_to :classification, index: true, null: false
+      t.belongs_to :series, index: true, null: false
 
       t.string :identifier
       t.string :title

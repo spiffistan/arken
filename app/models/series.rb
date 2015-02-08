@@ -21,7 +21,14 @@
 #
 
 class Series < ActiveRecord::Base
-  belongs_to :fond
+
+  belongs_to :fonds
   belongs_to :classification_system
-  # attr_accessible :title, :body
+  belongs_to :precursor
+  belongs_to :successor
+
+  include Screenable
+  include PreservableAndDisposable
+  include Finalizable
+
 end

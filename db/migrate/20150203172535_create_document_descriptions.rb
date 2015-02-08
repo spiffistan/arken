@@ -5,8 +5,8 @@ class CreateDocumentDescriptions < ActiveRecord::Migration
       t.string :title
       t.text :description
 
-      t.integer :document_type, :integer, default: 0
-      t.integer :document_status, :integer, default: 0
+      t.integer :document_type, default: 0
+      t.integer :document_status, default: 0
 
       # t.string :document_medium # (B) NOTE: M2M, enum?
       # t.string :storage_location # (V) NOTE: ref. location?

@@ -1,11 +1,11 @@
 # == Schema Information
 #
-# Table name: records
+# Table name: filings
 #
 #  id                           :integer          not null, primary key
-#  filing_id                    :integer
-#  series_id                    :integer
+#  parent_id                    :integer
 #  classification_id            :integer
+#  series_id                    :integer
 #  identifier                   :string(255)
 #  title                        :string(255)
 #  official_title               :string(255)
@@ -19,14 +19,16 @@
 #  updated_at                   :datetime         not null
 #
 
-class Record < ActiveRecord::Base
-  
-  belongs_to :filing
-  belongs_to :series
-  belongs_to :classification
+class BasicFile < ActiveRecord::Base
 
+  belongs_to :classification
+  belongs_to :series
+  belongs_to :parent
+
+  include Finalizable
   include Screenable
   include PreservableAndDisposable
-  include Finalizable
+  include Taggable
+  include CrossReferencable
 
 end

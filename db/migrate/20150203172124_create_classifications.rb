@@ -2,7 +2,7 @@ class CreateClassifications < ActiveRecord::Migration
   def change
     create_table :classifications do |t|
       t.belongs_to :parent, index: true
-      t.belongs_to :classification_system, index: true
+      t.belongs_to :classification_system, index: true, null: false
 
       t.belongs_to :screening, index: true
       t.belongs_to :preservation_and_disposal, index: true

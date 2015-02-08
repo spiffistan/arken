@@ -16,6 +16,12 @@
 
 class Classification < ActiveRecord::Base
 
-  # include Finalizable
+  belongs_to :classification_system
+
+  include Finalizable
+  include Screenable
+  include PreservableAndDisposable
+  include Taggable
+  include CrossReferencable
 
 end

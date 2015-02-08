@@ -19,14 +19,8 @@
 #  updated_at                   :datetime         not null
 #
 
-class Record < ActiveRecord::Base
-  
-  belongs_to :filing
-  belongs_to :series
-  belongs_to :classification
+class BasicRecord < Record
 
-  include Screenable
-  include PreservableAndDisposable
-  include Finalizable
+  include Taggable
 
 end

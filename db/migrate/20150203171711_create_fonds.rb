@@ -1,6 +1,7 @@
 class CreateFonds < ActiveRecord::Migration
   def change
     create_table :fonds do |t|
+      t.belongs_to :records_creator, index: true
       t.belongs_to :parent, index: true
       t.string :title
       t.text :description
