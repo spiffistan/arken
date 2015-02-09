@@ -13,5 +13,5 @@
 #
 
 class ClassificationSystem < ActiveRecord::Base
-  # attr_accessible :title, :body
+  include Finalizable
 end

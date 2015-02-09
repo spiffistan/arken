@@ -20,6 +20,8 @@ class Fonds < ActiveRecord::Base
   has_and_belongs_to_many :records_creator
 
   has_many :fonds, foreign_key: 'parent_id'
+  
   belongs_to :parent, class_name: 'Fonds'
   belongs_to :created_by
+
 end

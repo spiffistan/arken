@@ -5,7 +5,7 @@ class CreateCrossReferences < ActiveRecord::Migration
       t.string :from_type
       t.integer :from_id, index: true
       t.string :to_type
-      t.string :to_id, index: true
+      t.integer :to_id, index: true
 
       t.timestamps
     end

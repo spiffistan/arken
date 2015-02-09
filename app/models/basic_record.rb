@@ -21,6 +21,9 @@
 
 class BasicRecord < Record
 
+  include Finalizable
+  include PreservableAndDisposable
+  include Screenable
   include Taggable
   include CrossReferencable
 

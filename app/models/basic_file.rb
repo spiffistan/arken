@@ -25,7 +25,7 @@ class BasicFile < ActiveRecord::Base
   belongs_to :series
   belongs_to :parent
 
-  # include Finalizable
+  include Finalizable
   include Screenable
   include PreservableAndDisposable
   include Taggable

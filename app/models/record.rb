@@ -20,13 +20,13 @@
 #
 
 class Record < ActiveRecord::Base
-  
+
   belongs_to :filing
   belongs_to :series
   belongs_to :classification
 
+  include Finalizable
   include Screenable
   include PreservableAndDisposable
-  include Finalizable
 
 end
