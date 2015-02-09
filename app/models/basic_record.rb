@@ -22,5 +22,6 @@
 class BasicRecord < Record
 
   include Taggable
+  include CrossReferencable
 
 end

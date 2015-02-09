@@ -15,7 +15,7 @@
 
 class Fonds < ActiveRecord::Base
 
-  # include Finalizable
+  include Finalizable
 
   has_and_belongs_to_many :records_creator
 

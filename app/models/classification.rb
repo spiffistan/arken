@@ -16,6 +16,7 @@
 
 class Classification < ActiveRecord::Base
 
+  belongs_to :classification, foreign_key: 'parent_id'
   belongs_to :classification_system
 
   include Finalizable

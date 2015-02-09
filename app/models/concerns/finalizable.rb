@@ -3,6 +3,5 @@ module Finalizable
 
   included do
     belongs_to :finalized_by
-    attr_accessor :finalized_at
   end
 end
