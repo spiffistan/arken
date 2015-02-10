@@ -5,8 +5,8 @@ class FondsRequirementsTest < ActiveSupport::TestCase
   test '5.2.1 (O)' do
     # It must be possible for a Noark 5 solution to consist of one or more
     # independent Fonds.
-
-    assert Module.const_get('Fonds').is_a?(Class)
+    Fonds.create! && Fonds.create!
+    assert Fonds.count == 2
   end
 
   test '5.2.2 (O)' do
@@ -40,17 +40,38 @@ class FondsRequirementsTest < ActiveSupport::TestCase
 
   test '5.2.6 (O)' do
     # It must not be possible to alter the date of creation of the Fonds entity.
-    NOT_YET_IMPLEMENTED
+
+    f = Fonds.create!
+    original_datetime = f.read_attribute_before_type_cast("created_at")
+
+    f.update_attributes!(created_at: DateTime.now)
+    new_datetime = Fonds.find(f.id).read_attribute_before_type_cast("created_at")
+
+    assert_equal original_datetime, new_datetime
   end
 
   test '5.2.7 (O)' do
     # It must not be possible to delete the date of creation of the Fonds entity.
-    NOT_YET_IMPLEMENTED
+
+    f = Fonds.create!
+    original_datetime = f.read_attribute_before_type_cast("created_at")
+
+    f.update_attributes!(created_at: nil)
+    new_datetime = Fonds.find(f.id).read_attribute_before_type_cast("created_at")
+
+    assert_equal original_datetime, new_datetime
   end
 
   test '5.2.8 (O)' do
     # It must not be possible to delete the date of closure of the Fonds entity.
-    NOT_YET_IMPLEMENTED
+
+    f = Fonds.create!
+    original_datetime = f.read_attribute_before_type_cast("finalized_at")
+
+    f.update_attributes!(finalized_at: nil)
+    new_datetime = Fonds.find(f.id).read_attribute_before_type_cast("finalized_at")
+
+    assert_equal original_datetime, new_datetime
   end
 
   test '5.2.9 (B)' do

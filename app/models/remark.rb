@@ -13,5 +13,6 @@
 #
 
 class Remark < ActiveRecord::Base
+  belongs_to :remarkable, polymorphic: true
   belongs_to :created_by
 end

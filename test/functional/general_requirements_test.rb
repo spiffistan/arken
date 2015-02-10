@@ -7,7 +7,9 @@ class GeneralRequirementsTest < ActiveSupport::TestCase
     # standard, it must be possible to implement the conceptual model of the
     # archive structure and the functional opportunities in the relevant
     # system's (physical) data structures.
-    NOT_YET_IMPLEMENTED
+
+    assert true
+    # NOTE: this is possible with a relational database and rails.
   end
 
   test '5.1.2 (B)' do
@@ -73,6 +75,7 @@ class GeneralRequirementsTest < ActiveSupport::TestCase
     # REMARK: In connection with transfer, a unique ID for all record units must
     # be called systemID.
 
-    assert true # This is the id column. 
+    assert true
+    # NOTE: This is the id column in the database.
   end
 end

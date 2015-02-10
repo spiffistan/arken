@@ -12,4 +12,7 @@
 #
 
 class CrossReference < ActiveRecord::Base
+
+  has_many :cross_referencables
+
 end
