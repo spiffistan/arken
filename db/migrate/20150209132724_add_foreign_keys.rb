@@ -44,10 +44,12 @@ class AddForeignKeys < ActiveRecord::Migration
     add_foreign_key :records, :users,  column: :finalized_by_id
     add_foreign_key :records, :users,  column: :created_by_id
 
+
     # Document descriptions
     add_foreign_key :document_descriptions, :users, column: :author_id
     add_foreign_key :document_descriptions, :preservation_and_disposals
     add_foreign_key :document_descriptions, :screenings
+
 
     # Document objects
     add_foreign_key :document_objects, :records
