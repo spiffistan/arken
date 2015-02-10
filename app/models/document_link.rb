@@ -8,12 +8,12 @@
 #  role                    :integer
 #  linked_at               :datetime
 #  linked_by_id            :integer
-#  created_at              :datetime         not null
-#  updated_at              :datetime         not null
+#  created_at              :datetime
+#  updated_at              :datetime
 #
 
 class DocumentLink < ActiveRecord::Base
-  belongs_to :document
+  belongs_to :document_description
   belongs_to :record
-  belongs_to :linked_by
+  belongs_to :linked_by, class_name: 'User'
 end

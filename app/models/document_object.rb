@@ -3,18 +3,21 @@
 # Table name: document_objects
 #
 #  id                 :integer          not null, primary key
-#  record_id          :integer
+#  documentable_id    :integer
+#  documentable_type  :string
 #  version            :integer
-#  variant_format     :string(255)
-#  format             :string(255)
-#  format_details     :string(255)
-#  checksum           :string(255)
-#  checksum_algorithm :string(255)
+#  variant_format     :string
+#  format             :string
+#  format_details     :string
+#  checksum           :string
+#  checksum_algorithm :string
 #  file_size          :integer
-#  created_at         :datetime         not null
-#  updated_at         :datetime         not null
+#  created_at         :datetime
+#  updated_at         :datetime
 #
 
 class DocumentObject < ActiveRecord::Base
-  # attr_accessible :title, :body
+
+  belongs_to :documentable
+  # constraint xorit check( (x_id OR y_id) AND NOT(x_id AND y_id))
 end

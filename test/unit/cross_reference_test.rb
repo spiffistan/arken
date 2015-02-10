@@ -3,12 +3,12 @@
 # Table name: cross_references
 #
 #  id         :integer          not null, primary key
-#  from_type  :string(255)
+#  from_type  :string
 #  from_id    :integer
-#  to_type    :string(255)
-#  to_id      :string(255)
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
+#  to_type    :string
+#  to_id      :integer
+#  created_at :datetime
+#  updated_at :datetime
 #
 
 require 'test_helper'

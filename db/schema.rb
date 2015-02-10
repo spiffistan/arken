@@ -91,7 +91,8 @@ ActiveRecord::Schema.define(version: 20150210162716) do
   add_index "document_links", ["record_id"], name: "index_document_links_on_record_id", using: :btree
 
   create_table "document_objects", force: :cascade do |t|
-    t.integer  "record_id"
+    t.integer  "documentable_id"
+    t.string   "documentable_type"
     t.integer  "version"
     t.string   "variant_format"
     t.string   "format"
@@ -103,9 +104,10 @@ ActiveRecord::Schema.define(version: 20150210162716) do
     t.datetime "updated_at"
   end
 
-  add_index "document_objects", ["record_id"], name: "index_document_objects_on_record_id", using: :btree
+  add_index "document_objects", ["documentable_type", "documentable_id"], name: "index_document_objects_on_documentable_type_and_documentable_id", using: :btree
 
-  create_table "files", force: :cascade do |t|
+  create_table "filings", force: :cascade do |t|
+    t.string   "type",                         null: false
     t.integer  "parent_id"
     t.integer  "classification_id",            null: false
     t.integer  "series_id",                    null: false
@@ -122,13 +124,13 @@ ActiveRecord::Schema.define(version: 20150210162716) do
     t.datetime "updated_at"
   end
 
-  add_index "files", ["classification_id"], name: "index_files_on_classification_id", using: :btree
-  add_index "files", ["created_by_id"], name: "index_files_on_created_by_id", using: :btree
-  add_index "files", ["finalized_by_id"], name: "index_files_on_finalized_by_id", using: :btree
-  add_index "files", ["parent_id"], name: "index_files_on_parent_id", using: :btree
-  add_index "files", ["preservation_and_disposal_id"], name: "index_files_on_preservation_and_disposal_id", using: :btree
-  add_index "files", ["screening_id"], name: "index_files_on_screening_id", using: :btree
-  add_index "files", ["series_id"], name: "index_files_on_series_id", using: :btree
+  add_index "filings", ["classification_id"], name: "index_filings_on_classification_id", using: :btree
+  add_index "filings", ["created_by_id"], name: "index_filings_on_created_by_id", using: :btree
+  add_index "filings", ["finalized_by_id"], name: "index_filings_on_finalized_by_id", using: :btree
+  add_index "filings", ["parent_id"], name: "index_filings_on_parent_id", using: :btree
+  add_index "filings", ["preservation_and_disposal_id"], name: "index_filings_on_preservation_and_disposal_id", using: :btree
+  add_index "filings", ["screening_id"], name: "index_filings_on_screening_id", using: :btree
+  add_index "filings", ["series_id"], name: "index_filings_on_series_id", using: :btree
 
   create_table "fonds", force: :cascade do |t|
     t.integer  "records_creator_id"
@@ -147,6 +149,16 @@ ActiveRecord::Schema.define(version: 20150210162716) do
   add_index "fonds", ["parent_id"], name: "index_fonds_on_parent_id", using: :btree
   add_index "fonds", ["records_creator_id"], name: "index_fonds_on_records_creator_id", using: :btree
 
+  create_table "fonds_records_creators", force: :cascade do |t|
+    t.integer  "records_creator_id"
+    t.integer  "fonds_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "fonds_records_creators", ["fonds_id"], name: "index_fonds_records_creators_on_fonds_id", using: :btree
+  add_index "fonds_records_creators", ["records_creator_id"], name: "index_fonds_records_creators_on_records_creator_id", using: :btree
+
   create_table "preservation_and_disposals", force: :cascade do |t|
     t.text     "disposal_decision"
     t.text     "disposal_authority"
@@ -160,7 +172,8 @@ ActiveRecord::Schema.define(version: 20150210162716) do
   add_index "preservation_and_disposals", ["disposed_of_by_id"], name: "index_preservation_and_disposals_on_disposed_of_by_id", using: :btree
 
   create_table "records", force: :cascade do |t|
-    t.integer  "file_id",                      null: false
+    t.string   "type",                         null: false
+    t.integer  "filing_id",                    null: false
     t.integer  "series_id",                    null: false
     t.integer  "classification_id",            null: false
     t.string   "identifier"
@@ -178,7 +191,7 @@ ActiveRecord::Schema.define(version: 20150210162716) do
 
   add_index "records", ["classification_id"], name: "index_records_on_classification_id", using: :btree
   add_index "records", ["created_by_id"], name: "index_records_on_created_by_id", using: :btree
-  add_index "records", ["file_id"], name: "index_records_on_file_id", using: :btree
+  add_index "records", ["filing_id"], name: "index_records_on_filing_id", using: :btree
   add_index "records", ["finalized_by_id"], name: "index_records_on_finalized_by_id", using: :btree
   add_index "records", ["preservation_and_disposal_id"], name: "index_records_on_preservation_and_disposal_id", using: :btree
   add_index "records", ["screening_id"], name: "index_records_on_screening_id", using: :btree
@@ -190,16 +203,6 @@ ActiveRecord::Schema.define(version: 20150210162716) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
-
-  create_table "records_creators_fonds", force: :cascade do |t|
-    t.integer  "records_creator_id"
-    t.integer  "fonds_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "records_creators_fonds", ["fonds_id"], name: "index_records_creators_fonds_on_fonds_id", using: :btree
-  add_index "records_creators_fonds", ["records_creator_id"], name: "index_records_creators_fonds_on_records_creator_id", using: :btree
 
   create_table "remarks", force: :cascade do |t|
     t.string   "remarkable_type"
@@ -289,21 +292,20 @@ ActiveRecord::Schema.define(version: 20150210162716) do
   add_foreign_key "document_descriptions", "preservation_and_disposals"
   add_foreign_key "document_descriptions", "screenings"
   add_foreign_key "document_descriptions", "users", column: "author_id"
-  add_foreign_key "document_objects", "records"
-  add_foreign_key "files", "classifications"
-  add_foreign_key "files", "series"
-  add_foreign_key "files", "users", column: "created_by_id"
-  add_foreign_key "files", "users", column: "finalized_by_id"
+  add_foreign_key "filings", "classifications"
+  add_foreign_key "filings", "series"
+  add_foreign_key "filings", "users", column: "created_by_id"
+  add_foreign_key "filings", "users", column: "finalized_by_id"
   add_foreign_key "fonds", "records_creators"
   add_foreign_key "fonds", "users", column: "created_by_id"
   add_foreign_key "fonds", "users", column: "finalized_by_id"
   add_foreign_key "records", "classifications"
-  add_foreign_key "records", "files"
+  add_foreign_key "records", "filings"
   add_foreign_key "records", "series"
   add_foreign_key "records", "users", column: "created_by_id"
   add_foreign_key "records", "users", column: "finalized_by_id"
   add_foreign_key "series", "classification_systems"
-  add_foreign_key "series", "fonds", column: "fonds_id"
+  add_foreign_key "series", "fonds"
   add_foreign_key "series", "users", column: "created_by_id"
   add_foreign_key "series", "users", column: "finalized_by_id"
 end

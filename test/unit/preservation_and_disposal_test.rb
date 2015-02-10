@@ -8,8 +8,8 @@
 #  preservation_time  :integer
 #  disposed_of_by_id  :integer
 #  disposed_of_at     :datetime
-#  created_at         :datetime         not null
-#  updated_at         :datetime         not null
+#  created_at         :datetime
+#  updated_at         :datetime
 #
 
 require 'test_helper'

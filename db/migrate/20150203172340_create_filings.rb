@@ -1,6 +1,9 @@
-class CreateFiles < ActiveRecord::Migration
+class CreateFilings < ActiveRecord::Migration
   def change
-    create_table :files do |t|
+    create_table :filings do |t|
+
+      t.string :type, null: false # STI key
+
       t.belongs_to :parent, index: true
       t.belongs_to :classification, index: true, null: false
       t.belongs_to :series, index: true, null: false

@@ -2,7 +2,9 @@ class CreateRecords < ActiveRecord::Migration
   def change
     create_table :records do |t|
 
-      t.belongs_to :file, index: true, null: false
+      t.string :type, null: false # STI key
+
+      t.belongs_to :filing, index: true, null: false
       t.belongs_to :series, index: true, null: false
       t.belongs_to :classification, index: true, null: false
 

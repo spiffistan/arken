@@ -29,15 +29,15 @@ class AddForeignKeys < ActiveRecord::Migration
 
 
     # Files
-    add_foreign_key :files, :classifications
-    add_foreign_key :files, :series, column: :series_id
+    add_foreign_key :filings, :classifications
+    add_foreign_key :filings, :series, column: :series_id
 
-    add_foreign_key :files, :users,  column: :finalized_by_id
-    add_foreign_key :files, :users,  column: :created_by_id
+    add_foreign_key :filings, :users,  column: :finalized_by_id
+    add_foreign_key :filings, :users,  column: :created_by_id
 
 
     # Records
-    add_foreign_key :records, :files
+    add_foreign_key :records, :filings
     add_foreign_key :records, :series, column: :series_id
     add_foreign_key :records, :classifications
 
@@ -49,10 +49,6 @@ class AddForeignKeys < ActiveRecord::Migration
     add_foreign_key :document_descriptions, :users, column: :author_id
     add_foreign_key :document_descriptions, :preservation_and_disposals
     add_foreign_key :document_descriptions, :screenings
-
-
-    # Document objects
-    add_foreign_key :document_objects, :records
 
   end
 end

@@ -6,7 +6,7 @@ class CreateTriggers < ActiveRecord::Migration
       BEGIN
         IF (OLD.created_at <> NEW.created_at) THEN
           RAISE EXCEPTION 'Cannot alter created_at!';
-        ELSE IF (OLD.finalized_at <> NEW.finalized_at)
+        ELSIF (OLD.finalized_at <> NEW.finalized_at) THEN
           RAISE EXCEPTION 'Cannot alter finalized_at!';
         END IF;
         RETURN NULL;
@@ -21,8 +21,8 @@ class CreateTriggers < ActiveRecord::Migration
 
   def down
     execute <<-SQL
-      DROP FUNCTION deny_change_for_protected_columns();
       DROP TRIGGER deny_change_for_protected_columns ON fonds;
+      DROP FUNCTION IF EXISTS deny_change_for_protected_columns();
     SQL
   end
 end
