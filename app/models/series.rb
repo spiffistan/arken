@@ -24,8 +24,11 @@ class Series < ActiveRecord::Base
 
   belongs_to :fonds
   belongs_to :classification_system
+
   belongs_to :precursor, class_name: 'Series'
   belongs_to :successor, class_name: 'Series'
+
+  has_many :filings
 
   include Screenable
   include PreservableAndDisposable

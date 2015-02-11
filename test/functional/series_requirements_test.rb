@@ -8,7 +8,19 @@ class SeriesRequirementsTest < ActiveSupport::TestCase
     # Series(s).
 
     # REMARK: Obligatory for case records.
-    NOT_YET_IMPLEMENTED
+
+    classification_system = ClassificationSystem.create!
+    series = FactoryGirl.create(:series, classification_system: nil)
+
+    assert classification_system.series.count == 0
+    assert_nil series.classification_system
+
+    series_a = FactoryGirl.create(:series, classification_system: classification_system)
+    series_b = FactoryGirl.create(:series, classification_system: classification_system)
+
+    assert_not_nil series_a.classification_system
+    assert_not_nil series_b.classification_system
+    assert classification_system.series.count == 2
   end
 
   test '5.2.14 (O)' do
@@ -21,7 +33,18 @@ class SeriesRequirementsTest < ActiveSupport::TestCase
     #         have functions for screening and preservation/disposal. However,
     #         this requirement may be omitted for simple systems without such
     #         needs.
-    NOT_YET_IMPLEMENTED
+
+    screening = Screening.create!
+    series = FactoryGirl.create(:series)
+
+    assert series.screening == nil
+    assert screening.series.count == 0
+
+    series_a = FactoryGirl.create(:series, screening: screening)
+    series_b = FactoryGirl.create(:series, screening: screening)
+
+    assert series_a.screening == series_b.screening
+    assert screening.series.count == 2
   end
 
   test '5.2.15 (O)' do
@@ -29,12 +52,37 @@ class SeriesRequirementsTest < ActiveSupport::TestCase
     # Preservation and disposal can form part of no, one or more Series(s).
 
     # NOTE: Same remarks as test 5.2.14.
-    NOT_YET_IMPLEMENTED
+
+    assert Series.reflect_on_association(:preservation_and_disposal).macro == :belongs_to
+    assert PreservationAndDisposal.reflect_on_association(:series).macro == :has_many
+
+    preservation_and_disposal = PreservationAndDisposal.create!
+    series = FactoryGirl.create(:series)
+
+    assert series.preservation_and_disposal == nil
+    assert preservation_and_disposal.series.count == 0
+
+    series_a = FactoryGirl.create(:series, preservation_and_disposal: preservation_and_disposal)
+    series_b = FactoryGirl.create(:series, preservation_and_disposal: preservation_and_disposal)
+
+    assert series_a.preservation_and_disposal == series_b.preservation_and_disposal
+    assert preservation_and_disposal.series.count == 2
   end
 
   test '5.2.16 (O)' do
     # A Series can be linked to (contain) no, one or more Files.
-    NOT_YET_IMPLEMENTED
+
+    assert Filing.reflect_on_association(:series).macro == :belongs_to
+    assert Series.reflect_on_association(:filings).macro == :has_many
+
+    series = FactoryGirl.create(:series)
+
+    assert series.filings.count == 0
+
+    series.filings << FactoryGirl.create(:meeting_filing)
+    series.filings << FactoryGirl.create(:meeting_filing)
+
+    assert series.filings.count == 2
   end
 
   test '5.2.17 (O)' do

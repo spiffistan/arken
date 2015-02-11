@@ -1,30 +1,68 @@
 require 'test_helper'
 
-class ClassificationSystemsRequirementsTest < ActiveSupport::TestCase
+class ClassificationSystemsRequirementTest < ActiveSupport::TestCase
 
   # NOTE: 'Class' here is implemented as 'Classification'
 
   test '5.3.1 (O)' do
     # A Classification system can be subdivided into no, one or more Classes
     # and a Class can belong to just one Classification system.
-    NOT_YET_IMPLEMENTED
+
+    assert ClassificationSystem.reflect_on_association(:classifications).macro == :has_many
+    assert Classification.reflect_on_association(:classification_system).macro == :belongs_to
+
+    classification_system = FactoryGirl.create(:classification_system)
+
+    assert classification_system.classifications.count == 0
+
+    FactoryGirl.create(:classification, classification_system: classification_system)
+    FactoryGirl.create(:classification, classification_system: classification_system)
+
+    assert classification_system.classifications.count == 2
   end
 
   test '5.3.2 (O)' do
     # A Classification system can form a primary system in no, one or more
     # Series.
-    NOT_YET_IMPLEMENTED
+
+    assert ClassificationSystem.reflect_on_association(:series).macro == :has_many
+    assert Series.reflect_on_association(:classification_system).macro == :belongs_to
+
+    classification_system = FactoryGirl.create(:classification_system)
+
+    assert classification_system.series.count == 0
+
+    a = FactoryGirl.create(:series, classification_system: classification_system)
+    b = FactoryGirl.create(:series, classification_system: classification_system)
+    c = FactoryGirl.create(:series, classification_system: classification_system)
+
+    assert [a, b, c].map(&:classification_system).map(&:id).uniq == [classification_system.id]
+    assert classification_system.series.count == 3
   end
 
   test '5.3.3 (O)' do
     # A Class can be included in a hierarchy of Classes (outlined in the model
     # via a self-relation).
-    NOT_YET_IMPLEMENTED
+
+    classification_system = FactoryGirl.create(:classification_system)
+
+    parent = FactoryGirl.create(:classification, classification_system: classification_system)
+    child = FactoryGirl.create(:classification, classification_system: classification_system, parent: parent)
+    grandchild = FactoryGirl.create(:classification, classification_system: classification_system, parent: child)
+
+    assert_equal grandchild.parent, child
+    assert_equal child.parent, parent
+    assert_equal parent.children.first, child
+    assert_equal child.children.first, grandchild
   end
 
   test '5.3.4 (O)' do
     # A Class can have registered no or one Screening and a Screening can be
     # included in no, one or more Classes.
+
+    # assert Classification.reflect_on_association(:screening).macro == :belongs_to
+    # assert Screening.reflect_on_association(:classification).macro == :has_many
+
 
     # REMARK: Metadata for screening are described in section 4.3.7.1. Metadata
     #         for preservation and disposal are described in section 4.2.10. It

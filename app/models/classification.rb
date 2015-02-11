@@ -16,8 +16,10 @@
 
 class Classification < ActiveRecord::Base
 
-  belongs_to :classification, foreign_key: 'parent_id'
+  belongs_to :parent, class_name: 'Classification'
   belongs_to :classification_system
+
+  has_many :children, class_name: 'Classification', foreign_key: 'parent_id'
 
   include Finalizable
   include Screenable

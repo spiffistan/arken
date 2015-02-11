@@ -44,10 +44,12 @@ class GeneralRequirementsTest < ActiveSupport::TestCase
     # solution. Task systems can consist of the same record units as case
     # records.
 
-    models = %w(Fonds Series Record SimplifiedRecord BasicRecord
-                RegistryEntry MeetingRecord DocumentObject)
+    models = %w(Fonds Series Record BasicRecord
+                RecordEntry MeetingRecord DocumentObject)
 
-    assert models.map { |m| Module.const_get('::' + m).is_a?(Class) }.all?
+    assert models.map { |m| Module.const_get(m).is_a?(Class) }.all?
+
+    # NOTE: Registry entry is interpreted as RecordEntry
   end
 
   test '5.1.4 (O)' do

@@ -5,6 +5,7 @@ class FondsRequirementsTest < ActiveSupport::TestCase
   test '5.2.1 (O)' do
     # It must be possible for a Noark 5 solution to consist of one or more
     # independent Fonds.
+
     Fonds.create! && Fonds.create!
     assert Fonds.count == 2
   end
@@ -21,7 +22,17 @@ class FondsRequirementsTest < ActiveSupport::TestCase
     # section must form part of (only) one Fonds entity.
 
     # NOTE: 'Fonds section' seems to be 'Series'
-    NOT_YET_IMPLEMENTED
+
+    assert Fonds.reflect_on_association(:series).macro == :has_many
+    assert Series.reflect_on_association(:fonds).macro == :belongs_to
+
+    fonds = Fonds.create!
+    fonds.series << Series.new
+    fonds.series << Series.new
+    fonds.save
+
+    assert Fonds.count == 1 && Series.count == 2
+    assert Series.all.map(&:fonds).map(&:id).uniq == [fonds.id]
   end
 
   test '5.2.4 (B)' do
@@ -92,7 +103,15 @@ class FondsRequirementsTest < ActiveSupport::TestCase
     #         possible to represent physical subfonds for example. This may be
     #         relevant for organisations that have fonds physically located in
     #         several different places.
-    NOT_YET_IMPLEMENTED
+
+    parent = Fonds.create!
+    child = Fonds.create!(parent: parent)
+    grandchild = Fonds.create!(parent: child)
+
+    assert_equal grandchild.parent, child
+    assert_equal child.parent, parent
+    assert_equal parent.children.first, child
+    assert_equal child.children.first, grandchild
   end
 
   test '5.2.11 (V)' do

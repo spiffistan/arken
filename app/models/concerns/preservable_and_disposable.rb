@@ -4,4 +4,5 @@ module PreservableAndDisposable
   included do
     belongs_to :preservation_and_disposal
   end
+
 end
