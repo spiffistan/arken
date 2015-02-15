@@ -20,9 +20,10 @@ class Classification < ActiveRecord::Base
 
   has_ancestry
 
+  belongs_to :classification_system
+
   has_many :records
   has_many :filings
-  belongs_to :classification_system
 
   include Finalizable
   include Screenable

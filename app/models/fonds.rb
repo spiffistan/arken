@@ -18,13 +18,13 @@ class Fonds < ActiveRecord::Base
 
   has_ancestry
 
+  belongs_to :created_by, class_name: 'User'
+
+  has_and_belongs_to_many :records_creators
+  has_many :series
+
   attr_readonly :created_at
 
   include Finalizable
-
-  belongs_to :created_by, class_name: 'User'
-
-  has_and_belongs_to_many :records_creator
-  has_many :series
 
 end

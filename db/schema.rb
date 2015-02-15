@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150210162716) do
+ActiveRecord::Schema.define(version: 20150215212509) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -159,6 +159,18 @@ ActiveRecord::Schema.define(version: 20150210162716) do
   add_index "fonds_records_creators", ["fonds_id"], name: "index_fonds_records_creators_on_fonds_id", using: :btree
   add_index "fonds_records_creators", ["records_creator_id"], name: "index_fonds_records_creators_on_records_creator_id", using: :btree
 
+  create_table "permissions", force: :cascade do |t|
+    t.integer  "user_id"
+    t.string   "subject_type", null: false
+    t.integer  "subject_id"
+    t.string   "action",       null: false
+    t.text     "description"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
+  add_index "permissions", ["user_id"], name: "index_permissions_on_user_id", using: :btree
+
   create_table "preservation_and_disposals", force: :cascade do |t|
     t.text     "disposal_decision"
     t.text     "disposal_authority"
@@ -249,6 +261,17 @@ ActiveRecord::Schema.define(version: 20150210162716) do
   add_index "series", ["screening_id"], name: "index_series_on_screening_id", using: :btree
   add_index "series", ["successor_id"], name: "index_series_on_successor_id", using: :btree
 
+  create_table "settings", force: :cascade do |t|
+    t.string   "var",                   null: false
+    t.text     "value"
+    t.integer  "thing_id"
+    t.string   "thing_type", limit: 30
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "settings", ["thing_type", "thing_id", "var"], name: "index_settings_on_thing_type_and_thing_id_and_var", unique: true, using: :btree
+
   create_table "taggings", force: :cascade do |t|
     t.integer  "tag_id"
     t.integer  "taggable_id"
@@ -299,6 +322,7 @@ ActiveRecord::Schema.define(version: 20150210162716) do
   add_foreign_key "fonds", "records_creators"
   add_foreign_key "fonds", "users", column: "created_by_id"
   add_foreign_key "fonds", "users", column: "finalized_by_id"
+  add_foreign_key "permissions", "users"
   add_foreign_key "records", "classifications"
   add_foreign_key "records", "filings"
   add_foreign_key "records", "series"
