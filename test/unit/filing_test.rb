@@ -4,7 +4,7 @@
 #
 #  id                           :integer          not null, primary key
 #  type                         :string           not null
-#  parent_id                    :integer
+#  ancestry                     :string
 #  classification_id            :integer          not null
 #  series_id                    :integer          not null
 #  identifier                   :string

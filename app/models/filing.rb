@@ -4,7 +4,7 @@
 #
 #  id                           :integer          not null, primary key
 #  type                         :string           not null
-#  parent_id                    :integer
+#  ancestry                     :string
 #  classification_id            :integer          not null
 #  series_id                    :integer          not null
 #  identifier                   :string
@@ -22,9 +22,10 @@
 
 class Filing < ActiveRecord::Base
 
+  has_ancestry
+
   belongs_to :classification
   belongs_to :series
-  belongs_to :parent, class_name: 'Filing'
 
   include Finalizable
   include Screenable

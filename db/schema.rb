@@ -30,7 +30,7 @@ ActiveRecord::Schema.define(version: 20150210162716) do
   add_index "classification_systems", ["finalized_by_id"], name: "index_classification_systems_on_finalized_by_id", using: :btree
 
   create_table "classifications", force: :cascade do |t|
-    t.integer  "parent_id"
+    t.string   "ancestry"
     t.integer  "classification_system_id",     null: false
     t.integer  "screening_id"
     t.integer  "preservation_and_disposal_id"
@@ -41,10 +41,10 @@ ActiveRecord::Schema.define(version: 20150210162716) do
     t.datetime "updated_at"
   end
 
+  add_index "classifications", ["ancestry"], name: "index_classifications_on_ancestry", using: :btree
   add_index "classifications", ["classification_system_id"], name: "index_classifications_on_classification_system_id", using: :btree
   add_index "classifications", ["created_by_id"], name: "index_classifications_on_created_by_id", using: :btree
   add_index "classifications", ["finalized_by_id"], name: "index_classifications_on_finalized_by_id", using: :btree
-  add_index "classifications", ["parent_id"], name: "index_classifications_on_parent_id", using: :btree
   add_index "classifications", ["preservation_and_disposal_id"], name: "index_classifications_on_preservation_and_disposal_id", using: :btree
   add_index "classifications", ["screening_id"], name: "index_classifications_on_screening_id", using: :btree
 
@@ -108,7 +108,7 @@ ActiveRecord::Schema.define(version: 20150210162716) do
 
   create_table "filings", force: :cascade do |t|
     t.string   "type",                         null: false
-    t.integer  "parent_id"
+    t.string   "ancestry"
     t.integer  "classification_id",            null: false
     t.integer  "series_id",                    null: false
     t.string   "identifier"
@@ -124,17 +124,17 @@ ActiveRecord::Schema.define(version: 20150210162716) do
     t.datetime "updated_at"
   end
 
+  add_index "filings", ["ancestry"], name: "index_filings_on_ancestry", using: :btree
   add_index "filings", ["classification_id"], name: "index_filings_on_classification_id", using: :btree
   add_index "filings", ["created_by_id"], name: "index_filings_on_created_by_id", using: :btree
   add_index "filings", ["finalized_by_id"], name: "index_filings_on_finalized_by_id", using: :btree
-  add_index "filings", ["parent_id"], name: "index_filings_on_parent_id", using: :btree
   add_index "filings", ["preservation_and_disposal_id"], name: "index_filings_on_preservation_and_disposal_id", using: :btree
   add_index "filings", ["screening_id"], name: "index_filings_on_screening_id", using: :btree
   add_index "filings", ["series_id"], name: "index_filings_on_series_id", using: :btree
 
   create_table "fonds", force: :cascade do |t|
+    t.string   "ancestry"
     t.integer  "records_creator_id"
-    t.integer  "parent_id"
     t.string   "title"
     t.text     "description"
     t.integer  "finalized_by_id"
@@ -144,9 +144,9 @@ ActiveRecord::Schema.define(version: 20150210162716) do
     t.datetime "updated_at"
   end
 
+  add_index "fonds", ["ancestry"], name: "index_fonds_on_ancestry", using: :btree
   add_index "fonds", ["created_by_id"], name: "index_fonds_on_created_by_id", using: :btree
   add_index "fonds", ["finalized_by_id"], name: "index_fonds_on_finalized_by_id", using: :btree
-  add_index "fonds", ["parent_id"], name: "index_fonds_on_parent_id", using: :btree
   add_index "fonds", ["records_creator_id"], name: "index_fonds_on_records_creator_id", using: :btree
 
   create_table "fonds_records_creators", force: :cascade do |t|

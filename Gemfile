@@ -14,6 +14,10 @@ gem 'web-console', '~> 2.0',    group: :development
 gem 'factory_girl_rails',       group: :test
 gem 'shoulda-matchers',         group: :test
 gem 'shoulda',                  group: :test
-
+gem 'therubyracer'
+gem 'less-rails'
+gem 'twitter-bootstrap-rails'
+gem 'slim'
+gem 'ancestry'
 
 gem 'rails-erd', github: 'ready4god2513/rails-erd', branch: 'rails-4.2-support-fix'

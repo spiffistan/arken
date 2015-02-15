@@ -3,7 +3,7 @@
 # Table name: classifications
 #
 #  id                           :integer          not null, primary key
-#  parent_id                    :integer
+#  ancestry                     :string
 #  classification_system_id     :integer          not null
 #  screening_id                 :integer
 #  preservation_and_disposal_id :integer

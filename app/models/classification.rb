@@ -3,7 +3,7 @@
 # Table name: classifications
 #
 #  id                           :integer          not null, primary key
-#  parent_id                    :integer
+#  ancestry                     :string
 #  classification_system_id     :integer          not null
 #  screening_id                 :integer
 #  preservation_and_disposal_id :integer
@@ -14,12 +14,15 @@
 #  updated_at                   :datetime
 #
 
+# This corresponds to 'Class' in Noark 5 (v3.1)
+
 class Classification < ActiveRecord::Base
 
-  belongs_to :parent, class_name: 'Classification'
-  belongs_to :classification_system
+  has_ancestry
 
-  has_many :children, class_name: 'Classification', foreign_key: 'parent_id'
+  has_many :records
+  has_many :filings
+  belongs_to :classification_system
 
   include Finalizable
   include Screenable

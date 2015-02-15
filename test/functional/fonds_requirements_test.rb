@@ -31,7 +31,8 @@ class FondsRequirementsTest < ActiveSupport::TestCase
     fonds.series << Series.new
     fonds.save
 
-    assert Fonds.count == 1 && Series.count == 2
+    assert Fonds.count == 1
+    assert Series.count == 2
     assert Series.all.map(&:fonds).map(&:id).uniq == [fonds.id]
   end
 

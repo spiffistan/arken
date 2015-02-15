@@ -60,16 +60,15 @@ class ClassificationSystemsRequirementTest < ActiveSupport::TestCase
     # A Class can have registered no or one Screening and a Screening can be
     # included in no, one or more Classes.
 
-    # assert Classification.reflect_on_association(:screening).macro == :belongs_to
-    # assert Screening.reflect_on_association(:classification).macro == :has_many
-
-
     # REMARK: Metadata for screening are described in section 4.3.7.1. Metadata
     #         for preservation and disposal are described in section 4.2.10. It
     #         is essentially an obligatory requirement that all records systems
     #         have functions for screening and preservation/disposal. However,
     #         this requirement may be omitted for simple systems without such
     #         needs.
+
+    assert Classification.reflect_on_association(:screening).macro == :belongs_to
+    assert Screening.reflect_on_association(:classifications).macro == :has_many
     NOT_YET_IMPLEMENTED
   end
 
@@ -78,7 +77,9 @@ class ClassificationSystemsRequirementTest < ActiveSupport::TestCase
 
     # A Class can have registered no or one Preservation and disposal and a
     # Preservation and disposal can be included in no, one or more Classes.
-    NOT_YET_IMPLEMENTED
+
+    assert Classification.reflect_on_association(:preservation_and_disposal).macro == :belongs_to
+    assert PreservationAndDisposal.reflect_on_association(:classifications).macro == :has_many
   end
 
   test '5.3.6 (V)' do
@@ -97,7 +98,9 @@ class ClassificationSystemsRequirementTest < ActiveSupport::TestCase
     #         belong to other classification systems. Note that inheritance only
     #         takes place from the primary class. A Class can be subdivided into
     #         no, one or more Files and a File can belong to just one Class.
-    NOT_YET_IMPLEMENTED
+
+    assert Classification.reflect_on_association(:filings).macro == :has_many
+    assert Filing.reflect_on_association(:classification).macro == :belongs_to
   end
 
   test '5.3.8 (V)' do
@@ -151,18 +154,20 @@ class ClassificationSystemsRequirementTest < ActiveSupport::TestCase
   end
 
   test '5.3.14 (O)' do
-    # REMARK: A class cannot therefore contain both other classes and files.
-
     # In order for a Class to be assigned a File, it must be situated at the
     # bottom level in the class hierarchy.
+
+    # REMARK: A class cannot therefore contain both other classes and files.
+
     NOT_YET_IMPLEMENTED
   end
 
   test '5.3.15 (B)' do
-    # REMARK: Obligatory if it is possible to finalise classes.
-
     # If the value in Class is registered as finalised (finalisedDate), it must
     # not be possible to assign new Files to the Class.
+
+    # REMARK: Obligatory if it is possible to finalise classes.
+
     NOT_YET_IMPLEMENTED
   end
 

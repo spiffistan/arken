@@ -22,7 +22,7 @@
 
 class Record < ActiveRecord::Base
 
-  belongs_to :file, class_name: 'BasicFile'
+  belongs_to :filing
   belongs_to :series
   belongs_to :classification
 

@@ -41,7 +41,7 @@ class RemarkRequirementsTest < ActiveSupport::TestCase
   end
 
   test '5.7.19 (B)' do
-    # If more than one remark is linked to a Basic file or a Basic record, the
+    # If more than one remark is linked to  a Basic file or a Basic record, the
     # metadata must be grouped together upon export and exchange.
 
     # REMARK: Obligatory for case records, relevant to many task systems.

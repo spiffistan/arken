@@ -4,7 +4,7 @@ class CreateFilings < ActiveRecord::Migration
 
       t.string :type, null: false # STI key
 
-      t.belongs_to :parent, index: true
+      t.string :ancestry, index: true
       t.belongs_to :classification, index: true, null: false
       t.belongs_to :series, index: true, null: false
 

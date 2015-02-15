@@ -3,8 +3,8 @@
 # Table name: fonds
 #
 #  id                 :integer          not null, primary key
+#  ancestry           :string
 #  records_creator_id :integer
-#  parent_id          :integer
 #  title              :string
 #  description        :text
 #  finalized_by_id    :integer
