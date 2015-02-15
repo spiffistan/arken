@@ -21,5 +21,6 @@ gem 'twitter-bootstrap-rails'
 gem 'slim'
 gem 'ancestry'
 gem 'rails-settings-cached', '0.4.1'
+gem 'gretel'
 
 gem 'rails-erd', github: 'ready4god2513/rails-erd', branch: 'rails-4.2-support-fix'
