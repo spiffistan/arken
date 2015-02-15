@@ -3,6 +3,7 @@ require 'test_helper'
 class FileRequirementsTest < ActiveSupport::TestCase
 
   # NOTE: 'Class' here is implemented as 'Classification'
+  # NOTE: 'File' here is implemented as 'Filing'
 
   test '5.4.1 (O)' do
     # It must be possible for a file to be of different types. In the conceptual

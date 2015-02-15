@@ -28,6 +28,7 @@ class Series < ActiveRecord::Base
   belongs_to :precursor, class_name: 'Series'
   belongs_to :successor, class_name: 'Series'
 
+  has_many :records
   has_many :filings
 
   include Screenable
