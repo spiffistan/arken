@@ -22,6 +22,8 @@
 
 class Record < ActiveRecord::Base
 
+  audited
+
   belongs_to :filing
   belongs_to :series
   belongs_to :classification

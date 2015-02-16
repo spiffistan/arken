@@ -18,11 +18,14 @@
 #
 
 class User < ActiveRecord::Base
+
+  audited
+
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable,
   # :lockable, :timeoutable and :omniauthable, :registerable, :recoverable, :validatable
   devise :database_authenticatable, :rememberable, :trackable
 
   has_many :permissions
-  
+
 end

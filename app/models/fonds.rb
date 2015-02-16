@@ -17,6 +17,7 @@
 class Fonds < ActiveRecord::Base
 
   has_ancestry
+  audited
 
   belongs_to :created_by, class_name: 'User'
 

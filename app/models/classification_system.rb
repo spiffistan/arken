@@ -14,9 +14,11 @@
 
 class ClassificationSystem < ActiveRecord::Base
 
-  include Finalizable
+  audited
 
   has_many :series
   has_many :classifications
+
+  include Finalizable
 
 end

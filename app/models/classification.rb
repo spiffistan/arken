@@ -19,6 +19,7 @@
 class Classification < ActiveRecord::Base
 
   has_ancestry
+  audited
 
   belongs_to :classification_system
 
@@ -30,5 +31,14 @@ class Classification < ActiveRecord::Base
   include PreservableAndDisposable
   include Taggable
   include CrossReferencable
+
+  validate :validate_absence_of_files, if: -> { persisted? && has_children? }
+
+  protected
+
+  def validate_absence_of_files
+    errors.add(:base, 'Unable to add files to non-leaf classification') unless filings.empty?
+    false
+  end
 
 end

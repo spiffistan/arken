@@ -22,6 +22,8 @@
 
 class Series < ActiveRecord::Base
 
+  audited
+
   belongs_to :fonds
   belongs_to :classification_system
 

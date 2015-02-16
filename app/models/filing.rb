@@ -23,6 +23,7 @@
 class Filing < ActiveRecord::Base
 
   has_ancestry
+  audited
 
   belongs_to :classification
   belongs_to :series
