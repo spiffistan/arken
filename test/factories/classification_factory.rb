@@ -17,5 +17,10 @@
 FactoryGirl.define do
   factory :classification do
     classification_system
+
+    trait :finalized do
+      finalized_at { DateTime.now }
+      finalized_by factory: :user
+    end
   end
 end

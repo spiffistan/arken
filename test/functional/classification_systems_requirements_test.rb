@@ -200,15 +200,10 @@ class ClassificationSystemsRequirementTest < ActiveSupport::TestCase
 
     classification_root = FactoryGirl.create(:classification)
     classification_leaf = FactoryGirl.create(:classification, parent: classification_root)
-
     classification_root.filings.build(classification: nil)
 
     assert !classification_root.valid?
-
-    assert_raise ActiveRecord::RecordInvalid do
-      classification_root.save!
-    end
-
+    assert_raise(ActiveRecord::RecordInvalid) { classification_root.save! }
     assert classification_root.filings.count == 0
 
     classification_leaf.filings << FactoryGirl.build(:meeting_filing, classification: nil)
@@ -223,7 +218,11 @@ class ClassificationSystemsRequirementTest < ActiveSupport::TestCase
 
     # REMARK: Obligatory if it is possible to finalise classes.
 
-    NOT_YET_IMPLEMENTED
+    classification = FactoryGirl.create(:classification, :finalized)
+    classification.filings.build(classification: nil)
+
+    assert_raise(ActiveRecord::ReadOnlyRecord) { classification.save! }
+    assert classification.filings.count == 0
   end
 
   test '5.3.16 (O)' do
@@ -235,7 +234,12 @@ class ClassificationSystemsRequirementTest < ActiveSupport::TestCase
     #         use. However, permission can be given for classes to be created
     #         on an ongoing basis, something which is particularly relevant in
     #         the case of object-based classification.
-    NOT_YET_IMPLEMENTED
+
+    classification = FactoryGirl.create(:classification)
+    assert classification.audits.size == 1
+
+    # NOTE: it is assumed that the system created the classification if
+    #       created_by_id is nil.
   end
 
   test '5.3.17 (B)' do
@@ -243,7 +247,10 @@ class ClassificationSystemsRequirementTest < ActiveSupport::TestCase
 
     # A log must be kept of when a class was finalised and who finalised it.
     # Only authorised personnel can finalise classes.
-    NOT_YET_IMPLEMENTED
+
+    classification = FactoryGirl.create(:classification, :finalized)
+    assert classification.audits.size == 1
+    assert classification.audits.last.audited_changes[:finalized_by_id].present?
   end
 
 end

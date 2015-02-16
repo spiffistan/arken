@@ -24,5 +24,6 @@ gem 'rails-settings-cached', '0.4.1'
 gem 'gretel'
 gem 'datagrid'
 gem 'audited-activerecord', '~> 4.0'
+gem 'byebug'
 
 gem 'rails-erd', github: 'ready4god2513/rails-erd', branch: 'rails-4.2-support-fix'

@@ -5,8 +5,9 @@ module Finalizable
   included do
     belongs_to :finalized_by, class_name: 'User'
 
-    before_validation { raise ReadOnlyRecord if finalized? } # Deny updates
-    before_destroy    { raise ReadOnlyRecord if finalized? } # Deny destruction
+    before_destroy { raise ActiveRecord::ReadOnlyRecord if readonly? }
+
+    validates :finalized_by, presence: true, if: -> { finalized? }
   end
 
   def finalized?
@@ -14,7 +15,7 @@ module Finalizable
   end
 
   def readonly?
-    finalized?
+    persisted? && finalized?
   end
 
 end

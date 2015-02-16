@@ -38,7 +38,6 @@ class Classification < ActiveRecord::Base
 
   def validate_absence_of_files
     errors.add(:base, 'Unable to add files to non-leaf classification') unless filings.empty?
-    false
   end
 
 end
