@@ -21,5 +21,7 @@ class DocumentObject < ActiveRecord::Base
   audited
 
   belongs_to :documentable
-  # constraint xorit check( (x_id OR y_id) AND NOT(x_id AND y_id))
+
+  validates :documentable, presence: true
+
 end

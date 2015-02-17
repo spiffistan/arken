@@ -8,7 +8,7 @@ class CreateRemarks < ActiveRecord::Migration
       t.integer :type
       t.belongs_to :created_by, index: true
 
-      t.timestamps
+      t.timestamps null: false
     end
   end
 end

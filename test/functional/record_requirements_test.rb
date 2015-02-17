@@ -3,6 +3,8 @@ require 'test_helper'
 class RecordRequirementsTest < ActiveSupport::TestCase
 
   # NOTE: 'Class' here is implemented as 'Classification'
+  # NOTE: 'Basic file' here is implemented as 'Filing'
+  # NOTE: 'Simplified record' here is implemented as 'Record'
 
   # == Structural requirements for Record
 
@@ -19,7 +21,26 @@ class RecordRequirementsTest < ActiveSupport::TestCase
     # If the File level is used, a Simplified record must belong to (only) one
     # Basic file and a Basic file can contain no, one or several Simplified
     # records.
-    NOT_YET_IMPLEMENTED
+
+    assert Filing.reflect_on_association(:records).macro == :has_many
+    assert Record.reflect_on_association(:filing).macro == :belongs_to
+
+    filing = FactoryGirl.create(:filing)
+
+    assert filing.records.count == 0
+
+    record_a = FactoryGirl.create(:record, filing: filing)
+    record_b = FactoryGirl.create(:record, filing: filing)
+
+    assert filing.records.count == 2
+
+    series = FactoryGirl.create(:series)
+
+    assert_raise(ActiveRecord::RecordInvalid) { record_a.update_attributes(series: series) }
+    assert_raise(ActiveRecord::RecordInvalid) { record_b.update_attributes(series: series) }
+
+    assert_nil record_a.series
+    assert_nil record_b.series
   end
 
   test '5.5.3 (B)' do
@@ -28,7 +49,26 @@ class RecordRequirementsTest < ActiveSupport::TestCase
 
     # REMARK: This is outlined in the model via an EITHER/OR constraint.
     # REMARK: Only relevant for certain task systems.
-    NOT_YET_IMPLEMENTED
+
+    assert Series.reflect_on_association(:records).macro == :has_many
+    assert Record.reflect_on_association(:series).macro == :belongs_to
+
+    series = FactoryGirl.create(:series)
+
+    assert series.records.count == 0
+
+    record_a = FactoryGirl.create(:record, series: series)
+    record_b = FactoryGirl.create(:record, series: series)
+
+    assert series.records.count == 2
+
+    filing = FactoryGirl.create(:filing)
+
+    assert_raise(ActiveRecord::RecordInvalid) { record_a.update_attributes(filing: filing) }
+    assert_raise(ActiveRecord::RecordInvalid) { record_b.update_attributes(filing: filing) }
+
+    assert_nil record_a.filing
+    assert_nil record_b.filing
   end
 
   test '5.5.4 (B)' do
@@ -38,6 +78,7 @@ class RecordRequirementsTest < ActiveSupport::TestCase
 
     # REMARK: This is outlined in the model via an EITHER/OR constraint.
     # REMARK: Only relevant for certain task systems.
+
     NOT_YET_IMPLEMENTED
   end
 
@@ -51,7 +92,18 @@ class RecordRequirementsTest < ActiveSupport::TestCase
     #         with automatic document capture, in which only one document is
     #         linked to the record and in which the document is not included in
     #         other fonds.
-    NOT_YET_IMPLEMENTED
+
+    assert Record.reflect_on_association(:document_descriptions).macro == :has_many
+    assert DocumentDescription.reflect_on_association(:record).macro == :belongs_to
+
+    record = FactoryGirl.create(:record)
+
+    assert record.document_descriptions.count == 0
+
+    FactoryGirl.create(:document_description, record: record)
+    FactoryGirl.create(:document_description, record: record)
+
+    assert series.document_descriptions.count == 2
   end
 
   test '5.5.6 (O)' do
@@ -78,7 +130,7 @@ class RecordRequirementsTest < ActiveSupport::TestCase
 
   test '5.5.9 (?)' do
     # NOTE: EMPTY SPEC
-    NOT_YET_IMPLEMENTED
+    DEPRECATED
   end
 
   test '5.5.10 (B)' do

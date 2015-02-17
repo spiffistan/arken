@@ -37,4 +37,6 @@ class Series < ActiveRecord::Base
   include PreservableAndDisposable
   include Finalizable
 
+  validates :fonds, presence: true
+
 end

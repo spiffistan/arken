@@ -15,7 +15,7 @@ class CreateDocumentDescriptions < ActiveRecord::Migration
       t.belongs_to :preservation_and_disposal, index: true
       t.belongs_to :screening, index: true
 
-      t.timestamps
+      t.timestamps null: false
     end
   end
 end

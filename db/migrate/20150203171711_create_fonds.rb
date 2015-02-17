@@ -9,7 +9,7 @@ class CreateFonds < ActiveRecord::Migration
       t.belongs_to :finalized_by, index: true
       t.datetime :finalized_at
       t.belongs_to :created_by, index: true
-      t.timestamps
+      t.timestamps null: false
     end
   end
 end

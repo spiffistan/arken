@@ -10,4 +10,5 @@ class ActiveSupport::TestCase
   # fixtures :all
 
   NOT_YET_IMPLEMENTED = false
+  DEPRECATED = skip
 end

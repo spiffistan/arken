@@ -200,15 +200,11 @@ class ClassificationSystemsRequirementTest < ActiveSupport::TestCase
 
     classification_root = FactoryGirl.create(:classification)
     classification_leaf = FactoryGirl.create(:classification, parent: classification_root)
-    classification_root.filings.build(classification: nil)
 
-    assert !classification_root.valid?
-    assert_raise(ActiveRecord::RecordInvalid) { classification_root.save! }
+    assert_raise(ActiveRecord::RecordInvalid) { FactoryGirl.create(:meeting_filing, classification: classification_root) }
     assert classification_root.filings.count == 0
 
-    classification_leaf.filings << FactoryGirl.build(:meeting_filing, classification: nil)
-
-    assert_nothing_raised { classification_leaf.save! }
+    assert_nothing_raised { FactoryGirl.create(:meeting_filing, classification: classification_leaf) }
     assert classification_leaf.filings.count == 1
   end
 
@@ -219,9 +215,8 @@ class ClassificationSystemsRequirementTest < ActiveSupport::TestCase
     # REMARK: Obligatory if it is possible to finalise classes.
 
     classification = FactoryGirl.create(:classification, :finalized)
-    classification.filings.build(classification: nil)
 
-    assert_raise(ActiveRecord::ReadOnlyRecord) { classification.save! }
+    assert_raise(ActiveRecord::RecordInvalid) { FactoryGirl.create(:filing, classification: classification) }
     assert classification.filings.count == 0
   end
 
@@ -236,6 +231,7 @@ class ClassificationSystemsRequirementTest < ActiveSupport::TestCase
     #         the case of object-based classification.
 
     classification = FactoryGirl.create(:classification)
+    
     assert classification.audits.size == 1
 
     # NOTE: it is assumed that the system created the classification if

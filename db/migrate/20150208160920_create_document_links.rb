@@ -8,7 +8,7 @@ class CreateDocumentLinks < ActiveRecord::Migration
       t.datetime :linked_at
       t.belongs_to :linked_by, index: true
 
-      t.timestamps
+      t.timestamps null: false
     end
   end
 end

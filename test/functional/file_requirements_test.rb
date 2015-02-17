@@ -3,7 +3,7 @@ require 'test_helper'
 class FileRequirementsTest < ActiveSupport::TestCase
 
   # NOTE: 'Class' here is implemented as 'Classification'
-  # NOTE: 'File' here is implemented as 'Filing'
+  # NOTE: 'Basic File' here is implemented as 'Filing'
 
   test '5.4.1 (O)' do
     # It must be possible for a file to be of different types. In the conceptual
@@ -14,7 +14,22 @@ class FileRequirementsTest < ActiveSupport::TestCase
   test '5.4.2 (O)' do
     # A Basic file must belong to a Series and a Series may contain no, one or
     # several Basic files.
-    NOT_YET_IMPLEMENTED
+
+    assert Series.reflect_on_association(:filings).macro == :has_many
+    assert Filing.reflect_on_association(:series).macro == :belongs_to
+
+    filing = FactoryGirl.build(:filing, series: nil)
+    assert_raise(ActiveRecord::RecordInvalid) { filing.save! }
+    assert Filing.count == 0
+
+    series = FactoryGirl.create(:series)
+
+    assert series.filings.count == 0
+
+    FactoryGirl.create(:filing, series: series)
+    FactoryGirl.create(:filing, series: series)
+
+    assert series.filings.count == 2
   end
 
   test '5.4.3 (O)' do
@@ -23,7 +38,22 @@ class FileRequirementsTest < ActiveSupport::TestCase
 
     # REMARK: Classification is obligatory in all case records and will also
     # occur in most task systems.
-    NOT_YET_IMPLEMENTED
+
+    assert Classification.reflect_on_association(:filings).macro == :has_many
+    assert Filing.reflect_on_association(:classification).macro == :belongs_to
+
+    filing = FactoryGirl.build(:filing, classification: nil)
+    assert_raise(ActiveRecord::RecordInvalid) { filing.save! }
+    assert Filing.count == 0
+
+    classification = FactoryGirl.create(:classification)
+
+    assert classification.filings.count == 0
+
+    FactoryGirl.create(:filing, classification: classification)
+    FactoryGirl.create(:filing, classification: classification)
+
+    assert classification.filings.count == 2
   end
 
   test '5.4.4 (B)' do
@@ -44,13 +74,28 @@ class FileRequirementsTest < ActiveSupport::TestCase
   test '5.4.6 (O)' do
     # It must be possible for a Basic file to consist of no, one or several
     # Records and a Record can be included in (only) one Basic file.
-    NOT_YET_IMPLEMENTED
+
+    assert Filing.reflect_on_association(:records).macro == :has_many
+    assert Record.reflect_on_association(:filing).macro == :belongs_to
+
+    filing = FactoryGirl.create(:filing)
+
+    assert filing.records.count == 0
+
+    FactoryGirl.create(:record, filing: filing)
+    FactoryGirl.create(:record, filing: filing)
+
+    assert filing.records.count == 2
   end
 
   test '5.4.7 (O)' do
     # If a Basic file is registered as finalised (finalisedDate), it must not be
     # possible to add more Records to the File.
-    NOT_YET_IMPLEMENTED
+
+    filing = FactoryGirl.create(:filing, :finalized)
+
+    assert_raise(ActiveRecord::RecordInvalid) { FactoryGirl.create(:record, filing: filing) }
+    assert classification.filings.count == 0
   end
 
   test '5.4.8 (B)' do

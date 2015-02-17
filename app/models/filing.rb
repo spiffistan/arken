@@ -20,10 +20,13 @@
 #  updated_at                   :datetime
 #
 
+# NOTE: This corresponds to the concept 'Basic file' in Noark 5 (v3.1)
+
 class Filing < ActiveRecord::Base
 
-  has_ancestry
   audited
+
+  has_ancestry
 
   belongs_to :classification
   belongs_to :series
@@ -34,5 +37,7 @@ class Filing < ActiveRecord::Base
   include Taggable
   include CrossReferencable
   include Remarkable
+
+  validates :series, :classification, presence: true
 
 end

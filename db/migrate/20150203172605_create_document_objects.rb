@@ -13,7 +13,7 @@ class CreateDocumentObjects < ActiveRecord::Migration
       t.string :checksum_algorithm
       t.integer :file_size
 
-      t.timestamps
+      t.timestamps null: false
     end
   end
 end

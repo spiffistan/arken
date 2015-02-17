@@ -14,12 +14,13 @@
 #  updated_at                   :datetime
 #
 
-# This corresponds to 'Class' in Noark 5 (v3.1)
+# This corresponds to the concept 'Class' in Noark 5 (v3.1)
 
 class Classification < ActiveRecord::Base
 
-  has_ancestry
   audited
+
+  has_ancestry
 
   belongs_to :classification_system
 
@@ -32,12 +33,13 @@ class Classification < ActiveRecord::Base
   include Taggable
   include CrossReferencable
 
-  validate :validate_absence_of_files, if: -> { persisted? && has_children? }
+  validates :classification_system, presence: true
+  validate  :validate_absence_of_filings, if: -> { persisted? && has_children? }
 
   protected
 
-  def validate_absence_of_files
-    errors.add(:base, 'Unable to add files to non-leaf classification') unless filings.empty?
+  def validate_absence_of_filings
+    errors.add(:base, 'Unable to add filings to non-leaf classification') unless filings.empty?
   end
 
 end

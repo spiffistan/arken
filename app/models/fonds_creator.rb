@@ -9,10 +9,10 @@
 #  updated_at  :datetime
 #
 
-class RecordsCreator < ActiveRecord::Base
+class FondsCreator < ActiveRecord::Base
 
   audited
 
   has_and_belongs_to_many :fonds
-  
+
 end
