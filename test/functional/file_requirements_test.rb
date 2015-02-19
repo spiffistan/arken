@@ -3,20 +3,22 @@ require 'test_helper'
 class FileRequirementsTest < ActiveSupport::TestCase
 
   # NOTE: 'Class' here is implemented as 'Classification'
-  # NOTE: 'Basic File' here is implemented as 'Filing'
+  # NOTE: '* File' here is implemented as '* Filing'
 
   test '5.4.1 (O)' do
     # It must be possible for a file to be of different types. In the conceptual
     # model, this is resolved through specialisation.
-    NOT_YET_IMPLEMENTED
+
+    assert MeetingFiling < Filing
+    assert CaseFiling < Filing
   end
 
   test '5.4.2 (O)' do
     # A Basic file must belong to a Series and a Series may contain no, one or
     # several Basic files.
 
-    assert Series.reflect_on_association(:filings).macro == :has_many
-    assert Filing.reflect_on_association(:series).macro == :belongs_to
+    assert_has_many :series, :filings
+    assert_belongs_to :filing, :series
 
     filing = FactoryGirl.build(:filing, series: nil)
     assert_raise(ActiveRecord::RecordInvalid) { filing.save! }
@@ -39,8 +41,8 @@ class FileRequirementsTest < ActiveSupport::TestCase
     # REMARK: Classification is obligatory in all case records and will also
     # occur in most task systems.
 
-    assert Classification.reflect_on_association(:filings).macro == :has_many
-    assert Filing.reflect_on_association(:classification).macro == :belongs_to
+    assert_has_many :classification, :filings
+    assert_belongs_to :filing, :classification
 
     filing = FactoryGirl.build(:filing, classification: nil)
     assert_raise(ActiveRecord::RecordInvalid) { filing.save! }
@@ -61,22 +63,33 @@ class FileRequirementsTest < ActiveSupport::TestCase
     # no, one or several Basic files. This only applies to task systems.
 
     # REMARK: Classification can be omitted in certain types of task system.
-    NOT_YET_IMPLEMENTED
+
+    skip # Deprecated in Noark 5 v3.1
   end
 
   test '5.4.5 (V)' do
     # It should be possible for a Basic file to be included in other Basic files
     # in a hierarchy. These are called subfiles and are outlined in the model
     # using a self-relation.
-    NOT_YET_IMPLEMENTED
+
+    classification_system = FactoryGirl.create(:filing)
+
+    parent = FactoryGirl.create(:filing)
+    child = FactoryGirl.create(:filing, parent: parent)
+    grandchild = FactoryGirl.create(:filing, parent: child)
+
+    assert_equal grandchild.parent, child
+    assert_equal child.parent, parent
+    assert_equal parent.children.first, child
+    assert_equal child.children.first, grandchild
   end
 
   test '5.4.6 (O)' do
     # It must be possible for a Basic file to consist of no, one or several
     # Records and a Record can be included in (only) one Basic file.
 
-    assert Filing.reflect_on_association(:records).macro == :has_many
-    assert Record.reflect_on_association(:filing).macro == :belongs_to
+    assert_has_many :filing, :records
+    assert_belongs_to :record, :filing
 
     filing = FactoryGirl.create(:filing)
 
@@ -95,7 +108,7 @@ class FileRequirementsTest < ActiveSupport::TestCase
     filing = FactoryGirl.create(:filing, :finalized)
 
     assert_raise(ActiveRecord::RecordInvalid) { FactoryGirl.create(:record, filing: filing) }
-    assert classification.filings.count == 0
+    assert filing.records.count == 0
   end
 
   test '5.4.8 (B)' do
@@ -105,7 +118,14 @@ class FileRequirementsTest < ActiveSupport::TestCase
     # main class.
 
     # REMARK: Obligatory for case records.
-    NOT_YET_IMPLEMENTED
+
+    filing = FactoryGirl.create(:filing)
+
+    assert filing.class == Filing
+
+    filing.becomes!(CaseFiling)
+
+    assert filing.class == CaseFiling
   end
 
   test '5.4.9 (B)' do

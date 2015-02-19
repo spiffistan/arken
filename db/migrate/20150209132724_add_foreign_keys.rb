@@ -2,8 +2,6 @@ class AddForeignKeys < ActiveRecord::Migration
   def change
 
     # Fonds
-    add_foreign_key :fonds, :records_creators
-
     add_foreign_key :fonds, :users, column: :finalized_by_id
     add_foreign_key :fonds, :users, column: :created_by_id
 

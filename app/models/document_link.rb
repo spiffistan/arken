@@ -13,7 +13,11 @@
 #
 
 class DocumentLink < ActiveRecord::Base
+
+  audited
+
   belongs_to :document_description
   belongs_to :record
   belongs_to :linked_by, class_name: 'User'
+
 end

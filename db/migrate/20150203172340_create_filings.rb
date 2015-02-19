@@ -2,7 +2,7 @@ class CreateFilings < ActiveRecord::Migration
   def change
     create_table :filings do |t|
 
-      t.string :type, null: false # STI key
+      t.string :object_type # STI key
 
       t.string :ancestry, index: true
       t.belongs_to :classification, index: true, null: false

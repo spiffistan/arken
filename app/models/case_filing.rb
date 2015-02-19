@@ -1,12 +1,12 @@
 # == Schema Information
 #
-# Table name: records
+# Table name: filings
 #
 #  id                           :integer          not null, primary key
 #  type                         :string           not null
-#  filing_id                    :integer          not null
-#  series_id                    :integer          not null
+#  ancestry                     :string
 #  classification_id            :integer          not null
+#  series_id                    :integer          not null
 #  identifier                   :string
 #  title                        :string
 #  official_title               :string
@@ -20,9 +20,6 @@
 #  updated_at                   :datetime
 #
 
-class BasicRecord < Record
-
-  include Taggable
-  include CrossReferencable
+class CaseFiling < Filing
 
 end

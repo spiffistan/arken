@@ -10,5 +10,27 @@ class ActiveSupport::TestCase
   # fixtures :all
 
   NOT_YET_IMPLEMENTED = false
-  DEPRECATED = skip
+
+  def assert_has_many(model, association)
+    assert_reflects_on model, association, :has_many
+  end
+
+  def assert_belongs_to(model, association)
+    assert_reflects_on model, association, :belongs_to
+  end
+
+  def assert_has_and_belongs_to_many(model, association)
+    assert_reflects_on model, association, :has_and_belongs_to_many
+  end
+
+  def assert_has_one(model, association)
+    assert_reflects_on model, association, :has_one
+  end
+
+  private
+
+  def assert_reflects_on(model, association, macro)
+    assert model.to_s.classify.constantize.reflect_on_association(association).macro == macro
+  end
+
 end

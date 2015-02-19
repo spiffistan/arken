@@ -22,6 +22,10 @@
 
 class Series < ActiveRecord::Base
 
+  include Screenable
+  include PreservableAndDisposable
+  include Finalizable
+
   audited
 
   belongs_to :fonds
@@ -32,10 +36,6 @@ class Series < ActiveRecord::Base
 
   has_many :records
   has_many :filings
-
-  include Screenable
-  include PreservableAndDisposable
-  include Finalizable
 
   validates :fonds, presence: true
 

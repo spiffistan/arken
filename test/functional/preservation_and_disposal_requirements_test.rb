@@ -286,7 +286,7 @@ class PreservationAndDisposalRequirementsTest < ActiveSupport::TestCase
   test '5.10.36 (O)' do
     # It must be possible to specify that both the documents and the associated
     # metadata up to file level are to be deleted when the disposal is effected.
-    NOT_YET_IMPLEMENTED
+    skip
   end
 
 end

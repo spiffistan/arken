@@ -18,6 +18,12 @@
 
 class Classification < ActiveRecord::Base
 
+  include Finalizable
+  include Screenable
+  include PreservableAndDisposable
+  include Taggable
+  include CrossReferencable
+
   audited
 
   has_ancestry
@@ -26,12 +32,6 @@ class Classification < ActiveRecord::Base
 
   has_many :records
   has_many :filings
-
-  include Finalizable
-  include Screenable
-  include PreservableAndDisposable
-  include Taggable
-  include CrossReferencable
 
   validates :classification_system, presence: true
   validate  :validate_absence_of_filings, if: -> { persisted? && has_children? }

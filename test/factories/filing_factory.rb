@@ -24,5 +24,18 @@ FactoryGirl.define do
   factory :meeting_filing do
     classification
     series
+    trait :finalized do
+      finalized_at { DateTime.now }
+      finalized_by factory: :user
+    end
+  end
+
+  factory :filing do
+    classification
+    series
+    trait :finalized do
+      finalized_at { DateTime.now }
+      finalized_by factory: :user
+    end
   end
 end

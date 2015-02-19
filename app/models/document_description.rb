@@ -16,10 +16,15 @@
 
 class DocumentDescription < ActiveRecord::Base
 
-  audited
-
   include PreservableAndDisposable
   include Screenable
   include Documentable
+
+  audited
+
+  belongs_to :document_link
+
+  has_many :document_descriptions, as: :documentable
+  has_one :record, through: :document_link
 
 end

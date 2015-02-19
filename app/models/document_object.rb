@@ -20,7 +20,7 @@ class DocumentObject < ActiveRecord::Base
 
   audited
 
-  belongs_to :documentable
+  belongs_to :documentable, polymorphic: true
 
   validates :documentable, presence: true
 

@@ -20,7 +20,14 @@
 #  updated_at                   :datetime
 #
 
+# This is the Noark 5 concept 'Simplified record'
+
 class Record < ActiveRecord::Base
+
+  include Finalizable
+  include Screenable
+  include PreservableAndDisposable
+  include Documentable
 
   audited
 
@@ -28,10 +35,8 @@ class Record < ActiveRecord::Base
   belongs_to :series
   belongs_to :classification
 
-  include Finalizable
-  include Screenable
-  include PreservableAndDisposable
-  include Documentable
+  has_many :document_links
+  has_many :document_descriptions, through: :document_links
 
   validates :classification, presence: true
   validate  :validate_series_xor_filing_present

@@ -14,7 +14,9 @@ class RecordRequirementsTest < ActiveSupport::TestCase
 
     # REMARK: In the conceptual model, this is resolved through specialisation,
     #         i.e. expansions for each type.
-    NOT_YET_IMPLEMENTED
+
+    assert BasicRecord < Record
+    assert RecordEntry < BasicRecord
   end
 
   test '5.5.2 (O)' do
@@ -22,8 +24,8 @@ class RecordRequirementsTest < ActiveSupport::TestCase
     # Basic file and a Basic file can contain no, one or several Simplified
     # records.
 
-    assert Filing.reflect_on_association(:records).macro == :has_many
-    assert Record.reflect_on_association(:filing).macro == :belongs_to
+    assert_has_many :filing, :records
+    assert_belongs_to :record, :filing
 
     filing = FactoryGirl.create(:filing)
 
@@ -50,8 +52,8 @@ class RecordRequirementsTest < ActiveSupport::TestCase
     # REMARK: This is outlined in the model via an EITHER/OR constraint.
     # REMARK: Only relevant for certain task systems.
 
-    assert Series.reflect_on_association(:records).macro == :has_many
-    assert Record.reflect_on_association(:series).macro == :belongs_to
+    assert_has_many :series, :records
+    assert_belongs_to :record, :series
 
     series = FactoryGirl.create(:series)
 
@@ -93,10 +95,10 @@ class RecordRequirementsTest < ActiveSupport::TestCase
     #         linked to the record and in which the document is not included in
     #         other fonds.
 
-    assert Record.reflect_on_association(:document_descriptions).macro == :has_many
-    assert DocumentDescription.reflect_on_association(:record).macro == :belongs_to
+    # assert_has_many :record, :document_descriptions
+    # assert_belongs_to :document_description, :record
 
-    record = FactoryGirl.create(:record)
+    record = FactoryGirl.create(:record, :for_filing)
 
     assert record.document_descriptions.count == 0
 
@@ -104,6 +106,8 @@ class RecordRequirementsTest < ActiveSupport::TestCase
     FactoryGirl.create(:document_description, record: record)
 
     assert series.document_descriptions.count == 2
+
+    NOT_YET_IMPLEMENTED
   end
 
   test '5.5.6 (O)' do
@@ -111,13 +115,27 @@ class RecordRequirementsTest < ActiveSupport::TestCase
 
     # REMARK: As a minimum requirement, all task systems must contain metadata
     #         for Simplified records + Basic records.
-    NOT_YET_IMPLEMENTED
+
+    record = FactoryGirl.create(:record, :for_filing)
+
+    assert record.class == Record
+
+    record.becomes!(BasicRecord)
+
+    assert record.class == BasicRecord
   end
 
   test '5.5.7 (B)' do
     # It must be possible to expand a Basic record to a Registry entry.
     # REMARK: Obligatory for case records.
-    NOT_YET_IMPLEMENTED
+
+    record = FactoryGirl.create(:basic_record, :for_filing)
+
+    assert record.class == BasicRecord
+
+    record.becomes!(RecordEntry)
+
+    assert record.class == RecordEntry
   end
 
   test '5.5.8 (B)' do
@@ -129,8 +147,7 @@ class RecordRequirementsTest < ActiveSupport::TestCase
   end
 
   test '5.5.9 (?)' do
-    # NOTE: EMPTY SPEC
-    DEPRECATED
+    skip
   end
 
   test '5.5.10 (B)' do

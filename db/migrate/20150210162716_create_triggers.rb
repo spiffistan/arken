@@ -14,7 +14,7 @@ class CreateTriggers < ActiveRecord::Migration
       $$ LANGUAGE 'plpgsql';
 
       CREATE TRIGGER deny_change_for_protected_columns
-      BEFORE UPDATE OR DELETE ON fonds
+      BEFORE UPDATE ON fonds
       FOR EACH ROW EXECUTE PROCEDURE deny_change_for_protected_columns();
     SQL
   end

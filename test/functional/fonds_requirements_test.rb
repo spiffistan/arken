@@ -6,7 +6,9 @@ class FondsRequirementsTest < ActiveSupport::TestCase
     # It must be possible for a Noark 5 solution to consist of one or more
     # independent Fonds.
 
-    Fonds.create! && Fonds.create!
+    FactoryGirl.create(:fonds)
+    FactoryGirl.create(:fonds)
+
     assert Fonds.count == 2
   end
 
@@ -14,7 +16,20 @@ class FondsRequirementsTest < ActiveSupport::TestCase
     # It must be possible to create no, one or more Fonds for a Fonds creator
     # (activity) and it must be possible to specify that several fonds creators
     # together create a Fonds entity.
-    NOT_YET_IMPLEMENTED
+
+    assert_has_and_belongs_to_many :fonds_creators, :fonds
+    assert_has_and_belongs_to_many :fonds, :fonds_creators
+
+    fonds_creator_a = FactoryGirl.create(:fonds_creator)
+    fonds_creator_b = FactoryGirl.create(:fonds_creator)
+
+    fonds = FactoryGirl.create(:fonds, fonds_creators: [fonds_creator_a, fonds_creator_b])
+
+    assert fonds.fonds_creators == [fonds_creator_a, fonds_creator_b]
+    assert fonds_creator_a.fonds.count == 1
+    assert fonds_creator_b.fonds.count == 1
+    assert fonds_creator_a.fonds.first == fonds
+    assert fonds_creator_b.fonds.first == fonds
   end
 
   test '5.2.3 (O)' do
@@ -23,13 +38,13 @@ class FondsRequirementsTest < ActiveSupport::TestCase
 
     # NOTE: 'Fonds section' seems to be 'Series'
 
-    assert Fonds.reflect_on_association(:series).macro == :has_many
-    assert Series.reflect_on_association(:fonds).macro == :belongs_to
+    assert_has_many :fonds, :series
+    assert_belongs_to :series, :fonds
 
-    fonds = Fonds.create!
-    fonds.series << Series.new
-    fonds.series << Series.new
-    fonds.save
+    fonds = FactoryGirl.create(:fonds)
+
+    FactoryGirl.create(:series, fonds: fonds)
+    FactoryGirl.create(:series, fonds: fonds)
 
     assert Fonds.count == 1
     assert Series.count == 2
@@ -41,23 +56,34 @@ class FondsRequirementsTest < ActiveSupport::TestCase
     # to add more underlying Fonds sections.
 
     # REMARK: Obligatory if fonds status is used.
-    NOT_YET_IMPLEMENTED
+
+    fonds = FactoryGirl.create(:fonds, :finalized)
+
+    assert_raise(ActiveRecord::RecordInvalid) { FactoryGirl.create(:series, fonds: fonds) }
+    assert fonds.series.count == 0
   end
 
   test '5.2.5 (O)' do
     # When a service/function deletes an entire Fonds entity with all
     # underlying levels, this must be logged.
-    NOT_YET_IMPLEMENTED
+
+    fonds = FactoryGirl.create(:fonds)
+
+    assert fonds.audits.size == 1
+
+    fonds.destroy
+
+    assert fonds.audits.size == 2
   end
 
   test '5.2.6 (O)' do
     # It must not be possible to alter the date of creation of the Fonds entity.
 
-    f = Fonds.create!
-    original_datetime = f.read_attribute_before_type_cast("created_at")
+    fonds = FactoryGirl.create(:fonds)
+    original_datetime = fonds.read_attribute_before_type_cast("created_at")
 
-    f.update_attributes!(created_at: DateTime.now)
-    new_datetime = Fonds.find(f.id).read_attribute_before_type_cast("created_at")
+    fonds.update_attributes!(created_at: DateTime.now)
+    new_datetime = Fonds.find(fonds.id).read_attribute_before_type_cast("created_at")
 
     assert_equal original_datetime, new_datetime
   end
@@ -65,11 +91,11 @@ class FondsRequirementsTest < ActiveSupport::TestCase
   test '5.2.7 (O)' do
     # It must not be possible to delete the date of creation of the Fonds entity.
 
-    f = Fonds.create!
-    original_datetime = f.read_attribute_before_type_cast("created_at")
+    fonds = FactoryGirl.create(:fonds)
+    original_datetime = fonds.read_attribute_before_type_cast("created_at")
 
-    f.update_attributes!(created_at: nil)
-    new_datetime = Fonds.find(f.id).read_attribute_before_type_cast("created_at")
+    fonds.update_attributes!(created_at: nil)
+    new_datetime = Fonds.find(fonds.id).read_attribute_before_type_cast("created_at")
 
     assert_equal original_datetime, new_datetime
   end
@@ -77,11 +103,11 @@ class FondsRequirementsTest < ActiveSupport::TestCase
   test '5.2.8 (O)' do
     # It must not be possible to delete the date of closure of the Fonds entity.
 
-    f = Fonds.create!
-    original_datetime = f.read_attribute_before_type_cast("finalized_at")
+    fonds = FactoryGirl.create(:fonds)
+    original_datetime = fonds.read_attribute_before_type_cast("finalized_at")
 
-    f.update_attributes!(finalized_at: nil)
-    new_datetime = Fonds.find(f.id).read_attribute_before_type_cast("finalized_at")
+    fonds.update_attributes!(finalized_at: nil)
+    new_datetime = Fonds.find(fonds.id).read_attribute_before_type_cast("finalized_at")
 
     assert_equal original_datetime, new_datetime
   end
@@ -105,9 +131,9 @@ class FondsRequirementsTest < ActiveSupport::TestCase
     #         relevant for organisations that have fonds physically located in
     #         several different places.
 
-    parent = Fonds.create!
-    child = Fonds.create!(parent: parent)
-    grandchild = Fonds.create!(parent: child)
+    parent = FactoryGirl.create(:fonds)
+    child = FactoryGirl.create(:fonds, parent: parent)
+    grandchild = FactoryGirl.create(:fonds, parent: child)
 
     assert_equal grandchild.parent, child
     assert_equal child.parent, parent
@@ -126,6 +152,7 @@ class FondsRequirementsTest < ActiveSupport::TestCase
     # Administration system for Noark 5.
 
     # REMARK: Obligatory if subfonds are used.
+
     # NOTE: Probably means Subfonds instead of Subrecord here.
     NOT_YET_IMPLEMENTED
   end

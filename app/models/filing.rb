@@ -30,6 +30,8 @@ class Filing < ActiveRecord::Base
 
   belongs_to :classification
   belongs_to :series
+  
+  has_many :records
 
   include Finalizable
   include Screenable

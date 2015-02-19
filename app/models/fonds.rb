@@ -16,18 +16,17 @@
 
 class Fonds < ActiveRecord::Base
 
-  has_ancestry
+  include Finalizable
+
   audited
+  has_ancestry
 
   belongs_to :created_by, class_name: 'User'
-
   has_and_belongs_to_many :fonds_creators
   has_many :series
 
   attr_readonly :created_at
 
-  include Finalizable
-
-  validates :fonds_creator, presence: true
+  validates :fonds_creators, presence: true
 
 end

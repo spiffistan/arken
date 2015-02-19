@@ -9,8 +9,8 @@ class ClassificationSystemsRequirementTest < ActiveSupport::TestCase
     # A Classification system can be subdivided into no, one or more Classes
     # and a Class can belong to just one Classification system.
 
-    assert ClassificationSystem.reflect_on_association(:classifications).macro == :has_many
-    assert Classification.reflect_on_association(:classification_system).macro == :belongs_to
+    assert_has_many :classification_system, :classifications
+    assert_belongs_to :classification, :classification_system
 
     classification_system = FactoryGirl.create(:classification_system)
 
@@ -26,8 +26,8 @@ class ClassificationSystemsRequirementTest < ActiveSupport::TestCase
     # A Classification system can form a primary system in no, one or more
     # Series.
 
-    assert ClassificationSystem.reflect_on_association(:series).macro == :has_many
-    assert Series.reflect_on_association(:classification_system).macro == :belongs_to
+    assert_has_many :classification_system, :series
+    assert_belongs_to :series, :classification_system
 
     classification_system = FactoryGirl.create(:classification_system)
 
@@ -68,8 +68,8 @@ class ClassificationSystemsRequirementTest < ActiveSupport::TestCase
     #         this requirement may be omitted for simple systems without such
     #         needs.
 
-    assert Classification.reflect_on_association(:screening).macro == :belongs_to
-    assert Screening.reflect_on_association(:classifications).macro == :has_many
+    assert_has_many :screening, :classifications
+    assert_belongs_to :classification, :screening
 
     classification_a = FactoryGirl.create(:classification)
     classification_b = FactoryGirl.create(:classification)
@@ -92,8 +92,8 @@ class ClassificationSystemsRequirementTest < ActiveSupport::TestCase
     # A Class can have registered no or one Preservation and disposal and a
     # Preservation and disposal can be included in no, one or more Classes.
 
-    assert Classification.reflect_on_association(:preservation_and_disposal).macro == :belongs_to
-    assert PreservationAndDisposal.reflect_on_association(:classifications).macro == :has_many
+    assert_has_many :preservation_and_disposal, :classifications
+    assert_belongs_to :classification, :preservation_and_disposal
 
     classification_a = FactoryGirl.create(:classification)
     classification_b = FactoryGirl.create(:classification)
@@ -127,8 +127,9 @@ class ClassificationSystemsRequirementTest < ActiveSupport::TestCase
     #         takes place from the primary class. A Class can be subdivided into
     #         no, one or more Files and a File can belong to just one Class.
 
-    assert Classification.reflect_on_association(:filings).macro == :has_many
-    assert Filing.reflect_on_association(:classification).macro == :belongs_to
+
+    assert_has_many :classification, :filings
+    assert_belongs_to :filings, :classification
 
     classification = FactoryGirl.create(:classification)
 
@@ -231,7 +232,7 @@ class ClassificationSystemsRequirementTest < ActiveSupport::TestCase
     #         the case of object-based classification.
 
     classification = FactoryGirl.create(:classification)
-    
+
     assert classification.audits.size == 1
 
     # NOTE: it is assumed that the system created the classification if
@@ -245,6 +246,7 @@ class ClassificationSystemsRequirementTest < ActiveSupport::TestCase
     # Only authorised personnel can finalise classes.
 
     classification = FactoryGirl.create(:classification, :finalized)
+
     assert classification.audits.size == 1
     assert classification.audits.last.audited_changes[:finalized_by_id].present?
   end

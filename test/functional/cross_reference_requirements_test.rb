@@ -13,7 +13,7 @@ class CrossReferenceRequirementsTest < ActiveSupport::TestCase
   test '5.7.6 (V)' do
     # It should be possible to refer to a Class from one or several other
     # Classes.
-    NOT_YET_IMPLEMENTED
+    skip
   end
 
   test '5.7.7 (B)' do
@@ -29,7 +29,7 @@ class CrossReferenceRequirementsTest < ActiveSupport::TestCase
     # Basic files.
 
     # REMARK: Obligatory for case records, relevant to many task systems.
-    NOT_YET_IMPLEMENTED
+    skip
   end
 
   test '5.7.9 (B)' do
@@ -45,7 +45,7 @@ class CrossReferenceRequirementsTest < ActiveSupport::TestCase
     # Basic records.
 
     # REMARK: Obligatory for case records, relevant to many task systems.
-    NOT_YET_IMPLEMENTED
+    skip
   end
 
   test '5.7.11 (B)' do
@@ -61,7 +61,7 @@ class CrossReferenceRequirementsTest < ActiveSupport::TestCase
     #  Basic records.
 
     # REMARK: Obligatory for case records, relevant to many task systems.
-    NOT_YET_IMPLEMENTED
+    skip
   end
 
   # == Functional requirements for Cross-reference

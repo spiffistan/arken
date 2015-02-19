@@ -2,7 +2,6 @@ class CreateFonds < ActiveRecord::Migration
   def change
     create_table :fonds do |t|
       t.string :ancestry, index: true
-      t.belongs_to :records_creator, index: true
       t.string :title
       t.text :description
 

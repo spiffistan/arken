@@ -5,7 +5,7 @@ module Finalizable
   included do
     belongs_to :finalized_by, class_name: 'User'
 
-    before_destroy { raise ActiveRecord::ReadOnlyRecord if readonly? }
+    before_destroy { raise ActiveRecord::ReadOnlyRecord if finalized? }
 
     validates :finalized_by, presence: true, if: -> { finalized? }
   end

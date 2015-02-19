@@ -11,7 +11,14 @@ class DocumentRequirementsTest < ActiveSupport::TestCase
     #
     # These records can be linked to files which belong to different series and
     # fonds.
-    NOT_YET_IMPLEMENTED
+
+    assert_has_many :record, :document_links
+    assert_belongs_to :document_link, :document_description
+    assert_belongs_to :document_link, :record
+    assert_belongs_to :document_description, :document_link
+
+    assert_has_many :record, :document_descriptions # through-relation
+    assert_has_one :document_description, :record # through-relation
   end
 
   test '5.6.2 (O)' do

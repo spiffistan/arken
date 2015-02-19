@@ -9,6 +9,9 @@ class SeriesRequirementsTest < ActiveSupport::TestCase
 
     # REMARK: Obligatory for case records.
 
+    assert_has_many :classification_system, :series
+    assert_belongs_to :series, :classification_system
+
     classification_system = ClassificationSystem.create!
     series = FactoryGirl.create(:series, classification_system: nil)
 
@@ -34,7 +37,10 @@ class SeriesRequirementsTest < ActiveSupport::TestCase
     #         this requirement may be omitted for simple systems without such
     #         needs.
 
-    screening = Screening.create!
+    assert_has_many :screening, :series
+    assert_belongs_to :series, :screening
+
+    screening = FactoryGirl.create(:screening)
     series = FactoryGirl.create(:series)
 
     assert series.screening == nil
@@ -53,10 +59,10 @@ class SeriesRequirementsTest < ActiveSupport::TestCase
 
     # NOTE: Same remarks as test 5.2.14.
 
-    assert Series.reflect_on_association(:preservation_and_disposal).macro == :belongs_to
-    assert PreservationAndDisposal.reflect_on_association(:series).macro == :has_many
+    assert_has_many :preservation_and_disposal, :series
+    assert_belongs_to :series, :preservation_and_disposal
 
-    preservation_and_disposal = PreservationAndDisposal.create!
+    preservation_and_disposal = FactoryGirl.create(:preservation_and_disposal)
     series = FactoryGirl.create(:series)
 
     assert series.preservation_and_disposal == nil
@@ -72,8 +78,8 @@ class SeriesRequirementsTest < ActiveSupport::TestCase
   test '5.2.16 (O)' do
     # A Series can be linked to (contain) no, one or more Files.
 
-    assert Filing.reflect_on_association(:series).macro == :belongs_to
-    assert Series.reflect_on_association(:filings).macro == :has_many
+    assert_has_many :series, :filings
+    assert_belongs_to :filing, :series
 
     series = FactoryGirl.create(:series)
 
@@ -87,7 +93,14 @@ class SeriesRequirementsTest < ActiveSupport::TestCase
 
   test '5.2.17 (O)' do
     # When a service/function deletes a Series, this must be logged.
-    NOT_YET_IMPLEMENTED
+
+    series = FactoryGirl.create(:series)
+
+    assert series.audits.size == 1
+
+    series.destroy
+
+    assert series.audits.size == 2
   end
 
   test '5.2.18 (O)' do
@@ -99,7 +112,17 @@ class SeriesRequirementsTest < ActiveSupport::TestCase
   test '5.2.19 (O)' do
     # If Series is registered as finalised (finalisedDate is set), it must not
     # be possible to add more associated Files or Records.
-    NOT_YET_IMPLEMENTED
+
+    series = FactoryGirl.create(:series, :finalized)
+
+    assert series.records.count == 0
+    assert series.filings.count == 0
+
+    assert_raise(ActiveRecord::RecordInvalid) { FactoryGirl.create(:record, series: series) }
+    assert_raise(ActiveRecord::RecordInvalid) { FactoryGirl.create(:filing, series: series) }
+
+    assert series.records.count == 0
+    assert series.filings.count == 0
   end
 
   test '5.2.20 (B)' do

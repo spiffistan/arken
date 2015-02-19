@@ -17,8 +17,12 @@
 FactoryGirl.define do
 
   factory :fonds do
-  
+    fonds_creators { |f| [f.association(:fonds_creator)] }
 
+    trait :finalized do
+      finalized_at { DateTime.now }
+      finalized_by factory: :user
+    end
   end
 
 end
