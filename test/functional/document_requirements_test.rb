@@ -12,13 +12,12 @@ class DocumentRequirementsTest < ActiveSupport::TestCase
     # These records can be linked to files which belong to different series and
     # fonds.
 
-    assert_has_many :record, :document_links
     assert_belongs_to :document_link, :document_description
     assert_belongs_to :document_link, :record
-    assert_belongs_to :document_description, :document_link
-
-    assert_has_many :record, :document_descriptions # through-relation
-    assert_has_one :document_description, :record # through-relation
+    assert_has_one :document_description, :document_link
+    assert_has_one :document_description, :record, through: :document_link
+    assert_has_many :record, :document_links
+    assert_has_many :record, :document_descriptions, through: :document_links
   end
 
   test '5.6.2 (O)' do
@@ -31,7 +30,7 @@ class DocumentRequirementsTest < ActiveSupport::TestCase
     # Document object can be included in no or one Document description.
 
     assert_has_many :document_descriptions, :document_objects, as: :documentable
-    assert_belongs_to :document_object, :documentable
+    assert_belongs_to :document_object, :documentable, polymorphic: true
 
     NOT_YET_IMPLEMENTED
   end
@@ -45,7 +44,7 @@ class DocumentRequirementsTest < ActiveSupport::TestCase
     # REMARK: Only relevant for certain task systems.
 
     assert_has_many :record, :document_objects, as: :documentable
-    assert_belongs_to :document_object, :documentable
+    assert_belongs_to :document_object, :documentable, polymorphic: true
 
     NOT_YET_IMPLEMENTED
   end
@@ -63,8 +62,8 @@ class DocumentRequirementsTest < ActiveSupport::TestCase
     # document description to refer to different versions of the document.
 
     document_description = FactoryGirl.create(:document_description)
-    FactoryGirl.create(:document_object, document_description: document_description, version: '1.0')
-    FactoryGirl.create(:document_object, document_description: document_description, version: '1.1')
+    FactoryGirl.create(:document_object, documentable: document_description, version: '1.0')
+    FactoryGirl.create(:document_object, documentable: document_description, version: '1.1')
 
     assert document_description.document_objects.count == 2
     assert document_description.document_objects.map(&:version) == ['1.0', '1.1']
@@ -75,8 +74,8 @@ class DocumentRequirementsTest < ActiveSupport::TestCase
     # document description to refer to different variants of a document.
 
     document_description = FactoryGirl.create(:document_description)
-    FactoryGirl.create(:document_object, document_description: document_description, variant: 'English')
-    FactoryGirl.create(:document_object, document_description: document_description, variant: 'Norwegian')
+    FactoryGirl.create(:document_object, documentable: document_description, variant: 'English')
+    FactoryGirl.create(:document_object, documentable: document_description, variant: 'Norwegian')
 
     assert document_description.document_objects.count == 2
     assert document_description.document_objects.map(&:variant) == ['English', 'Norwegian']
@@ -88,8 +87,8 @@ class DocumentRequirementsTest < ActiveSupport::TestCase
     # formats.
 
     document_description = FactoryGirl.create(:document_description)
-    FactoryGirl.create(:document_object, document_description: document_description, format: 'PDF')
-    FactoryGirl.create(:document_object, document_description: document_description, format: 'DOCX')
+    FactoryGirl.create(:document_object, documentable: document_description, format: 'PDF')
+    FactoryGirl.create(:document_object, documentable: document_description, format: 'DOCX')
 
     assert document_description.document_objects.count == 2
     assert document_description.document_objects.map(&:format) == ['PDF', 'DOCX']

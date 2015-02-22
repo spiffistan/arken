@@ -31,18 +31,18 @@ class RecordRequirementsTest < ActiveSupport::TestCase
 
     assert filing.records.count == 0
 
-    record_a = FactoryGirl.create(:record, filing: filing)
-    record_b = FactoryGirl.create(:record, filing: filing)
+    record_a = FactoryGirl.create(:record, :for_filing, filing: filing)
+    record_b = FactoryGirl.create(:record, :for_filing, filing: filing)
 
     assert filing.records.count == 2
 
     series = FactoryGirl.create(:series)
 
-    assert_raise(ActiveRecord::RecordInvalid) { record_a.update_attributes(series: series) }
-    assert_raise(ActiveRecord::RecordInvalid) { record_b.update_attributes(series: series) }
+    assert_raise(ActiveRecord::RecordInvalid) { record_a.update_attributes!(series: series) }
+    assert_raise(ActiveRecord::RecordInvalid) { record_b.update_attributes!(series: series) }
 
-    assert_nil record_a.series
-    assert_nil record_b.series
+    assert_nil record_a.reload.series
+    assert_nil record_b.reload.series
   end
 
   test '5.5.3 (B)' do
@@ -59,18 +59,18 @@ class RecordRequirementsTest < ActiveSupport::TestCase
 
     assert series.records.count == 0
 
-    record_a = FactoryGirl.create(:record, series: series)
-    record_b = FactoryGirl.create(:record, series: series)
+    record_a = FactoryGirl.create(:record, :for_series, series: series)
+    record_b = FactoryGirl.create(:record, :for_series, series: series)
 
     assert series.records.count == 2
 
     filing = FactoryGirl.create(:filing)
 
-    assert_raise(ActiveRecord::RecordInvalid) { record_a.update_attributes(filing: filing) }
-    assert_raise(ActiveRecord::RecordInvalid) { record_b.update_attributes(filing: filing) }
+    assert_raise(ActiveRecord::RecordInvalid) { record_a.update_attributes!(filing: filing) }
+    assert_raise(ActiveRecord::RecordInvalid) { record_b.update_attributes!(filing: filing) }
 
-    assert_nil record_a.filing
-    assert_nil record_b.filing
+    assert_nil record_a.reload.filing
+    assert_nil record_b.reload.filing
   end
 
   test '5.5.4 (B)' do
@@ -95,8 +95,11 @@ class RecordRequirementsTest < ActiveSupport::TestCase
     #         linked to the record and in which the document is not included in
     #         other fonds.
 
-    # assert_has_many :record, :document_descriptions
-    # assert_belongs_to :document_description, :record
+    assert_has_many :record, :document_links
+    assert_has_many :record, :document_descriptions, through: :document_links
+    assert_belongs_to :document_link, :record
+    assert_belongs_to :document_link, :document_description
+    assert_has_one :document_description, :record, through: :document_link
 
     record = FactoryGirl.create(:record, :for_filing)
 
@@ -105,9 +108,7 @@ class RecordRequirementsTest < ActiveSupport::TestCase
     FactoryGirl.create(:document_description, record: record)
     FactoryGirl.create(:document_description, record: record)
 
-    assert series.document_descriptions.count == 2
-
-    NOT_YET_IMPLEMENTED
+    assert record.document_descriptions.count == 2
   end
 
   test '5.5.6 (O)' do

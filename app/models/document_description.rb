@@ -23,9 +23,9 @@ class DocumentDescription < ActiveRecord::Base
 
   audited
 
-  belongs_to :document_link
-
-  has_many :document_descriptions, as: :documentable
+  has_one :document_link
   has_one :record, through: :document_link
+
+  has_many :document_objects, as: :documentable
 
 end

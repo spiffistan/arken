@@ -38,6 +38,7 @@ class Record < ActiveRecord::Base
 
   has_many :document_links
   has_many :document_descriptions, through: :document_links
+  has_many :document_objects, as: :documentable
 
   validates :classification, presence: true
   validate  :validate_series_xor_filing_present

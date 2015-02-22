@@ -2,7 +2,7 @@ require 'test_helper'
 
 class RemarkRequirementsTest < ActiveSupport::TestCase
 
-  # == Structural requirements for Cross-reference
+  # == Structural requirements for Remarks
 
   test '5.7.15 (B)' do
     # A Remark must be included in (belong to) either a Basic file, Basic record
@@ -11,7 +11,11 @@ class RemarkRequirementsTest < ActiveSupport::TestCase
     # REMARK: This is modelled using an "either/or"
     #         constraint in the conceptual model.
     # REMARK: Obligatory for case records, relevant to many task systems.
-    NOT_YET_IMPLEMENTED
+
+    assert_has_many :filing, :remarks, as: :remarkable
+    assert_has_many :basic_record, :remarks, as: :remarkable
+    assert_has_many :document_description, :remarks, as: :remarkable
+    assert_belongs_to :remark, :remarkable
   end
 
   test '5.7.16 (B)' do
@@ -19,7 +23,15 @@ class RemarkRequirementsTest < ActiveSupport::TestCase
     # Remarks.
 
     # REMARK: Obligatory for case records, relevant to many task systems.
-    NOT_YET_IMPLEMENTED
+
+    filing = FactoryGirl.create(:filing)
+
+    assert filing.remarks.count == 0
+
+    FactoryGirl.create(:remark, filing: filing)
+    FactoryGirl.create(:remark, filing: filing)
+
+    assert filing.remarks.count == 2
   end
 
   test '5.7.17 (B)' do
@@ -27,7 +39,15 @@ class RemarkRequirementsTest < ActiveSupport::TestCase
     # Remarks.
 
     # REMARK: Obligatory for case records, relevant to many task systems.
-    NOT_YET_IMPLEMENTED
+
+    record = FactoryGirl.create(:record, :for_filing)
+
+    assert record.remarks.count == 0
+
+    FactoryGirl.create(:remark, record: record)
+    FactoryGirl.create(:remark, record: record)
+
+    assert record.remarks.count == 2
   end
 
   # == Functional requirements for Remarks
