@@ -3,6 +3,7 @@
 # Table name: records
 #
 #  id                           :integer          not null, primary key
+#  uuid                         :uuid
 #  object_type                  :string
 #  filing_id                    :integer          not null
 #  series_id                    :integer          not null

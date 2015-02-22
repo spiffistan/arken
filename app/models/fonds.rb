@@ -3,6 +3,7 @@
 # Table name: fonds
 #
 #  id              :integer          not null, primary key
+#  uuid            :uuid
 #  ancestry        :string
 #  title           :string
 #  description     :text

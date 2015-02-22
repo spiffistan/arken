@@ -15,10 +15,8 @@
 #  updated_at                   :datetime         not null
 #
 
-require 'test_helper'
-
-class DocumentDescriptionTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+FactoryGirl.define do
+  factory :document_description do
+    document_link
+  end
 end

@@ -120,8 +120,8 @@ ActiveRecord::Schema.define(version: 20150216191135) do
   create_table "document_objects", force: :cascade do |t|
     t.integer  "documentable_id"
     t.string   "documentable_type"
-    t.integer  "version"
-    t.string   "variant_format"
+    t.string   "version"
+    t.string   "variant"
     t.string   "format"
     t.string   "format_details"
     t.string   "checksum"

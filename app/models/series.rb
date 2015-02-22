@@ -3,6 +3,7 @@
 # Table name: series
 #
 #  id                           :integer          not null, primary key
+#  uuid                         :uuid
 #  fonds_id                     :integer          not null
 #  classification_system_id     :integer
 #  precursor_id                 :integer
@@ -38,5 +39,15 @@ class Series < ActiveRecord::Base
   has_many :filings
 
   validates :fonds, presence: true
+
+  validate :validate_unable_to_add_to_finalized_parent
+
+  protected
+
+  def validate_unable_to_add_to_finalized_parent
+    if fonds.finalized?
+      errors.add(:base, 'Unable to add series to finalized fonds')
+    end
+  end
 
 end

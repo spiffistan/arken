@@ -1,7 +1,7 @@
 class CreateClassificationSystems < ActiveRecord::Migration
   def change
     create_table :classification_systems do |t|
-      t.uuid :uuid, default: 'uuid_generate_v4()'
+      t.uuid :uuid, default: 'uuid_generate_v4()', null: false
 
       t.string :title
       t.text :description

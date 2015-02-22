@@ -29,6 +29,10 @@ class DocumentRequirementsTest < ActiveSupport::TestCase
   test '5.6.3 (O)' do
     # A Document description must have one or more Document objects and a
     # Document object can be included in no or one Document description.
+
+    assert_has_many :document_descriptions, :document_objects, as: :documentable
+    assert_belongs_to :document_object, :documentable
+
     NOT_YET_IMPLEMENTED
   end
 
@@ -39,6 +43,10 @@ class DocumentRequirementsTest < ActiveSupport::TestCase
 
     # REMARK: This is outlined in the model via an EITHER/OR constraint.
     # REMARK: Only relevant for certain task systems.
+
+    assert_has_many :record, :document_objects, as: :documentable
+    assert_belongs_to :document_object, :documentable
+
     NOT_YET_IMPLEMENTED
   end
 
@@ -53,20 +61,38 @@ class DocumentRequirementsTest < ActiveSupport::TestCase
   test '5.6.6 (O)' do
     # It must be possible for a Document object that is linked to the same
     # document description to refer to different versions of the document.
-    NOT_YET_IMPLEMENTED
+
+    document_description = FactoryGirl.create(:document_description)
+    FactoryGirl.create(:document_object, document_description: document_description, version: '1.0')
+    FactoryGirl.create(:document_object, document_description: document_description, version: '1.1')
+
+    assert document_description.document_objects.count == 2
+    assert document_description.document_objects.map(&:version) == ['1.0', '1.1']
   end
 
   test '5.6.7 (B)' do
     # It must be possible for a Document object that is linked to the same
     # document description to refer to different variants of a document.
-    NOT_YET_IMPLEMENTED
+
+    document_description = FactoryGirl.create(:document_description)
+    FactoryGirl.create(:document_object, document_description: document_description, variant: 'English')
+    FactoryGirl.create(:document_object, document_description: document_description, variant: 'Norwegian')
+
+    assert document_description.document_objects.count == 2
+    assert document_description.document_objects.map(&:variant) == ['English', 'Norwegian']
   end
 
   test '5.6.8 (O)' do
     # It must be possible for a Document object that is linked to the same
     # document description to refer to the same document stored in different
     # formats.
-    NOT_YET_IMPLEMENTED
+
+    document_description = FactoryGirl.create(:document_description)
+    FactoryGirl.create(:document_object, document_description: document_description, format: 'PDF')
+    FactoryGirl.create(:document_object, document_description: document_description, format: 'DOCX')
+
+    assert document_description.document_objects.count == 2
+    assert document_description.document_objects.map(&:format) == ['PDF', 'DOCX']
   end
 
   # == Functional requirements for Document description and Document object

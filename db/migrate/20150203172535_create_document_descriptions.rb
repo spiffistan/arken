@@ -1,7 +1,7 @@
 class CreateDocumentDescriptions < ActiveRecord::Migration
   def change
     create_table :document_descriptions do |t|
-      t.uuid :uuid, default: 'uuid_generate_v4()'
+      t.uuid :uuid, default: 'uuid_generate_v4()', null: false
 
       t.string :title
       t.text :description

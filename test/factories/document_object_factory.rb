@@ -16,12 +16,13 @@
 #  updated_at         :datetime         not null
 #
 
-class DocumentObject < ActiveRecord::Base
-
-  audited
-
-  belongs_to :documentable, polymorphic: true
-
-  validates :documentable, presence: true
-
+FactoryGirl.define do
+  factory :document_object do
+    trait :for_record do
+      association :documentable, factory: :record
+    end
+    trait :for_document_description do
+      association :documentable, factory: :document_description
+    end
+  end
 end

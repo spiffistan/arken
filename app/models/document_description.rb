@@ -3,6 +3,7 @@
 # Table name: document_descriptions
 #
 #  id                           :integer          not null, primary key
+#  uuid                         :uuid
 #  title                        :string
 #  description                  :text
 #  document_type                :integer          default("0")

@@ -8,21 +8,39 @@ class KeywordRequirementsTest < ActiveSupport::TestCase
     # It must be possible for a Class to have registered no, one or several
     # Keywords and it must be possible for a Keyword to form part of no, one or
     # several Classes.
-    NOT_YET_IMPLEMENTED
+
+    assert_has_many :classification, :taggings, as: :taggable
+    assert_has_many :classification, :tags, through: :taggings
+    assert_belongs_to :tagging, :taggable
+    assert_belongs_to :tagging, :tag
+    assert_has_many :tag, :taggings
+
   end
 
   test '5.7.2 (V)' do
     # It must be possible for a Basic file to have registered no, one or several
     # Keywords and it must be possible for a Keyword to form part of no, one or
     # several Basic files.
-    NOT_YET_IMPLEMENTED
+
+    assert_has_many :filing, :taggings, as: :taggable
+    assert_has_many :filing, :tags, through: :taggings
+    assert_belongs_to :tagging, :taggable
+    assert_belongs_to :tagging, :tag
+    assert_has_many :tag, :taggings
+
   end
 
   test '5.7.3 (V)' do
     # It must be possible for a Basic record to have registered no, one or
     # several Keywords and it must be possible for a Keyword to form part of no,
     # one or several Basic records.
-    NOT_YET_IMPLEMENTED
+
+    assert_has_many :basic_record, :taggings, as: :taggable
+    assert_has_many :basic_record, :tags, through: :taggings
+    assert_belongs_to :tagging, :taggable
+    assert_belongs_to :tagging, :tag
+    assert_has_many :tag, :taggings
+
   end
 
   # == Functional requirements for Keyword

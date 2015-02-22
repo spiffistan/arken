@@ -11,26 +11,28 @@ class ActiveSupport::TestCase
 
   NOT_YET_IMPLEMENTED = false
 
-  def assert_has_many(model, association)
-    assert_reflects_on model, association, :has_many
+  def assert_has_many(model, association, opts={})
+    assert_reflects_on model, association, :has_many, opts
   end
 
-  def assert_belongs_to(model, association)
-    assert_reflects_on model, association, :belongs_to
+  def assert_belongs_to(model, association, opts={})
+    assert_reflects_on model, association, :belongs_to, opts
   end
 
-  def assert_has_and_belongs_to_many(model, association)
-    assert_reflects_on model, association, :has_and_belongs_to_many
+  def assert_has_and_belongs_to_many(model, association, opts={})
+    assert_reflects_on model, association, :has_and_belongs_to_many, opts
   end
 
-  def assert_has_one(model, association)
-    assert_reflects_on model, association, :has_one
+  def assert_has_one(model, association, opts={})
+    assert_reflects_on model, association, :has_one, opts
   end
 
   private
 
-  def assert_reflects_on(model, association, macro)
-    assert model.to_s.classify.constantize.reflect_on_association(association).macro == macro
+  def assert_reflects_on(model, association, relation_type, opts={})
+    reflection = model.to_s.classify.constantize.reflect_on_association(association)
+    assert reflection.macro == relation_type
+    # assert reflection.options == opts
   end
 
 end

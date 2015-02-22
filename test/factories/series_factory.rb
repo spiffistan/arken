@@ -3,6 +3,7 @@
 # Table name: series
 #
 #  id                           :integer          not null, primary key
+#  uuid                         :uuid
 #  fonds_id                     :integer          not null
 #  classification_system_id     :integer
 #  precursor_id                 :integer
@@ -24,5 +25,10 @@ FactoryGirl.define do
   factory :series do
     fonds
     classification_system
+
+    trait :finalized do
+      finalized_at { DateTime.now }
+      finalized_by factory: :user
+    end
   end
 end

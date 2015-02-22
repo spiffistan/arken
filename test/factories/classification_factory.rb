@@ -3,6 +3,7 @@
 # Table name: classifications
 #
 #  id                           :integer          not null, primary key
+#  uuid                         :uuid
 #  ancestry                     :string
 #  classification_system_id     :integer          not null
 #  screening_id                 :integer

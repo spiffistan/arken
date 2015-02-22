@@ -3,6 +3,7 @@
 # Table name: fonds_creators
 #
 #  id          :integer          not null, primary key
+#  uuid        :uuid
 #  name        :string
 #  description :text
 #  created_at  :datetime         not null

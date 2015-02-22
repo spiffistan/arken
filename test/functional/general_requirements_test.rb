@@ -80,6 +80,6 @@ class GeneralRequirementsTest < ActiveSupport::TestCase
     models = %w(FondsCreator Fonds Series ClassificationSystem Classification
                 Filing Record DocumentDescription)
 
-    assert models.map { |m| m.column_names.include?(:uuid) }.all?
+    assert models.map { |m| m.constantize.column_names.include?('uuid') }.all?
   end
 end

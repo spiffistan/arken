@@ -3,6 +3,7 @@
 # Table name: series
 #
 #  id                           :integer          not null, primary key
+#  uuid                         :uuid
 #  fonds_id                     :integer          not null
 #  classification_system_id     :integer
 #  precursor_id                 :integer

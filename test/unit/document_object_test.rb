@@ -5,8 +5,8 @@
 #  id                 :integer          not null, primary key
 #  documentable_id    :integer
 #  documentable_type  :string
-#  version            :integer
-#  variant_format     :string
+#  version            :string
+#  variant            :string
 #  format             :string
 #  format_details     :string
 #  checksum           :string

@@ -3,6 +3,7 @@
 # Table name: filings
 #
 #  id                           :integer          not null, primary key
+#  uuid                         :uuid
 #  object_type                  :string
 #  ancestry                     :string
 #  classification_id            :integer          not null
