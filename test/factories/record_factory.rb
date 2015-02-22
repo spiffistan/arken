@@ -5,8 +5,8 @@
 #  id                           :integer          not null, primary key
 #  uuid                         :uuid
 #  object_type                  :string
-#  filing_id                    :integer          not null
-#  series_id                    :integer          not null
+#  filing_id                    :integer
+#  series_id                    :integer
 #  classification_id            :integer          not null
 #  identifier                   :string
 #  title                        :string
@@ -24,15 +24,22 @@
 FactoryGirl.define do
   factory :record do
     classification
+
     trait :finalized do
       finalized_at { DateTime.now }
       finalized_by factory: :user
     end
+
     trait :for_series do
       series
     end
+
     trait :for_filing do
       filing
+    end
+
+    factory :basic_record, class: 'BasicRecord', parent: :record do
+
     end
   end
 

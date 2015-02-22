@@ -5,8 +5,8 @@ class CreateRecords < ActiveRecord::Migration
 
       t.string :object_type # STI key
 
-      t.belongs_to :filing, index: true, null: false
-      t.belongs_to :series, index: true, null: false
+      t.belongs_to :filing, index: true
+      t.belongs_to :series, index: true
       t.belongs_to :classification, index: true, null: false
 
       t.string :identifier

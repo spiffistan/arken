@@ -248,7 +248,7 @@ class ClassificationSystemsRequirementTest < ActiveSupport::TestCase
     classification = FactoryGirl.create(:classification, :finalized)
 
     assert classification.audits.size == 1
-    assert classification.audits.last.audited_changes[:finalized_by_id].present?
+    assert classification.audits.last.audited_changes['finalized_by_id'].present?
   end
 
 end

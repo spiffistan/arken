@@ -221,8 +221,8 @@ ActiveRecord::Schema.define(version: 20150216191135) do
   create_table "records", force: :cascade do |t|
     t.uuid     "uuid",                         default: "uuid_generate_v4()"
     t.string   "object_type"
-    t.integer  "filing_id",                                                   null: false
-    t.integer  "series_id",                                                   null: false
+    t.integer  "filing_id"
+    t.integer  "series_id"
     t.integer  "classification_id",                                           null: false
     t.string   "identifier"
     t.string   "title"

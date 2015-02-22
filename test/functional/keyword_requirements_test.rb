@@ -11,10 +11,19 @@ class KeywordRequirementsTest < ActiveSupport::TestCase
 
     assert_has_many :classification, :taggings, as: :taggable
     assert_has_many :classification, :tags, through: :taggings
-    assert_belongs_to :tagging, :taggable
+    assert_belongs_to :tagging, :taggable, polymorphic: true
     assert_belongs_to :tagging, :tag
     assert_has_many :tag, :taggings
 
+    classification_a = FactoryGirl.create(:classification)
+    classification_b = FactoryGirl.create(:classification)
+
+    classification_a.tag('testtag')
+    classification_b.tag('testtag')
+
+    assert Tag.count == 1
+    assert classification_a.tag_names == ['testtag']
+    assert classification_b.tag_names == ['testtag']
   end
 
   test '5.7.2 (V)' do
@@ -24,10 +33,19 @@ class KeywordRequirementsTest < ActiveSupport::TestCase
 
     assert_has_many :filing, :taggings, as: :taggable
     assert_has_many :filing, :tags, through: :taggings
-    assert_belongs_to :tagging, :taggable
+    assert_belongs_to :tagging, :taggable, polymorphic: true
     assert_belongs_to :tagging, :tag
     assert_has_many :tag, :taggings
 
+    filing_a = FactoryGirl.create(:filing)
+    filing_b = FactoryGirl.create(:filing)
+
+    filing_a.tag('testtag')
+    filing_b.tag('testtag')
+
+    assert Tag.count == 1
+    assert filing_a.tag_names == ['testtag']
+    assert filing_b.tag_names == ['testtag']
   end
 
   test '5.7.3 (V)' do
@@ -37,10 +55,19 @@ class KeywordRequirementsTest < ActiveSupport::TestCase
 
     assert_has_many :basic_record, :taggings, as: :taggable
     assert_has_many :basic_record, :tags, through: :taggings
-    assert_belongs_to :tagging, :taggable
+    assert_belongs_to :tagging, :taggable, polymorphic: true
     assert_belongs_to :tagging, :tag
     assert_has_many :tag, :taggings
 
+    record_a = FactoryGirl.create(:basic_record, :for_filing)
+    record_b = FactoryGirl.create(:basic_record, :for_filing)
+
+    record_a.tag('testtag')
+    record_a.tag('testtag')
+
+    assert Tag.count == 1
+    assert record_a.tag_names == ['testtag']
+    assert record_a.tag_names == ['testtag']
   end
 
   # == Functional requirements for Keyword

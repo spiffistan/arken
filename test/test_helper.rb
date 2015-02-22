@@ -32,7 +32,7 @@ class ActiveSupport::TestCase
   def assert_reflects_on(model, association, relation_type, opts={})
     reflection = model.to_s.classify.constantize.reflect_on_association(association)
     assert reflection.macro == relation_type
-    # assert reflection.options == opts
+    assert reflection.options == opts
   end
 
 end

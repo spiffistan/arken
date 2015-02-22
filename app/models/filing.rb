@@ -42,5 +42,19 @@ class Filing < ActiveRecord::Base
   has_many :records
 
   validates :series, :classification, presence: true
+  validate :validate_unable_to_add_to_non_leaf_classification
+  validate :validate_unable_to_add_to_finalized_parent
+
+  def validate_unable_to_add_to_non_leaf_classification
+    if classification.try(:has_children?)
+      errors.add(:base, 'Unable to add filing to non-leaf classification')
+    end
+  end
+
+  def validate_unable_to_add_to_finalized_parent
+    if series.try(:finalized?) || classification.try(:finalized?)
+      errors.add(:base, 'Unable to add filing to finalized parent')
+    end
+  end
 
 end

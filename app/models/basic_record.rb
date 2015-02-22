@@ -5,8 +5,8 @@
 #  id                           :integer          not null, primary key
 #  uuid                         :uuid
 #  object_type                  :string
-#  filing_id                    :integer          not null
-#  series_id                    :integer          not null
+#  filing_id                    :integer
+#  series_id                    :integer
 #  classification_id            :integer          not null
 #  identifier                   :string
 #  title                        :string

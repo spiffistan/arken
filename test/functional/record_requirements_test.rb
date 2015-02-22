@@ -120,9 +120,10 @@ class RecordRequirementsTest < ActiveSupport::TestCase
 
     assert record.class == Record
 
-    record.becomes!(BasicRecord)
+    record = record.becomes!(BasicRecord)
+    record.save
 
-    assert record.class == BasicRecord
+    assert Record.find(record.id).class == BasicRecord
   end
 
   test '5.5.7 (B)' do
@@ -133,9 +134,10 @@ class RecordRequirementsTest < ActiveSupport::TestCase
 
     assert record.class == BasicRecord
 
-    record.becomes!(RecordEntry)
+    record = record.becomes!(RecordEntry)
+    record.save
 
-    assert record.class == RecordEntry
+    assert Record.find(record.id).class == RecordEntry
   end
 
   test '5.5.8 (B)' do

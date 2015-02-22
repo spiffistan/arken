@@ -5,8 +5,8 @@
 #  id                           :integer          not null, primary key
 #  uuid                         :uuid
 #  object_type                  :string
-#  filing_id                    :integer          not null
-#  series_id                    :integer          not null
+#  filing_id                    :integer
+#  series_id                    :integer
 #  classification_id            :integer          not null
 #  identifier                   :string
 #  title                        :string
@@ -46,7 +46,7 @@ class Record < ActiveRecord::Base
   protected
 
   def validate_series_xor_filing_present
-    if series.nil? ^ filing.nil?
+    unless series.nil? ^ filing.nil?
       errors.add(:base, 'Either series or filing must be set, and not both')
     end
   end

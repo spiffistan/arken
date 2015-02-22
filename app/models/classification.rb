@@ -35,12 +35,16 @@ class Classification < ActiveRecord::Base
   has_many :filings
 
   validates :classification_system, presence: true
-  validate  :validate_absence_of_filings, if: -> { persisted? && has_children? }
+  validate  :validate_absence_of_filings_and_records
 
   protected
 
-  def validate_absence_of_filings
-    errors.add(:base, 'Unable to add filings to non-leaf classification') unless filings.empty?
+  def validate_absence_of_filings_and_records
+    if persisted? && has_children?
+      unless filings.empty? && records.empty?
+        errors.add(:base, 'Unable to add filings to non-leaf classification')
+      end
+    end
   end
 
 end

@@ -95,8 +95,8 @@ class FileRequirementsTest < ActiveSupport::TestCase
 
     assert filing.records.count == 0
 
-    FactoryGirl.create(:record, filing: filing)
-    FactoryGirl.create(:record, filing: filing)
+    FactoryGirl.create(:record, :for_filing, filing: filing)
+    FactoryGirl.create(:record, :for_filing, filing: filing)
 
     assert filing.records.count == 2
   end
@@ -123,9 +123,10 @@ class FileRequirementsTest < ActiveSupport::TestCase
 
     assert filing.class == Filing
 
-    filing.becomes!(CaseFiling)
+    filing = filing.becomes!(CaseFiling)
+    filing.save
 
-    assert filing.class == CaseFiling
+    assert Filing.find(filing.id).class == CaseFiling
   end
 
   test '5.4.9 (B)' do
