@@ -2,16 +2,15 @@
 #
 # Table name: fonds
 #
-#  id                 :integer          not null, primary key
-#  ancestry           :string
-#  records_creator_id :integer
-#  title              :string
-#  description        :text
-#  finalized_by_id    :integer
-#  finalized_at       :datetime
-#  created_by_id      :integer
-#  created_at         :datetime
-#  updated_at         :datetime
+#  id              :integer          not null, primary key
+#  ancestry        :string
+#  title           :string
+#  description     :text
+#  finalized_by_id :integer
+#  finalized_at    :datetime
+#  created_by_id   :integer
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
 #
 
 require 'test_helper'

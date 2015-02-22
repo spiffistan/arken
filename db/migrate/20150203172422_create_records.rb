@@ -1,6 +1,7 @@
 class CreateRecords < ActiveRecord::Migration
   def change
     create_table :records do |t|
+      t.uuid :uuid, default: 'uuid_generate_v4()'
 
       t.string :object_type # STI key
 

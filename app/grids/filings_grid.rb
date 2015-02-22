@@ -6,6 +6,9 @@ class FilingsGrid
     Filing
   end
 
+  column('') do
+    '<i class="icon e-icon-folder"></i>'.html_safe
+  end
   column(:identifier)
   column(:title)
   column(:description)

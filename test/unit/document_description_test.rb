@@ -10,8 +10,8 @@
 #  author_id                    :integer
 #  preservation_and_disposal_id :integer
 #  screening_id                 :integer
-#  created_at                   :datetime
-#  updated_at                   :datetime
+#  created_at                   :datetime         not null
+#  updated_at                   :datetime         not null
 #
 
 require 'test_helper'

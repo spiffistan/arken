@@ -3,7 +3,7 @@
 # Table name: filings
 #
 #  id                           :integer          not null, primary key
-#  type                         :string           not null
+#  object_type                  :string
 #  ancestry                     :string
 #  classification_id            :integer          not null
 #  series_id                    :integer          not null
@@ -16,22 +16,13 @@
 #  finalized_by_id              :integer
 #  finalized_at                 :datetime
 #  created_by_id                :integer
-#  created_at                   :datetime
-#  updated_at                   :datetime
+#  created_at                   :datetime         not null
+#  updated_at                   :datetime         not null
 #
 
 # NOTE: This corresponds to the concept 'Basic file' in Noark 5 (v3.1)
 
 class Filing < ActiveRecord::Base
-
-  audited
-
-  has_ancestry
-
-  belongs_to :classification
-  belongs_to :series
-  
-  has_many :records
 
   include Finalizable
   include Screenable
@@ -39,6 +30,15 @@ class Filing < ActiveRecord::Base
   include Taggable
   include CrossReferencable
   include Remarkable
+
+  audited
+
+  has_ancestry
+
+  belongs_to :classification
+  belongs_to :series
+
+  has_many :records
 
   validates :series, :classification, presence: true
 

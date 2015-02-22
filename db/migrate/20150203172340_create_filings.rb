@@ -1,6 +1,7 @@
 class CreateFilings < ActiveRecord::Migration
   def change
     create_table :filings do |t|
+      t.uuid :uuid, default: 'uuid_generate_v4()'
 
       t.string :object_type # STI key
 

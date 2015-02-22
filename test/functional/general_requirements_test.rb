@@ -77,7 +77,9 @@ class GeneralRequirementsTest < ActiveSupport::TestCase
     # REMARK: In connection with transfer, a unique ID for all record units must
     # be called systemID.
 
-    assert true
-    # NOTE: This is the id column in the database.
+    models = %w(FondsCreator Fonds Series ClassificationSystem Classification
+                Filing Record DocumentDescription)
+
+    assert models.map { |m| m.column_names.include?(:uuid) }.all?
   end
 end

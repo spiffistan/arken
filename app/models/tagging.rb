@@ -6,8 +6,8 @@
 #  tag_id        :integer
 #  taggable_id   :integer
 #  taggable_type :string
-#  created_at    :datetime
-#  updated_at    :datetime
+#  created_at    :datetime         not null
+#  updated_at    :datetime         not null
 #
 
 class Tagging < ActiveRecord::Base

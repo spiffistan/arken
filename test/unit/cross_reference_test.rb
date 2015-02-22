@@ -7,8 +7,8 @@
 #  from_id    :integer
 #  to_type    :string
 #  to_id      :integer
-#  created_at :datetime
-#  updated_at :datetime
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
 #
 
 require 'test_helper'

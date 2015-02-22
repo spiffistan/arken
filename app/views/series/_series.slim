@@ -1,5 +1,7 @@
 .panel.panel-default
   .panel-heading
-    h3.panel-title= link_to series.title, series_path(series)
+    h3.panel-title
+      = entypo_icon(:box)
+      = link_to series.title, series_path(series)
   .panel-body
     = series.description

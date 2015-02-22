@@ -15,6 +15,7 @@ ActiveRecord::Schema.define(version: 20150216191135) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "uuid-ossp"
 
   create_table "audits", force: :cascade do |t|
     t.integer  "auditable_id"
@@ -40,28 +41,30 @@ ActiveRecord::Schema.define(version: 20150216191135) do
   add_index "audits", ["user_id", "user_type"], name: "user_index", using: :btree
 
   create_table "classification_systems", force: :cascade do |t|
+    t.uuid     "uuid",            default: "uuid_generate_v4()"
     t.string   "title"
     t.text     "description"
     t.integer  "finalized_by_id"
     t.datetime "finalized_at"
     t.integer  "created_by_id"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.datetime "created_at",                                     null: false
+    t.datetime "updated_at",                                     null: false
   end
 
   add_index "classification_systems", ["created_by_id"], name: "index_classification_systems_on_created_by_id", using: :btree
   add_index "classification_systems", ["finalized_by_id"], name: "index_classification_systems_on_finalized_by_id", using: :btree
 
   create_table "classifications", force: :cascade do |t|
+    t.uuid     "uuid",                         default: "uuid_generate_v4()"
     t.string   "ancestry"
-    t.integer  "classification_system_id",     null: false
+    t.integer  "classification_system_id",                                    null: false
     t.integer  "screening_id"
     t.integer  "preservation_and_disposal_id"
     t.integer  "finalized_by_id"
     t.datetime "finalized_at"
     t.integer  "created_by_id"
-    t.datetime "created_at",                   null: false
-    t.datetime "updated_at",                   null: false
+    t.datetime "created_at",                                                  null: false
+    t.datetime "updated_at",                                                  null: false
   end
 
   add_index "classifications", ["ancestry"], name: "index_classifications_on_ancestry", using: :btree
@@ -84,6 +87,7 @@ ActiveRecord::Schema.define(version: 20150216191135) do
   add_index "cross_references", ["to_id"], name: "index_cross_references_on_to_id", using: :btree
 
   create_table "document_descriptions", force: :cascade do |t|
+    t.uuid     "uuid",                         default: "uuid_generate_v4()"
     t.string   "title"
     t.text     "description"
     t.integer  "document_type",                default: 0
@@ -91,8 +95,8 @@ ActiveRecord::Schema.define(version: 20150216191135) do
     t.integer  "author_id"
     t.integer  "preservation_and_disposal_id"
     t.integer  "screening_id"
-    t.datetime "created_at",                               null: false
-    t.datetime "updated_at",                               null: false
+    t.datetime "created_at",                                                  null: false
+    t.datetime "updated_at",                                                  null: false
   end
 
   add_index "document_descriptions", ["author_id"], name: "index_document_descriptions_on_author_id", using: :btree
@@ -130,10 +134,11 @@ ActiveRecord::Schema.define(version: 20150216191135) do
   add_index "document_objects", ["documentable_type", "documentable_id"], name: "index_document_objects_on_documentable_type_and_documentable_id", using: :btree
 
   create_table "filings", force: :cascade do |t|
+    t.uuid     "uuid",                         default: "uuid_generate_v4()"
     t.string   "object_type"
     t.string   "ancestry"
-    t.integer  "classification_id",            null: false
-    t.integer  "series_id",                    null: false
+    t.integer  "classification_id",                                           null: false
+    t.integer  "series_id",                                                   null: false
     t.string   "identifier"
     t.string   "title"
     t.string   "official_title"
@@ -143,8 +148,8 @@ ActiveRecord::Schema.define(version: 20150216191135) do
     t.integer  "finalized_by_id"
     t.datetime "finalized_at"
     t.integer  "created_by_id"
-    t.datetime "created_at",                   null: false
-    t.datetime "updated_at",                   null: false
+    t.datetime "created_at",                                                  null: false
+    t.datetime "updated_at",                                                  null: false
   end
 
   add_index "filings", ["ancestry"], name: "index_filings_on_ancestry", using: :btree
@@ -156,14 +161,15 @@ ActiveRecord::Schema.define(version: 20150216191135) do
   add_index "filings", ["series_id"], name: "index_filings_on_series_id", using: :btree
 
   create_table "fonds", force: :cascade do |t|
+    t.uuid     "uuid",            default: "uuid_generate_v4()"
     t.string   "ancestry"
     t.string   "title"
     t.text     "description"
     t.integer  "finalized_by_id"
     t.datetime "finalized_at"
     t.integer  "created_by_id"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.datetime "created_at",                                     null: false
+    t.datetime "updated_at",                                     null: false
   end
 
   add_index "fonds", ["ancestry"], name: "index_fonds_on_ancestry", using: :btree
@@ -171,10 +177,11 @@ ActiveRecord::Schema.define(version: 20150216191135) do
   add_index "fonds", ["finalized_by_id"], name: "index_fonds_on_finalized_by_id", using: :btree
 
   create_table "fonds_creators", force: :cascade do |t|
+    t.uuid     "uuid",        default: "uuid_generate_v4()"
     t.string   "name"
     t.text     "description"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",                                 null: false
+    t.datetime "updated_at",                                 null: false
   end
 
   create_table "fonds_fonds_creators", force: :cascade do |t|
@@ -212,10 +219,11 @@ ActiveRecord::Schema.define(version: 20150216191135) do
   add_index "preservation_and_disposals", ["disposed_of_by_id"], name: "index_preservation_and_disposals_on_disposed_of_by_id", using: :btree
 
   create_table "records", force: :cascade do |t|
+    t.uuid     "uuid",                         default: "uuid_generate_v4()"
     t.string   "object_type"
-    t.integer  "filing_id",                    null: false
-    t.integer  "series_id",                    null: false
-    t.integer  "classification_id",            null: false
+    t.integer  "filing_id",                                                   null: false
+    t.integer  "series_id",                                                   null: false
+    t.integer  "classification_id",                                           null: false
     t.string   "identifier"
     t.string   "title"
     t.string   "official_title"
@@ -225,8 +233,8 @@ ActiveRecord::Schema.define(version: 20150216191135) do
     t.integer  "finalized_by_id"
     t.datetime "finalized_at"
     t.integer  "created_by_id"
-    t.datetime "created_at",                   null: false
-    t.datetime "updated_at",                   null: false
+    t.datetime "created_at",                                                  null: false
+    t.datetime "updated_at",                                                  null: false
   end
 
   add_index "records", ["classification_id"], name: "index_records_on_classification_id", using: :btree
@@ -256,7 +264,8 @@ ActiveRecord::Schema.define(version: 20150216191135) do
   end
 
   create_table "series", force: :cascade do |t|
-    t.integer  "fonds_id",                     null: false
+    t.uuid     "uuid",                         default: "uuid_generate_v4()"
+    t.integer  "fonds_id",                                                    null: false
     t.integer  "classification_system_id"
     t.integer  "precursor_id"
     t.integer  "successor_id"
@@ -269,8 +278,8 @@ ActiveRecord::Schema.define(version: 20150216191135) do
     t.integer  "finalized_by_id"
     t.datetime "finalized_at"
     t.integer  "created_by_id"
-    t.datetime "created_at",                   null: false
-    t.datetime "updated_at",                   null: false
+    t.datetime "created_at",                                                  null: false
+    t.datetime "updated_at",                                                  null: false
   end
 
   add_index "series", ["classification_system_id"], name: "index_series_on_classification_system_id", using: :btree

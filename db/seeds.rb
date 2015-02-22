@@ -6,8 +6,8 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-r = RecordsCreator.create(name: 'System', description: 'System records creator')
-f = Fonds.create(title: 'F1', description: 'System fonds', records_creators: [r])
+r = FondsCreator.create(name: 'System', description: 'System records creator')
+f = Fonds.create(title: 'F1', description: 'System fonds', fonds_creators: [r])
 s = Series.create(title: 'F1/S1', description: 'System series', fonds: f)
 
 cs = ClassificationSystem.create(title: 'CS1', description: 'Classification system')

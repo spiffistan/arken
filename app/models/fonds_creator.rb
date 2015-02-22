@@ -1,12 +1,12 @@
 # == Schema Information
 #
-# Table name: records_creators
+# Table name: fonds_creators
 #
 #  id          :integer          not null, primary key
 #  name        :string
 #  description :text
-#  created_at  :datetime
-#  updated_at  :datetime
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
 #
 
 class FondsCreator < ActiveRecord::Base

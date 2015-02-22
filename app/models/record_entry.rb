@@ -3,7 +3,7 @@
 # Table name: records
 #
 #  id                           :integer          not null, primary key
-#  type                         :string           not null
+#  object_type                  :string
 #  filing_id                    :integer          not null
 #  series_id                    :integer          not null
 #  classification_id            :integer          not null
@@ -16,8 +16,8 @@
 #  finalized_by_id              :integer
 #  finalized_at                 :datetime
 #  created_by_id                :integer
-#  created_at                   :datetime
-#  updated_at                   :datetime
+#  created_at                   :datetime         not null
+#  updated_at                   :datetime         not null
 #
 
 class RecordEntry < BasicRecord
