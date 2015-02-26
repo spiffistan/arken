@@ -15,7 +15,7 @@ class RemarkRequirementsTest < ActiveSupport::TestCase
     assert_has_many :filing, :remarks, as: :remarkable
     assert_has_many :basic_record, :remarks, as: :remarkable
     assert_has_many :document_description, :remarks, as: :remarkable
-    assert_belongs_to :remark, :remarkable
+    assert_belongs_to :remark, :remarkable, polymorphic: true
   end
 
   test '5.7.16 (B)' do
@@ -28,8 +28,8 @@ class RemarkRequirementsTest < ActiveSupport::TestCase
 
     assert filing.remarks.count == 0
 
-    FactoryGirl.create(:remark, filing: filing)
-    FactoryGirl.create(:remark, filing: filing)
+    FactoryGirl.create(:remark, remarkable: filing)
+    FactoryGirl.create(:remark, remarkable: filing)
 
     assert filing.remarks.count == 2
   end
@@ -44,8 +44,8 @@ class RemarkRequirementsTest < ActiveSupport::TestCase
 
     assert record.remarks.count == 0
 
-    FactoryGirl.create(:remark, record: record)
-    FactoryGirl.create(:remark, record: record)
+    FactoryGirl.create(:remark, remarkable: record)
+    FactoryGirl.create(:remark, remarkable: record)
 
     assert record.remarks.count == 2
   end

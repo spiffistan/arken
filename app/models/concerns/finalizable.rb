@@ -11,7 +11,9 @@ module Finalizable
   end
 
   def finalized?
-    finalized_at.present?
+    finalized_at.present? ||
+    ancestors.map(&:finalized?).any? rescue false ||
+    finalizable_parents.map(&:finalized?).any? rescue false
   end
 
   def readonly?

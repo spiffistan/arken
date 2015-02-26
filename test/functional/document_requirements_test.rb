@@ -62,11 +62,11 @@ class DocumentRequirementsTest < ActiveSupport::TestCase
     # document description to refer to different versions of the document.
 
     document_description = FactoryGirl.create(:document_description)
-    FactoryGirl.create(:document_object, documentable: document_description, version: '1.0')
-    FactoryGirl.create(:document_object, documentable: document_description, version: '1.1')
+    FactoryGirl.create(:document_object, documentable: document_description, document_version: '1.0')
+    FactoryGirl.create(:document_object, documentable: document_description, document_version: '1.1')
 
     assert document_description.document_objects.count == 2
-    assert document_description.document_objects.map(&:version) == ['1.0', '1.1']
+    assert document_description.document_objects.map(&:document_version) == ['1.1', '1.0']
   end
 
   test '5.6.7 (B)' do
@@ -74,11 +74,11 @@ class DocumentRequirementsTest < ActiveSupport::TestCase
     # document description to refer to different variants of a document.
 
     document_description = FactoryGirl.create(:document_description)
-    FactoryGirl.create(:document_object, documentable: document_description, variant: 'English')
-    FactoryGirl.create(:document_object, documentable: document_description, variant: 'Norwegian')
+    FactoryGirl.create(:document_object, documentable: document_description, document_variant: 'English')
+    FactoryGirl.create(:document_object, documentable: document_description, document_variant: 'Norwegian')
 
     assert document_description.document_objects.count == 2
-    assert document_description.document_objects.map(&:variant) == ['English', 'Norwegian']
+    assert document_description.document_objects.map(&:document_variant) == ['Norwegian', 'English']
   end
 
   test '5.6.8 (O)' do
@@ -87,11 +87,11 @@ class DocumentRequirementsTest < ActiveSupport::TestCase
     # formats.
 
     document_description = FactoryGirl.create(:document_description)
-    FactoryGirl.create(:document_object, documentable: document_description, format: 'PDF')
-    FactoryGirl.create(:document_object, documentable: document_description, format: 'DOCX')
+    FactoryGirl.create(:document_object, documentable: document_description, document_format: 'PDF')
+    FactoryGirl.create(:document_object, documentable: document_description, document_format: 'DOCX')
 
     assert document_description.document_objects.count == 2
-    assert document_description.document_objects.map(&:format) == ['PDF', 'DOCX']
+    assert document_description.document_objects.map(&:document_format) == ['DOCX', 'PDF']
   end
 
   # == Functional requirements for Document description and Document object

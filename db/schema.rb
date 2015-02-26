@@ -120,15 +120,15 @@ ActiveRecord::Schema.define(version: 20150216191135) do
   create_table "document_objects", force: :cascade do |t|
     t.integer  "documentable_id"
     t.string   "documentable_type"
-    t.string   "version"
-    t.string   "variant"
-    t.string   "format"
-    t.string   "format_details"
+    t.string   "document_version"
+    t.string   "document_variant"
+    t.string   "document_format"
+    t.string   "document_format_details"
     t.string   "checksum"
     t.string   "checksum_algorithm"
     t.integer  "file_size"
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
   end
 
   add_index "document_objects", ["documentable_type", "documentable_id"], name: "index_document_objects_on_documentable_type_and_documentable_id", using: :btree

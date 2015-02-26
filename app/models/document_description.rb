@@ -20,6 +20,7 @@ class DocumentDescription < ActiveRecord::Base
   include PreservableAndDisposable
   include Screenable
   include Documentable
+  include Remarkable
 
   audited
 

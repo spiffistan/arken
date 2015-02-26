@@ -29,6 +29,7 @@ class Record < ActiveRecord::Base
   include Screenable
   include PreservableAndDisposable
   include Documentable
+  include Remarkable
 
   audited
 
