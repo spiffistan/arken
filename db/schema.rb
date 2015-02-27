@@ -124,9 +124,10 @@ ActiveRecord::Schema.define(version: 20150216191135) do
     t.string   "document_variant"
     t.string   "document_format"
     t.string   "document_format_details"
+    t.string   "file"
+    t.integer  "file_size"
     t.string   "checksum"
     t.string   "checksum_algorithm"
-    t.integer  "file_size"
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
   end

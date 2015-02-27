@@ -9,10 +9,11 @@ class CreateDocumentObjects < ActiveRecord::Migration
       t.string :document_format
       t.string :document_format_details
 
+      t.string :file
+      t.integer :file_size
+
       t.string :checksum
       t.string :checksum_algorithm
-
-      t.integer :file_size
 
       t.timestamps null: false
     end

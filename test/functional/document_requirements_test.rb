@@ -65,7 +65,7 @@ class DocumentRequirementsTest < ActiveSupport::TestCase
     FactoryGirl.create(:document_object, documentable: document_description, document_version: '1.1')
 
     assert document_description.document_objects.count == 2
-    assert document_description.document_objects.map(&:document_version) == ['1.1', '1.0']
+    assert document_description.document_objects.map(&:document_version) == %w(1.1 1.0)
   end
 
   test '5.6.7 (B)' do

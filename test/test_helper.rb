@@ -11,6 +11,10 @@ class ActiveSupport::TestCase
 
   NOT_YET_IMPLEMENTED = false
 
+  def open_test_file(name)
+    File.open(Rails.root.join('test', 'data', name))
+  end
+
   def assert_has_many(model, association, opts = {})
     assert_reflects_on model, association, :has_many, opts
   end

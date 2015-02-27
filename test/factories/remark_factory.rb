@@ -1,11 +1,15 @@
 # == Schema Information
 #
-# Table name: tags
+# Table name: remarks
 #
-#  id         :integer          not null, primary key
-#  text       :string
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
+#  id              :integer          not null, primary key
+#  remarkable_type :string
+#  remarkable_id   :integer
+#  text            :text
+#  type            :integer
+#  created_by_id   :integer
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
 #
 
 FactoryGirl.define do

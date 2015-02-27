@@ -5,6 +5,15 @@ class DocumentCaptureRequirementsTest < ActiveSupport::TestCase
     # There must be functionality for capturing electronic documents
     # independently of file format, methods for technical coding, sources or
     # other technical characteristics.
+
+    document_object = FactoryGirl.create(:document_object, :for_record)
+    uploader = FileUploader.new(document_object, :file)
+
+    document_object.file = open_test_file('empty_file.txt')
+
+    assert_nothing_raised { document_object.save! }
+    assert File.exist? Rails.root.join(document_object.file.current_path)
+
     NOT_YET_IMPLEMENTED
   end
 
