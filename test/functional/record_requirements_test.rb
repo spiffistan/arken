@@ -1,7 +1,6 @@
 require 'test_helper'
 
 class RecordRequirementsTest < ActiveSupport::TestCase
-
   # NOTE: 'Class' here is implemented as 'Classification'
   # NOTE: 'Basic file' here is implemented as 'Filing'
   # NOTE: 'Simplified record' here is implemented as 'Record'
@@ -190,5 +189,4 @@ class RecordRequirementsTest < ActiveSupport::TestCase
     # entry.
     NOT_YET_IMPLEMENTED
   end
-
 end

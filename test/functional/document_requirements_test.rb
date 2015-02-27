@@ -1,7 +1,6 @@
 require 'test_helper'
 
 class DocumentRequirementsTest < ActiveSupport::TestCase
-
   # == Structural requirements for Document description and Document object
 
   test '5.6.1 (O)' do
@@ -78,7 +77,7 @@ class DocumentRequirementsTest < ActiveSupport::TestCase
     FactoryGirl.create(:document_object, documentable: document_description, document_variant: 'Norwegian')
 
     assert document_description.document_objects.count == 2
-    assert document_description.document_objects.map(&:document_variant) == ['Norwegian', 'English']
+    assert document_description.document_objects.map(&:document_variant) == %w(Norwegian English)
   end
 
   test '5.6.8 (O)' do
@@ -91,7 +90,7 @@ class DocumentRequirementsTest < ActiveSupport::TestCase
     FactoryGirl.create(:document_object, documentable: document_description, document_format: 'DOCX')
 
     assert document_description.document_objects.count == 2
-    assert document_description.document_objects.map(&:document_format) == ['DOCX', 'PDF']
+    assert document_description.document_objects.map(&:document_format) == %w(DOCX PDF)
   end
 
   # == Functional requirements for Document description and Document object
@@ -119,5 +118,4 @@ class DocumentRequirementsTest < ActiveSupport::TestCase
     # be possible to delete older versions of the document.
     NOT_YET_IMPLEMENTED
   end
-
 end

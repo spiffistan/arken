@@ -1,7 +1,6 @@
 require 'test_helper'
 
 class PeriodisationRequirementsTest < ActiveSupport::TestCase
-
   test '5.11.1 (O)' do
     # It must be possible for a series to contain a text-based description of
     # the principles to be used in the periodisation.
@@ -28,7 +27,7 @@ class PeriodisationRequirementsTest < ActiveSupport::TestCase
 
   test '5.11.5 (O)' do
     # If a new record is added to a file that belongs to a series in an overlap
-    # period, the file must automatically be transferred to the series‟s successor.
+    # period, the file must automatically be transferred to the series' successor.
     NOT_YET_IMPLEMENTED
   end
 
@@ -53,7 +52,7 @@ class PeriodisationRequirementsTest < ActiveSupport::TestCase
 
   test '5.11.9 (O)' do
     # It must be possible to transfer open files from a series in an overlap
-    # period to the series‟s successor.
+    # period to the series' successor.
     NOT_YET_IMPLEMENTED
   end
 
@@ -83,5 +82,4 @@ class PeriodisationRequirementsTest < ActiveSupport::TestCase
     # be possible to record the storage location.
     NOT_YET_IMPLEMENTED
   end
-
 end

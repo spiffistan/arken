@@ -1,7 +1,6 @@
 require 'test_helper'
 
 class KeywordRequirementsTest < ActiveSupport::TestCase
-
   # == Structural requirements for Keyword
 
   test '5.7.1 (V)' do
@@ -63,11 +62,11 @@ class KeywordRequirementsTest < ActiveSupport::TestCase
     record_b = FactoryGirl.create(:basic_record, :for_filing)
 
     record_a.tag('testtag')
-    record_a.tag('testtag')
+    record_b.tag('testtag')
 
     assert Tag.count == 1
     assert record_a.tag_names == ['testtag']
-    assert record_a.tag_names == ['testtag']
+    assert record_b.tag_names == ['testtag']
   end
 
   # == Functional requirements for Keyword
@@ -77,5 +76,4 @@ class KeywordRequirementsTest < ActiveSupport::TestCase
     # classes, files and records (except simplified records).
     NOT_YET_IMPLEMENTED
   end
-
 end

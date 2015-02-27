@@ -15,11 +15,10 @@
 #
 
 class Fonds < ActiveRecord::Base
-
   include Finalizable
 
   audited
-  
+
   has_ancestry
 
   belongs_to :created_by, class_name: 'User'
@@ -29,5 +28,4 @@ class Fonds < ActiveRecord::Base
   attr_readonly :created_at
 
   validates :fonds_creators, presence: true
-
 end

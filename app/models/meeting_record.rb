@@ -22,5 +22,4 @@
 #
 
 class MeetingRecord < BasicRecord
-
 end

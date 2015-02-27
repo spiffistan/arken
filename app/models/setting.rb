@@ -12,7 +12,5 @@
 #
 
 class Setting < RailsSettings::CachedSettings
-
   audited
-  
 end

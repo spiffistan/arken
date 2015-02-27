@@ -1,5 +1,4 @@
 class FilingsGrid
-
   include Datagrid
 
   scope do
@@ -14,5 +13,4 @@ class FilingsGrid
   column(:description)
   column(:created_at)
   column(:updated_at)
-
 end

@@ -1,0 +1,16 @@
+AllCops:
+  Include:
+    - '**/Rakefile'
+    - '**/config.ru'
+  Exclude:
+    - 'bin/**/*'
+    - 'db/**/*'
+    - 'config/**/*'
+    - 'script/**/*'
+
+Metrics/LineLength:
+  Enabled: false
+Metrics/ClassLength:
+  Enabled: false
+Style/Documentation:
+  Enabled: false

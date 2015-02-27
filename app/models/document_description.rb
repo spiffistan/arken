@@ -16,7 +16,6 @@
 #
 
 class DocumentDescription < ActiveRecord::Base
-
   include PreservableAndDisposable
   include Screenable
   include Documentable
@@ -28,5 +27,4 @@ class DocumentDescription < ActiveRecord::Base
   has_one :record, through: :document_link
 
   has_many :document_objects, as: :documentable
-
 end

@@ -22,5 +22,4 @@
 #
 
 class MeetingFiling < Filing
-
 end

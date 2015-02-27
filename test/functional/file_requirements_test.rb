@@ -1,7 +1,6 @@
 require 'test_helper'
 
 class FileRequirementsTest < ActiveSupport::TestCase
-
   # NOTE: 'Class' here is implemented as 'Classification'
   # NOTE: '* File' here is implemented as '* Filing'
 
@@ -71,8 +70,6 @@ class FileRequirementsTest < ActiveSupport::TestCase
     # It should be possible for a Basic file to be included in other Basic files
     # in a hierarchy. These are called subfiles and are outlined in the model
     # using a self-relation.
-
-    classification_system = FactoryGirl.create(:filing)
 
     parent = FactoryGirl.create(:filing)
     child = FactoryGirl.create(:filing, parent: parent)
@@ -218,5 +215,4 @@ class FileRequirementsTest < ActiveSupport::TestCase
     # for a Basic file (file hierarchy).
     NOT_YET_IMPLEMENTED
   end
-
 end

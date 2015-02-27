@@ -1,7 +1,6 @@
 require 'test_helper'
 
 class AdministrationRequirementsTest < ActiveSupport::TestCase
-
   test '5.13.1 (O)' do
     # There must be a service/function for administration of the core.
     NOT_YET_IMPLEMENTED
@@ -23,7 +22,7 @@ class AdministrationRequirementsTest < ActiveSupport::TestCase
   end
 
   test '5.13.4 (O)' do
-    # Fonds and the fonds‟ metadata must only be created through the
+    # Fonds and the fonds' metadata must only be created through the
     # Administrator function for Noark 5 core.
     NOT_YET_IMPLEMENTED
   end
@@ -56,7 +55,7 @@ class AdministrationRequirementsTest < ActiveSupport::TestCase
 
   test '5.13.9 (V)' do
     # It should be possible to use parameters to specify that the status
-    # "Document has been finalised" is to be automatically set to Document
+    # 'Document has been finalised' is to be automatically set to Document
     # description in connection with other statuses of File or Record.
     NOT_YET_IMPLEMENTED
   end
@@ -64,8 +63,8 @@ class AdministrationRequirementsTest < ActiveSupport::TestCase
   test '5.13.10 (O)' do
     # It must be possible to specify parameters to ensure that only authorised
     # units, roles or people have the right to archive a new version of a
-    # document on a Record with the status “Dispatched”, “Registered” or
-    # “Finalised”.
+    # document on a Record with the status 'Dispatched', 'Registered' or
+    # 'Finalised'.
     NOT_YET_IMPLEMENTED
   end
 
@@ -75,6 +74,4 @@ class AdministrationRequirementsTest < ActiveSupport::TestCase
     # of a document.
     NOT_YET_IMPLEMENTED
   end
-
-
 end

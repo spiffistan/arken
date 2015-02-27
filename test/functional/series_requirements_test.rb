@@ -1,7 +1,6 @@
 require 'test_helper'
 
 class SeriesRequirementsTest < ActiveSupport::TestCase
-
   test '5.2.13 (B)' do
     # A Series can have registered either no or one preferred Classification
     # system and a Classification system can form part of no, one or several
@@ -43,7 +42,7 @@ class SeriesRequirementsTest < ActiveSupport::TestCase
     screening = FactoryGirl.create(:screening)
     series = FactoryGirl.create(:series)
 
-    assert series.screening == nil
+    assert series.screening.nil?
     assert screening.series.count == 0
 
     series_a = FactoryGirl.create(:series, screening: screening)
@@ -65,7 +64,7 @@ class SeriesRequirementsTest < ActiveSupport::TestCase
     preservation_and_disposal = FactoryGirl.create(:preservation_and_disposal)
     series = FactoryGirl.create(:series)
 
-    assert series.preservation_and_disposal == nil
+    assert series.preservation_and_disposal.nil?
     assert preservation_and_disposal.series.count == 0
 
     series_a = FactoryGirl.create(:series, preservation_and_disposal: preservation_and_disposal)
@@ -162,9 +161,7 @@ class SeriesRequirementsTest < ActiveSupport::TestCase
     # A series must contain information stating whether the associated documents
     # are physical or electronic.
 
-    # REMARK: ￼Obligatory for mixed physical and electronic records.
+    # REMARK: Obligatory for mixed physical and electronic records.
     NOT_YET_IMPLEMENTED
   end
-
-
 end

@@ -1,7 +1,6 @@
 require 'test_helper'
 
 class CrossReferenceRequirementsTest < ActiveSupport::TestCase
-
   # == Structural requirements for Cross-reference
 
   test '5.7.5 (V)' do
@@ -81,7 +80,6 @@ class CrossReferenceRequirementsTest < ActiveSupport::TestCase
     assert filing.cross_references_out.count == 2
     assert filing.cross_references_out.map(&:to_id) == [record_a.id, record_b.id]
 
-    byebug
     assert record_a.cross_references_in.count == 1
     assert record_a.cross_references_in.first.from_id == filing.id
 
@@ -134,8 +132,8 @@ class CrossReferenceRequirementsTest < ActiveSupport::TestCase
   test '5.7.13 (O)' do
     # There must be a service/function that can store, retrieve, alter and
     # delete a Cross-reference between:
-    #  · Basic files
-    #  · Basic records
+    #  - Basic files
+    #  - Basic records
     # or to references between them.
     NOT_YET_IMPLEMENTED
   end
@@ -145,5 +143,4 @@ class CrossReferenceRequirementsTest < ActiveSupport::TestCase
     # delete a Cross-reference between Classes.
     NOT_YET_IMPLEMENTED
   end
-
 end

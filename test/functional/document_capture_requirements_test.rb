@@ -1,7 +1,6 @@
 require 'test_helper'
 
 class DocumentCaptureRequirementsTest < ActiveSupport::TestCase
-
   test '5.8.1 (O)' do
     # There must be functionality for capturing electronic documents
     # independently of file format, methods for technical coding, sources or

@@ -22,5 +22,4 @@
 #
 
 class CaseFiling < Filing
-
 end

@@ -8,7 +8,6 @@
 #
 
 class Screening < ActiveRecord::Base
-
   audited
 
   has_many :filings
@@ -16,5 +15,4 @@ class Screening < ActiveRecord::Base
   has_many :series
   has_many :classifications
   has_many :document_descriptions
-  
 end

@@ -1,7 +1,6 @@
 require 'test_helper'
 
 class RetrievalRequirementsTest < ActiveSupport::TestCase
-
   test '5.9.1 (O)' do
     # There must be services/functions for retrieving/searching for metadata.
     NOT_YET_IMPLEMENTED
@@ -84,9 +83,8 @@ class RetrievalRequirementsTest < ActiveSupport::TestCase
 
   test '5.9.15 (V)' do
     # The search functions should be organised so that when searching for a term
-    # in Norwegian bokmål form, the user also gets hits for the corresponding
+    # in Norwegian bokmaal form, the user also gets hits for the corresponding
     # Nynorsk forms and vice versa.
     NOT_YET_IMPLEMENTED
   end
-
 end

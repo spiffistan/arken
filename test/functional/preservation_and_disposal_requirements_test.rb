@@ -1,7 +1,6 @@
 require 'test_helper'
 
 class PreservationAndDisposalRequirementsTest < ActiveSupport::TestCase
-
   test '5.10.1 (O)' do
     # It must be possible for a Series to have registered no or one Disposal
     # decision and a Disposal decision can be included in no, one or several
@@ -51,7 +50,7 @@ class PreservationAndDisposalRequirementsTest < ActiveSupport::TestCase
     # There must be a service/function for updating disposal decisions, disposal
     # authority and preservation time for a Class.
 
-    # REMARK: Obligatory if requirements 5.10.2 – 5.10.5 are met.
+    # REMARK: Obligatory if requirements 5.10.2 - 5.10.5 are met.
     NOT_YET_IMPLEMENTED
   end
 
@@ -59,7 +58,7 @@ class PreservationAndDisposalRequirementsTest < ActiveSupport::TestCase
     # It must be possible for metadata concerning preservation and disposal for
     # a Class to be passed on to File, Document description and Document object.
 
-    # REMARK: Obligatory if requirements 5.10.2 – 5.10.5 are met.
+    # REMARK: Obligatory if requirements 5.10.2 - 5.10.5 are met.
     NOT_YET_IMPLEMENTED
   end
 
@@ -67,7 +66,7 @@ class PreservationAndDisposalRequirementsTest < ActiveSupport::TestCase
     # There must be a service/function for updating disposal decisions, disposal
     # authority and preservation time for a Series.
 
-    # REMARK: Obligatory if requirements 5.10.2 – 5.10.5 are met.
+    # REMARK: Obligatory if requirements 5.10.2 - 5.10.5 are met.
     NOT_YET_IMPLEMENTED
   end
 
@@ -75,7 +74,7 @@ class PreservationAndDisposalRequirementsTest < ActiveSupport::TestCase
     # It must be possible for metadata concerning preservation and disposal for
     # a Series to be passed on to File, Document description and Document object.
 
-    # REMARK: Obligatory if requirements 5.10.2 – 5.10.5 are met.
+    # REMARK: Obligatory if requirements 5.10.2 - 5.10.5 are met.
     NOT_YET_IMPLEMENTED
   end
 
@@ -288,5 +287,4 @@ class PreservationAndDisposalRequirementsTest < ActiveSupport::TestCase
     # metadata up to file level are to be deleted when the disposal is effected.
     skip
   end
-
 end

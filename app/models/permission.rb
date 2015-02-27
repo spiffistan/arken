@@ -13,9 +13,7 @@
 #
 
 class Permission < ActiveRecord::Base
-
   audited
 
   belongs_to :user
-  
 end

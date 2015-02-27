@@ -20,8 +20,8 @@
 FactoryGirl.define do
   factory :user do
     after(:build) do |u|
-       u.password_confirmation = u.password = 'qwerty123'
-       u.email = 'user@example.com'
-     end
+      u.password_confirmation = u.password = 'qwerty123'
+      u.email = 'user@example.com'
+    end
   end
 end

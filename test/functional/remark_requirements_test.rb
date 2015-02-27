@@ -1,7 +1,6 @@
 require 'test_helper'
 
 class RemarkRequirementsTest < ActiveSupport::TestCase
-
   # == Structural requirements for Remarks
 
   test '5.7.15 (B)' do
@@ -72,5 +71,4 @@ class RemarkRequirementsTest < ActiveSupport::TestCase
     # It should be possible to freely define types of remarks.
     NOT_YET_IMPLEMENTED
   end
-
 end

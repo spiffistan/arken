@@ -1,7 +1,6 @@
 require 'test_helper'
 
 class TransferRequirementsTest < ActiveSupport::TestCase
-
   # REMARK: Obligatory where transfer to an archive repository may be relevant.
 
   test '5.12.1 (B)' do
@@ -37,26 +36,26 @@ class TransferRequirementsTest < ActiveSupport::TestCase
 
   test '5.12.6 (B)' do
     # The structure and content of the metadata components of the transfer
-    # export must follow the National Archival Services of Norway‟s XML form for
+    # export must follow the National Archival Services of Norway's XML form for
     # transfer from Noark 5 cores (separate appendix).
     NOT_YET_IMPLEMENTED
   end
 
   test '5.12.7 (V)' do
     # Alphanumeric values in the transfer export must be represented using an
-    # XML Form – data type string.
+    # XML Form - data type string.
     NOT_YET_IMPLEMENTED
   end
 
   test '5.12.8 (B)' do
     # Dates without a time in the transfer export must be represented using an
-    # XML Form – data type date.
+    # XML Form - data type date.
     NOT_YET_IMPLEMENTED
   end
 
   test '5.12.9 (B)' do
     # Dates with a time in the transfer export must be represented using an XML
-    # Form – data type dateTime.
+    # Form - data type dateTime.
     NOT_YET_IMPLEMENTED
   end
 
@@ -78,14 +77,14 @@ class TransferRequirementsTest < ActiveSupport::TestCase
 
   test '5.12.12 (B)' do
     # A transfer export from electronic case records must consist of all
-    # metadata marked “To be transferred” and all documents in archival format
+    # metadata marked 'To be transferred' and all documents in archival format
     # in a finalised series.
     NOT_YET_IMPLEMENTED
   end
 
   test '5.12.13 (B)' do
     # A transfer export from physical case records must consist of all metadata
-    # marked “To be transferred” in a finalised series.
+    # marked 'To be transferred' in a finalised series.
     NOT_YET_IMPLEMENTED
   end
 
@@ -141,7 +140,8 @@ class TransferRequirementsTest < ActiveSupport::TestCase
 
   test '5.12.22 (B)' do
     # Metadata for the entire fonds structure must be exported as a file. If
-    # this file becomes very large, the XML form for export will open as several files.
+    # this file becomes very large, the XML form for export will open as several
+    # files.
     NOT_YET_IMPLEMENTED
   end
 
@@ -157,5 +157,4 @@ class TransferRequirementsTest < ActiveSupport::TestCase
     # finalised series.
     NOT_YET_IMPLEMENTED
   end
-
 end

@@ -18,7 +18,6 @@
 # This corresponds to the concept 'Class' in Noark 5 (v3.1)
 
 class Classification < ActiveRecord::Base
-
   include Finalizable
   include Screenable
   include PreservableAndDisposable
@@ -35,16 +34,12 @@ class Classification < ActiveRecord::Base
   has_many :filings
 
   validates :classification_system, presence: true
-  validate  :validate_absence_of_filings_and_records
+  validate :validate_absence_of_filings_and_records
 
   protected
 
   def validate_absence_of_filings_and_records
-    if persisted? && has_children?
-      unless filings.empty? && records.empty?
-        errors.add(:base, 'Unable to add filings to non-leaf classification')
-      end
-    end
+    return unless persisted? && has_children?
+    errors.add(:base, 'Unable to add filings to non-leaf classification') unless filings.empty? && records.empty?
   end
-
 end

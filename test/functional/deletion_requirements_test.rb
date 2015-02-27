@@ -1,7 +1,6 @@
 require 'test_helper'
 
 class DeletionRequirementsTest < ActiveSupport::TestCase
-
   test '5.13.17 (O)' do
     # Authorised users must be able to delete an archived inactive document
     # version. It must not be possible to delete the most recent, final version.
@@ -71,5 +70,4 @@ class DeletionRequirementsTest < ActiveSupport::TestCase
     # Deletion of archived production formats must be logged.
     NOT_YET_IMPLEMENTED
   end
-
 end

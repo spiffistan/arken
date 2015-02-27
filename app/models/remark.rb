@@ -13,10 +13,8 @@
 #
 
 class Remark < ActiveRecord::Base
-
   audited
 
   belongs_to :remarkable, polymorphic: true
   belongs_to :created_by, class_name: 'User'
-  
 end

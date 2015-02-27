@@ -22,7 +22,6 @@
 #
 
 class Series < ActiveRecord::Base
-
   include Screenable
   include PreservableAndDisposable
   include Finalizable
@@ -45,9 +44,6 @@ class Series < ActiveRecord::Base
   protected
 
   def validate_unable_to_add_to_finalized_parent
-    if fonds.finalized?
-      errors.add(:base, 'Unable to add series to finalized fonds')
-    end
+    errors.add(:base, 'Unable to add series to finalized fonds') if fonds.finalized?
   end
-
 end

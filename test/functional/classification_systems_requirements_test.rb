@@ -1,7 +1,6 @@
 require 'test_helper'
 
 class ClassificationSystemsRequirementTest < ActiveSupport::TestCase
-
   # NOTE: 'Class' here is implemented as 'Classification'
   # NOTE: 'File' here is implemented as 'Filing'
 
@@ -127,7 +126,6 @@ class ClassificationSystemsRequirementTest < ActiveSupport::TestCase
     #         takes place from the primary class. A Class can be subdivided into
     #         no, one or more Files and a File can belong to just one Class.
 
-
     assert_has_many :classification, :filings
     assert_belongs_to :filings, :classification
 
@@ -158,7 +156,7 @@ class ClassificationSystemsRequirementTest < ActiveSupport::TestCase
   test '5.3.9 (O)' do
     # It must be possible to establish hierarchical classification systems. The
     # following is standard:
-    #   · Common archive key for the state administration
+    #   - Common archive key for the state administration
     NOT_YET_IMPLEMENTED
   end
 
@@ -167,15 +165,15 @@ class ClassificationSystemsRequirementTest < ActiveSupport::TestCase
 
     # It must be possible to establish faceted, hierarchical classification
     # systems. The following is standard:
-    #   · The K code key
+    #   - The K code key
     NOT_YET_IMPLEMENTED
   end
 
   test '5.3.11 (O)' do
     # It must be possible to establish one-dimensional classification systems.
     # The following is standard:
-    #   · Legal person (private individual or business)
-    #   · Property and house number
+    #   - Legal person (private individual or business)
+    #   - Property and house number
     NOT_YET_IMPLEMENTED
   end
 
@@ -250,5 +248,4 @@ class ClassificationSystemsRequirementTest < ActiveSupport::TestCase
     assert classification.audits.size == 1
     assert classification.audits.last.audited_changes['finalized_by_id'].present?
   end
-
 end

@@ -1,7 +1,6 @@
 require 'test_helper'
 
 class GeneralRequirementsTest < ActiveSupport::TestCase
-
   test '5.1.1 (O)' do
     # In order for a system to be approved in accordance with the Noark 5
     # standard, it must be possible to implement the conceptual model of the
@@ -31,7 +30,7 @@ class GeneralRequirementsTest < ActiveSupport::TestCase
 
   test '5.1.3 (O)' do
     # Fonds documents that do not belong to a case record (e.g. a task system)
-    # can be included in a “simplified” archive structure which must at least
+    # can be included in a 'simplified' archive structure which must at least
     # contain the following record units:
     #
     #    Fonds, Series, Record[1] and Document object.

@@ -1,5 +1,4 @@
 module Taggable
-
   extend ActiveSupport::Concern
 
   included do
@@ -10,11 +9,10 @@ module Taggable
   def tag(name)
     name.strip!
     tag = Tag.find_or_create_by(text: name)
-    self.taggings.find_or_create_by(tag_id: tag.id)
+    taggings.find_or_create_by(tag_id: tag.id)
   end
 
   def tag_names
     tags.collect(&:text)
   end
-
 end

@@ -1,7 +1,6 @@
 require 'test_helper'
 
 class ConversionRequirementsTest < ActiveSupport::TestCase
-
   test '5.13.12 (B)' do
     # There must be a service/function which enables registry administrators to
     # specify which document formats are defined as archival formats.
@@ -18,7 +17,7 @@ class ConversionRequirementsTest < ActiveSupport::TestCase
   test '5.13.14 (B)' do
     # It must be possible to specify parameters to determine whether documents
     # should be converted to archival format when the status of document
-    # description is set to “Document has been finalised”.
+    # description is set to 'Document has been finalised'.
     NOT_YET_IMPLEMENTED
   end
 
@@ -35,5 +34,4 @@ class ConversionRequirementsTest < ActiveSupport::TestCase
     # contain documents stored in an approved archival format.
     NOT_YET_IMPLEMENTED
   end
-
 end

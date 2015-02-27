@@ -24,7 +24,6 @@
 # NOTE: This corresponds to the concept 'Basic file' in Noark 5 (v3.1)
 
 class Filing < ActiveRecord::Base
-
   include Finalizable
   include Screenable
   include PreservableAndDisposable
@@ -46,15 +45,12 @@ class Filing < ActiveRecord::Base
   validate :validate_unable_to_add_to_finalized_parent
 
   def validate_unable_to_add_to_non_leaf_classification
-    if classification.try(:has_children?)
-      errors.add(:base, 'Unable to add filing to non-leaf classification')
-    end
+    return unless classification.try(:has_children?)
+    errors.add(:base, 'Unable to add filing to non-leaf classification')
   end
 
   def validate_unable_to_add_to_finalized_parent
-    if series.try(:finalized?) || classification.try(:finalized?)
-      errors.add(:base, 'Unable to add filing to finalized parent')
-    end
+    return unless series.try(:finalized?) || classification.try(:finalized?)
+    errors.add(:base, 'Unable to add filing to finalized parent')
   end
-
 end

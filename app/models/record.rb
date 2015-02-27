@@ -24,7 +24,6 @@
 # This is the Noark 5 concept 'Simplified record'
 
 class Record < ActiveRecord::Base
-
   include Finalizable
   include Screenable
   include PreservableAndDisposable
@@ -42,21 +41,18 @@ class Record < ActiveRecord::Base
   has_many :document_objects, as: :documentable
 
   validates :classification, presence: true
-  validate  :validate_series_xor_filing_present
-  validate  :validate_unable_to_add_to_finalized_parent
+  validate :validate_series_xor_filing_present
+  validate :validate_unable_to_add_to_finalized_parent
 
   protected
 
   def validate_series_xor_filing_present
-    unless series.nil? ^ filing.nil?
-      errors.add(:base, 'Either series or filing must be set, and not both')
-    end
+    return if series.nil? ^ filing.nil?
+    errors.add(:base, 'Either series or filing must be set, and not both')
   end
 
   def validate_unable_to_add_to_finalized_parent
-    if series.try(:finalized?) || filing.try(:finalized?)
-      errors.add(:base, 'Unable to add record to finalized parent')
-    end
+    return unless series.try(:finalized?) || filing.try(:finalized?)
+    errors.add(:base, 'Unable to add record to finalized parent')
   end
-
 end
