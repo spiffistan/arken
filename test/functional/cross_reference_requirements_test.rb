@@ -7,7 +7,23 @@ class CrossReferenceRequirementsTest < ActiveSupport::TestCase
   test '5.7.5 (V)' do
     # From one Class, it should be possible to refer to one or several other
     # Classes.
-    NOT_YET_IMPLEMENTED
+
+    classification_a = FactoryGirl.create(:classification)
+    classification_b = FactoryGirl.create(:classification)
+    classification_c = FactoryGirl.create(:classification)
+
+    classification_a.add_reference(classification_b)
+    classification_a.add_reference(classification_c)
+
+    assert classification_a.cross_references_in.count == 0
+    assert classification_a.cross_references_out.count == 2
+    assert classification_a.cross_references_out.map(&:to_id) == [classification_b.id, classification_c.id]
+
+    assert classification_b.cross_references_in.count == 1
+    assert classification_b.cross_references_in.first.from_id == classification_a.id
+
+    assert classification_c.cross_references_in.count == 1
+    assert classification_c.cross_references_in.first.from_id == classification_a.id
   end
 
   test '5.7.6 (V)' do
@@ -21,7 +37,23 @@ class CrossReferenceRequirementsTest < ActiveSupport::TestCase
     # other Basic files.
 
     # REMARK: Obligatory for case records, relevant to many task systems.
-    NOT_YET_IMPLEMENTED
+
+    filing_a = FactoryGirl.create(:filing)
+    filing_b = FactoryGirl.create(:filing)
+    filing_c = FactoryGirl.create(:filing)
+
+    filing_a.add_reference(filing_b)
+    filing_a.add_reference(filing_c)
+
+    assert filing_a.cross_references_in.count == 0
+    assert filing_a.cross_references_out.count == 2
+    assert filing_a.cross_references_out.map(&:to_id) == [filing_b.id, filing_c.id]
+
+    assert filing_b.cross_references_in.count == 1
+    assert filing_b.cross_references_in.first.from_id == filing_a.id
+
+    assert filing_c.cross_references_in.count == 1
+    assert filing_c.cross_references_in.first.from_id == filing_a.id
   end
 
   test '5.7.8 (B)' do
@@ -37,7 +69,24 @@ class CrossReferenceRequirementsTest < ActiveSupport::TestCase
     # records.
 
     # REMARK: Obligatory for case records, relevant to many task systems.
-    NOT_YET_IMPLEMENTED
+
+    filing = FactoryGirl.create(:filing)
+    record_a = FactoryGirl.create(:basic_record, :for_filing)
+    record_b = FactoryGirl.create(:basic_record, :for_filing)
+
+    filing.add_reference(record_a)
+    filing.add_reference(record_b)
+
+    assert filing.cross_references_in.count == 0
+    assert filing.cross_references_out.count == 2
+    assert filing.cross_references_out.map(&:to_id) == [record_a.id, record_b.id]
+
+    byebug
+    assert record_a.cross_references_in.count == 1
+    assert record_a.cross_references_in.first.from_id == filing.id
+
+    assert record_b.cross_references_in.count == 1
+    assert record_b.cross_references_in.first.from_id == filing.id
   end
 
   test '5.7.10 (B)' do
@@ -53,7 +102,23 @@ class CrossReferenceRequirementsTest < ActiveSupport::TestCase
     # other Basic records.
 
     # REMARK: Obligatory for case records, relevant to many task systems.
-    NOT_YET_IMPLEMENTED
+
+    record_a = FactoryGirl.create(:basic_record, :for_filing)
+    record_b = FactoryGirl.create(:basic_record, :for_filing)
+    record_c = FactoryGirl.create(:basic_record, :for_filing)
+
+    record_a.add_reference(record_b)
+    record_a.add_reference(record_c)
+
+    assert record_a.cross_references_in.count == 0
+    assert record_a.cross_references_out.count == 2
+    assert record_a.cross_references_out.map(&:to_id) == [record_b.id, record_c.id]
+
+    assert record_b.cross_references_in.count == 1
+    assert record_b.cross_references_in.first.from_id == record_a.id
+
+    assert record_c.cross_references_in.count == 1
+    assert record_c.cross_references_in.first.from_id == record_a.id
   end
 
   test '5.7.12 (B)' do
