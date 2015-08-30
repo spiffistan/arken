@@ -31,7 +31,14 @@ class DocumentRequirementsTest < ActiveSupport::TestCase
     assert_has_many :document_descriptions, :document_objects, as: :documentable
     assert_belongs_to :document_object, :documentable, polymorphic: true
 
-    NOT_YET_IMPLEMENTED
+    document_description = create(:document_description)
+
+    document_object_a = create(:document_object, documentable: document_description)
+    document_object_b = create(:document_object, documentable: document_description)
+
+    assert document_description.document_objects.count == 2
+    assert document_object_a.documentable == document_description
+    assert document_object_b.documentable == document_description
   end
 
   test '5.6.4 (B)' do
@@ -45,7 +52,14 @@ class DocumentRequirementsTest < ActiveSupport::TestCase
     assert_has_many :record, :document_objects, as: :documentable
     assert_belongs_to :document_object, :documentable, polymorphic: true
 
-    NOT_YET_IMPLEMENTED
+    record = create(:record, :for_filing)
+
+    document_object_a = create(:document_object, documentable: record)
+    document_object_b = create(:document_object, documentable: record)
+
+    assert record.document_objects.count == 2
+    assert document_object_a.documentable == record
+    assert document_object_b.documentable == record
   end
 
   test '5.6.5 (V)' do
@@ -60,9 +74,9 @@ class DocumentRequirementsTest < ActiveSupport::TestCase
     # It must be possible for a Document object that is linked to the same
     # document description to refer to different versions of the document.
 
-    document_description = FactoryGirl.create(:document_description)
-    FactoryGirl.create(:document_object, documentable: document_description, document_version: '1.0')
-    FactoryGirl.create(:document_object, documentable: document_description, document_version: '1.1')
+    document_description = create(:document_description)
+    create(:document_object, documentable: document_description, document_version: '1.0')
+    create(:document_object, documentable: document_description, document_version: '1.1')
 
     assert document_description.document_objects.count == 2
     assert document_description.document_objects.map(&:document_version) == %w(1.1 1.0)
@@ -72,9 +86,9 @@ class DocumentRequirementsTest < ActiveSupport::TestCase
     # It must be possible for a Document object that is linked to the same
     # document description to refer to different variants of a document.
 
-    document_description = FactoryGirl.create(:document_description)
-    FactoryGirl.create(:document_object, documentable: document_description, document_variant: 'English')
-    FactoryGirl.create(:document_object, documentable: document_description, document_variant: 'Norwegian')
+    document_description = create(:document_description)
+    create(:document_object, documentable: document_description, document_variant: 'English')
+    create(:document_object, documentable: document_description, document_variant: 'Norwegian')
 
     assert document_description.document_objects.count == 2
     assert document_description.document_objects.map(&:document_variant) == %w(Norwegian English)
@@ -85,9 +99,9 @@ class DocumentRequirementsTest < ActiveSupport::TestCase
     # document description to refer to the same document stored in different
     # formats.
 
-    document_description = FactoryGirl.create(:document_description)
-    FactoryGirl.create(:document_object, documentable: document_description, document_format: 'PDF')
-    FactoryGirl.create(:document_object, documentable: document_description, document_format: 'DOCX')
+    document_description = create(:document_description)
+    create(:document_object, documentable: document_description, document_format: 'PDF')
+    create(:document_object, documentable: document_description, document_format: 'DOCX')
 
     assert document_description.document_objects.count == 2
     assert document_description.document_objects.map(&:document_format) == %w(DOCX PDF)

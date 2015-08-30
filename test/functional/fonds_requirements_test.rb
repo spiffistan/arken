@@ -5,8 +5,8 @@ class FondsRequirementsTest < ActiveSupport::TestCase
     # It must be possible for a Noark 5 solution to consist of one or more
     # independent Fonds.
 
-    FactoryGirl.create(:fonds)
-    FactoryGirl.create(:fonds)
+    create(:fonds)
+    create(:fonds)
 
     assert Fonds.count == 2
   end
@@ -19,10 +19,10 @@ class FondsRequirementsTest < ActiveSupport::TestCase
     assert_has_and_belongs_to_many :fonds_creators, :fonds
     assert_has_and_belongs_to_many :fonds, :fonds_creators
 
-    fonds_creator_a = FactoryGirl.create(:fonds_creator)
-    fonds_creator_b = FactoryGirl.create(:fonds_creator)
+    fonds_creator_a = create(:fonds_creator)
+    fonds_creator_b = create(:fonds_creator)
 
-    fonds = FactoryGirl.create(:fonds, fonds_creators: [fonds_creator_a, fonds_creator_b])
+    fonds = create(:fonds, fonds_creators: [fonds_creator_a, fonds_creator_b])
 
     assert fonds.fonds_creators == [fonds_creator_a, fonds_creator_b]
     assert fonds_creator_a.fonds.count == 1
@@ -40,10 +40,10 @@ class FondsRequirementsTest < ActiveSupport::TestCase
     assert_has_many :fonds, :series
     assert_belongs_to :series, :fonds
 
-    fonds = FactoryGirl.create(:fonds)
+    fonds = create(:fonds)
 
-    FactoryGirl.create(:series, fonds: fonds)
-    FactoryGirl.create(:series, fonds: fonds)
+    create(:series, fonds: fonds)
+    create(:series, fonds: fonds)
 
     assert Fonds.count == 1
     assert Series.count == 2
@@ -56,9 +56,9 @@ class FondsRequirementsTest < ActiveSupport::TestCase
 
     # REMARK: Obligatory if fonds status is used.
 
-    fonds = FactoryGirl.create(:fonds, :finalized)
+    fonds = create(:fonds, :finalized)
 
-    assert_raise(ActiveRecord::RecordInvalid) { FactoryGirl.create(:series, fonds: fonds) }
+    assert_raise(ActiveRecord::RecordInvalid) { create(:series, fonds: fonds) }
     assert fonds.series.count == 0
   end
 
@@ -66,7 +66,7 @@ class FondsRequirementsTest < ActiveSupport::TestCase
     # When a service/function deletes an entire Fonds entity with all
     # underlying levels, this must be logged.
 
-    fonds = FactoryGirl.create(:fonds)
+    fonds = create(:fonds)
 
     assert fonds.audits.size == 1
 
@@ -78,7 +78,7 @@ class FondsRequirementsTest < ActiveSupport::TestCase
   test '5.2.6 (O)' do
     # It must not be possible to alter the date of creation of the Fonds entity.
 
-    fonds = FactoryGirl.create(:fonds)
+    fonds = create(:fonds)
     original_datetime = fonds.read_attribute_before_type_cast('created_at')
 
     fonds.update_attributes!(created_at: DateTime.now)
@@ -90,7 +90,7 @@ class FondsRequirementsTest < ActiveSupport::TestCase
   test '5.2.7 (O)' do
     # It must not be possible to delete the date of creation of the Fonds entity.
 
-    fonds = FactoryGirl.create(:fonds)
+    fonds = create(:fonds)
     original_datetime = fonds.read_attribute_before_type_cast('created_at')
 
     fonds.update_attributes!(created_at: nil)
@@ -102,7 +102,7 @@ class FondsRequirementsTest < ActiveSupport::TestCase
   test '5.2.8 (O)' do
     # It must not be possible to delete the date of closure of the Fonds entity.
 
-    fonds = FactoryGirl.create(:fonds)
+    fonds = create(:fonds)
     original_datetime = fonds.read_attribute_before_type_cast('finalized_at')
 
     fonds.update_attributes!(finalized_at: nil)
@@ -130,9 +130,9 @@ class FondsRequirementsTest < ActiveSupport::TestCase
     #         relevant for organisations that have fonds physically located in
     #         several different places.
 
-    parent = FactoryGirl.create(:fonds)
-    child = FactoryGirl.create(:fonds, parent: parent)
-    grandchild = FactoryGirl.create(:fonds, parent: child)
+    parent = create(:fonds)
+    child = create(:fonds, parent: parent)
+    grandchild = create(:fonds, parent: child)
 
     assert_equal grandchild.parent, child
     assert_equal child.parent, parent

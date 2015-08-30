@@ -26,16 +26,16 @@ class RecordRequirementsTest < ActiveSupport::TestCase
     assert_has_many :filing, :records
     assert_belongs_to :record, :filing
 
-    filing = FactoryGirl.create(:filing)
+    filing = create(:filing)
 
     assert filing.records.count == 0
 
-    record_a = FactoryGirl.create(:record, :for_filing, filing: filing)
-    record_b = FactoryGirl.create(:record, :for_filing, filing: filing)
+    record_a = create(:record, :for_filing, filing: filing)
+    record_b = create(:record, :for_filing, filing: filing)
 
     assert filing.records.count == 2
 
-    series = FactoryGirl.create(:series)
+    series = create(:series)
 
     assert_raise(ActiveRecord::RecordInvalid) { record_a.update_attributes!(series: series) }
     assert_raise(ActiveRecord::RecordInvalid) { record_b.update_attributes!(series: series) }
@@ -54,16 +54,16 @@ class RecordRequirementsTest < ActiveSupport::TestCase
     assert_has_many :series, :records
     assert_belongs_to :record, :series
 
-    series = FactoryGirl.create(:series)
+    series = create(:series)
 
     assert series.records.count == 0
 
-    record_a = FactoryGirl.create(:record, :for_series, series: series)
-    record_b = FactoryGirl.create(:record, :for_series, series: series)
+    record_a = create(:record, :for_series, series: series)
+    record_b = create(:record, :for_series, series: series)
 
     assert series.records.count == 2
 
-    filing = FactoryGirl.create(:filing)
+    filing = create(:filing)
 
     assert_raise(ActiveRecord::RecordInvalid) { record_a.update_attributes!(filing: filing) }
     assert_raise(ActiveRecord::RecordInvalid) { record_b.update_attributes!(filing: filing) }
@@ -100,12 +100,12 @@ class RecordRequirementsTest < ActiveSupport::TestCase
     assert_belongs_to :document_link, :document_description
     assert_has_one :document_description, :record, through: :document_link
 
-    record = FactoryGirl.create(:record, :for_filing)
+    record = create(:record, :for_filing)
 
     assert record.document_descriptions.count == 0
 
-    FactoryGirl.create(:document_description, record: record)
-    FactoryGirl.create(:document_description, record: record)
+    create(:document_description, record: record)
+    create(:document_description, record: record)
 
     assert record.document_descriptions.count == 2
   end
@@ -116,7 +116,7 @@ class RecordRequirementsTest < ActiveSupport::TestCase
     # REMARK: As a minimum requirement, all task systems must contain metadata
     #         for Simplified records + Basic records.
 
-    record = FactoryGirl.create(:record, :for_filing)
+    record = create(:record, :for_filing)
 
     assert record.class == Record
 
@@ -130,7 +130,7 @@ class RecordRequirementsTest < ActiveSupport::TestCase
     # It must be possible to expand a Basic record to a Registry entry.
     # REMARK: Obligatory for case records.
 
-    record = FactoryGirl.create(:basic_record, :for_filing)
+    record = create(:basic_record, :for_filing)
 
     assert record.class == BasicRecord
 

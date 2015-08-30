@@ -19,16 +19,16 @@ class FileRequirementsTest < ActiveSupport::TestCase
     assert_has_many :series, :filings
     assert_belongs_to :filing, :series
 
-    filing = FactoryGirl.build(:filing, series: nil)
+    filing = build(:filing, series: nil)
     assert_raise(ActiveRecord::RecordInvalid) { filing.save! }
     assert Filing.count == 0
 
-    series = FactoryGirl.create(:series)
+    series = create(:series)
 
     assert series.filings.count == 0
 
-    FactoryGirl.create(:filing, series: series)
-    FactoryGirl.create(:filing, series: series)
+    create(:filing, series: series)
+    create(:filing, series: series)
 
     assert series.filings.count == 2
   end
@@ -43,16 +43,16 @@ class FileRequirementsTest < ActiveSupport::TestCase
     assert_has_many :classification, :filings
     assert_belongs_to :filing, :classification
 
-    filing = FactoryGirl.build(:filing, classification: nil)
+    filing = build(:filing, classification: nil)
     assert_raise(ActiveRecord::RecordInvalid) { filing.save! }
     assert Filing.count == 0
 
-    classification = FactoryGirl.create(:classification)
+    classification = create(:classification)
 
     assert classification.filings.count == 0
 
-    FactoryGirl.create(:filing, classification: classification)
-    FactoryGirl.create(:filing, classification: classification)
+    create(:filing, classification: classification)
+    create(:filing, classification: classification)
 
     assert classification.filings.count == 2
   end
@@ -71,9 +71,9 @@ class FileRequirementsTest < ActiveSupport::TestCase
     # in a hierarchy. These are called subfiles and are outlined in the model
     # using a self-relation.
 
-    parent = FactoryGirl.create(:filing)
-    child = FactoryGirl.create(:filing, parent: parent)
-    grandchild = FactoryGirl.create(:filing, parent: child)
+    parent = create(:filing)
+    child = create(:filing, parent: parent)
+    grandchild = create(:filing, parent: child)
 
     assert_equal grandchild.parent, child
     assert_equal child.parent, parent
@@ -88,12 +88,12 @@ class FileRequirementsTest < ActiveSupport::TestCase
     assert_has_many :filing, :records
     assert_belongs_to :record, :filing
 
-    filing = FactoryGirl.create(:filing)
+    filing = create(:filing)
 
     assert filing.records.count == 0
 
-    FactoryGirl.create(:record, :for_filing, filing: filing)
-    FactoryGirl.create(:record, :for_filing, filing: filing)
+    create(:record, :for_filing, filing: filing)
+    create(:record, :for_filing, filing: filing)
 
     assert filing.records.count == 2
   end
@@ -102,9 +102,9 @@ class FileRequirementsTest < ActiveSupport::TestCase
     # If a Basic file is registered as finalised (finalisedDate), it must not be
     # possible to add more Records to the File.
 
-    filing = FactoryGirl.create(:filing, :finalized)
+    filing = create(:filing, :finalized)
 
-    assert_raise(ActiveRecord::RecordInvalid) { FactoryGirl.create(:record, filing: filing) }
+    assert_raise(ActiveRecord::RecordInvalid) { create(:record, filing: filing) }
     assert filing.records.count == 0
   end
 
@@ -116,7 +116,7 @@ class FileRequirementsTest < ActiveSupport::TestCase
 
     # REMARK: Obligatory for case records.
 
-    filing = FactoryGirl.create(:filing)
+    filing = create(:filing)
 
     assert filing.class == Filing
 

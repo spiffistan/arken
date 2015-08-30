@@ -7,9 +7,9 @@ class CrossReferenceRequirementsTest < ActiveSupport::TestCase
     # From one Class, it should be possible to refer to one or several other
     # Classes.
 
-    classification_a = FactoryGirl.create(:classification)
-    classification_b = FactoryGirl.create(:classification)
-    classification_c = FactoryGirl.create(:classification)
+    classification_a = create(:classification)
+    classification_b = create(:classification)
+    classification_c = create(:classification)
 
     classification_a.add_reference(classification_b)
     classification_a.add_reference(classification_c)
@@ -37,9 +37,9 @@ class CrossReferenceRequirementsTest < ActiveSupport::TestCase
 
     # REMARK: Obligatory for case records, relevant to many task systems.
 
-    filing_a = FactoryGirl.create(:filing)
-    filing_b = FactoryGirl.create(:filing)
-    filing_c = FactoryGirl.create(:filing)
+    filing_a = create(:filing)
+    filing_b = create(:filing)
+    filing_c = create(:filing)
 
     filing_a.add_reference(filing_b)
     filing_a.add_reference(filing_c)
@@ -69,9 +69,9 @@ class CrossReferenceRequirementsTest < ActiveSupport::TestCase
 
     # REMARK: Obligatory for case records, relevant to many task systems.
 
-    filing = FactoryGirl.create(:filing)
-    record_a = FactoryGirl.create(:basic_record, :for_filing)
-    record_b = FactoryGirl.create(:basic_record, :for_filing)
+    filing = create(:filing)
+    record_a = create(:basic_record, :for_filing)
+    record_b = create(:basic_record, :for_filing)
 
     filing.add_reference(record_a)
     filing.add_reference(record_b)
@@ -101,9 +101,9 @@ class CrossReferenceRequirementsTest < ActiveSupport::TestCase
 
     # REMARK: Obligatory for case records, relevant to many task systems.
 
-    record_a = FactoryGirl.create(:basic_record, :for_filing)
-    record_b = FactoryGirl.create(:basic_record, :for_filing)
-    record_c = FactoryGirl.create(:basic_record, :for_filing)
+    record_a = create(:basic_record, :for_filing)
+    record_b = create(:basic_record, :for_filing)
+    record_c = create(:basic_record, :for_filing)
 
     record_a.add_reference(record_b)
     record_a.add_reference(record_c)

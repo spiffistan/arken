@@ -6,7 +6,7 @@ class DocumentCaptureRequirementsTest < ActiveSupport::TestCase
     # independently of file format, methods for technical coding, sources or
     # other technical characteristics.
 
-    document_object = FactoryGirl.create(:document_object, :for_record)
+    document_object = create(:document_object, :for_record)
     uploader = FileUploader.new(document_object, :file)
 
     document_object.file = open_test_file('empty_file.txt')

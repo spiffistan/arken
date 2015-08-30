@@ -14,8 +14,8 @@ class KeywordRequirementsTest < ActiveSupport::TestCase
     assert_belongs_to :tagging, :tag
     assert_has_many :tag, :taggings
 
-    classification_a = FactoryGirl.create(:classification)
-    classification_b = FactoryGirl.create(:classification)
+    classification_a = create(:classification)
+    classification_b = create(:classification)
 
     classification_a.tag('testtag')
     classification_b.tag('testtag')
@@ -36,8 +36,8 @@ class KeywordRequirementsTest < ActiveSupport::TestCase
     assert_belongs_to :tagging, :tag
     assert_has_many :tag, :taggings
 
-    filing_a = FactoryGirl.create(:filing)
-    filing_b = FactoryGirl.create(:filing)
+    filing_a = create(:filing)
+    filing_b = create(:filing)
 
     filing_a.tag('testtag')
     filing_b.tag('testtag')
@@ -58,8 +58,8 @@ class KeywordRequirementsTest < ActiveSupport::TestCase
     assert_belongs_to :tagging, :tag
     assert_has_many :tag, :taggings
 
-    record_a = FactoryGirl.create(:basic_record, :for_filing)
-    record_b = FactoryGirl.create(:basic_record, :for_filing)
+    record_a = create(:basic_record, :for_filing)
+    record_b = create(:basic_record, :for_filing)
 
     record_a.tag('testtag')
     record_b.tag('testtag')

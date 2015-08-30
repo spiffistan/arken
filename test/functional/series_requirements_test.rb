@@ -12,13 +12,13 @@ class SeriesRequirementsTest < ActiveSupport::TestCase
     assert_belongs_to :series, :classification_system
 
     classification_system = ClassificationSystem.create!
-    series = FactoryGirl.create(:series, classification_system: nil)
+    series = create(:series, classification_system: nil)
 
     assert classification_system.series.count == 0
     assert_nil series.classification_system
 
-    series_a = FactoryGirl.create(:series, classification_system: classification_system)
-    series_b = FactoryGirl.create(:series, classification_system: classification_system)
+    series_a = create(:series, classification_system: classification_system)
+    series_b = create(:series, classification_system: classification_system)
 
     assert_not_nil series_a.classification_system
     assert_not_nil series_b.classification_system
@@ -39,14 +39,14 @@ class SeriesRequirementsTest < ActiveSupport::TestCase
     assert_has_many :screening, :series
     assert_belongs_to :series, :screening
 
-    screening = FactoryGirl.create(:screening)
-    series = FactoryGirl.create(:series)
+    screening = create(:screening)
+    series = create(:series)
 
     assert series.screening.nil?
     assert screening.series.count == 0
 
-    series_a = FactoryGirl.create(:series, screening: screening)
-    series_b = FactoryGirl.create(:series, screening: screening)
+    series_a = create(:series, screening: screening)
+    series_b = create(:series, screening: screening)
 
     assert series_a.screening == series_b.screening
     assert screening.series.count == 2
@@ -61,14 +61,14 @@ class SeriesRequirementsTest < ActiveSupport::TestCase
     assert_has_many :preservation_and_disposal, :series
     assert_belongs_to :series, :preservation_and_disposal
 
-    preservation_and_disposal = FactoryGirl.create(:preservation_and_disposal)
-    series = FactoryGirl.create(:series)
+    preservation_and_disposal = create(:preservation_and_disposal)
+    series = create(:series)
 
     assert series.preservation_and_disposal.nil?
     assert preservation_and_disposal.series.count == 0
 
-    series_a = FactoryGirl.create(:series, preservation_and_disposal: preservation_and_disposal)
-    series_b = FactoryGirl.create(:series, preservation_and_disposal: preservation_and_disposal)
+    series_a = create(:series, preservation_and_disposal: preservation_and_disposal)
+    series_b = create(:series, preservation_and_disposal: preservation_and_disposal)
 
     assert series_a.preservation_and_disposal == series_b.preservation_and_disposal
     assert preservation_and_disposal.series.count == 2
@@ -80,12 +80,12 @@ class SeriesRequirementsTest < ActiveSupport::TestCase
     assert_has_many :series, :filings
     assert_belongs_to :filing, :series
 
-    series = FactoryGirl.create(:series)
+    series = create(:series)
 
     assert series.filings.count == 0
 
-    series.filings << FactoryGirl.create(:meeting_filing)
-    series.filings << FactoryGirl.create(:meeting_filing)
+    series.filings << create(:meeting_filing)
+    series.filings << create(:meeting_filing)
 
     assert series.filings.count == 2
   end
@@ -93,7 +93,7 @@ class SeriesRequirementsTest < ActiveSupport::TestCase
   test '5.2.17 (O)' do
     # When a service/function deletes a Series, this must be logged.
 
-    series = FactoryGirl.create(:series)
+    series = create(:series)
 
     assert series.audits.size == 1
 
@@ -112,13 +112,13 @@ class SeriesRequirementsTest < ActiveSupport::TestCase
     # If Series is registered as finalised (finalisedDate is set), it must not
     # be possible to add more associated Files or Records.
 
-    series = FactoryGirl.create(:series, :finalized)
+    series = create(:series, :finalized)
 
     assert series.records.count == 0
     assert series.filings.count == 0
 
-    assert_raise(ActiveRecord::RecordInvalid) { FactoryGirl.create(:record, series: series) }
-    assert_raise(ActiveRecord::RecordInvalid) { FactoryGirl.create(:filing, series: series) }
+    assert_raise(ActiveRecord::RecordInvalid) { create(:record, series: series) }
+    assert_raise(ActiveRecord::RecordInvalid) { create(:filing, series: series) }
 
     assert series.records.count == 0
     assert series.filings.count == 0

@@ -11,12 +11,12 @@ class ClassificationSystemsRequirementTest < ActiveSupport::TestCase
     assert_has_many :classification_system, :classifications
     assert_belongs_to :classification, :classification_system
 
-    classification_system = FactoryGirl.create(:classification_system)
+    classification_system = create(:classification_system)
 
     assert classification_system.classifications.count == 0
 
-    FactoryGirl.create(:classification, classification_system: classification_system)
-    FactoryGirl.create(:classification, classification_system: classification_system)
+    create(:classification, classification_system: classification_system)
+    create(:classification, classification_system: classification_system)
 
     assert classification_system.classifications.count == 2
   end
@@ -28,13 +28,13 @@ class ClassificationSystemsRequirementTest < ActiveSupport::TestCase
     assert_has_many :classification_system, :series
     assert_belongs_to :series, :classification_system
 
-    classification_system = FactoryGirl.create(:classification_system)
+    classification_system = create(:classification_system)
 
     assert classification_system.series.count == 0
 
-    a = FactoryGirl.create(:series, classification_system: classification_system)
-    b = FactoryGirl.create(:series, classification_system: classification_system)
-    c = FactoryGirl.create(:series, classification_system: classification_system)
+    a = create(:series, classification_system: classification_system)
+    b = create(:series, classification_system: classification_system)
+    c = create(:series, classification_system: classification_system)
 
     assert [a, b, c].map(&:classification_system).map(&:id).uniq == [classification_system.id]
     assert classification_system.series.count == 3
@@ -44,11 +44,11 @@ class ClassificationSystemsRequirementTest < ActiveSupport::TestCase
     # A Class can be included in a hierarchy of Classes (outlined in the model
     # via a self-relation).
 
-    classification_system = FactoryGirl.create(:classification_system)
+    classification_system = create(:classification_system)
 
-    parent = FactoryGirl.create(:classification, classification_system: classification_system)
-    child = FactoryGirl.create(:classification, classification_system: classification_system, parent: parent)
-    grandchild = FactoryGirl.create(:classification, classification_system: classification_system, parent: child)
+    parent = create(:classification, classification_system: classification_system)
+    child = create(:classification, classification_system: classification_system, parent: parent)
+    grandchild = create(:classification, classification_system: classification_system, parent: child)
 
     assert_equal grandchild.parent, child
     assert_equal child.parent, parent
@@ -70,10 +70,10 @@ class ClassificationSystemsRequirementTest < ActiveSupport::TestCase
     assert_has_many :screening, :classifications
     assert_belongs_to :classification, :screening
 
-    classification_a = FactoryGirl.create(:classification)
-    classification_b = FactoryGirl.create(:classification)
+    classification_a = create(:classification)
+    classification_b = create(:classification)
 
-    screening = FactoryGirl.create(:screening)
+    screening = create(:screening)
 
     assert_nil classification_a.screening
     assert screening.classifications.count == 0
@@ -94,10 +94,10 @@ class ClassificationSystemsRequirementTest < ActiveSupport::TestCase
     assert_has_many :preservation_and_disposal, :classifications
     assert_belongs_to :classification, :preservation_and_disposal
 
-    classification_a = FactoryGirl.create(:classification)
-    classification_b = FactoryGirl.create(:classification)
+    classification_a = create(:classification)
+    classification_b = create(:classification)
 
-    preservation_and_disposal = FactoryGirl.create(:preservation_and_disposal)
+    preservation_and_disposal = create(:preservation_and_disposal)
 
     assert_nil classification_a.preservation_and_disposal
     assert preservation_and_disposal.classifications.count == 0
@@ -129,13 +129,13 @@ class ClassificationSystemsRequirementTest < ActiveSupport::TestCase
     assert_has_many :classification, :filings
     assert_belongs_to :filings, :classification
 
-    classification = FactoryGirl.create(:classification)
+    classification = create(:classification)
 
     assert classification.filings.count == 0
 
-    a = FactoryGirl.create(:meeting_filing, classification: classification)
-    b = FactoryGirl.create(:meeting_filing, classification: classification)
-    c = FactoryGirl.create(:meeting_filing, classification: classification)
+    a = create(:meeting_filing, classification: classification)
+    b = create(:meeting_filing, classification: classification)
+    c = create(:meeting_filing, classification: classification)
 
     assert [a, b, c].map(&:classification).map(&:id).uniq == [classification.id]
     assert classification.filings.count == 3
@@ -197,13 +197,13 @@ class ClassificationSystemsRequirementTest < ActiveSupport::TestCase
 
     # REMARK: A class cannot therefore contain both other classes and files.
 
-    classification_root = FactoryGirl.create(:classification)
-    classification_leaf = FactoryGirl.create(:classification, parent: classification_root)
+    classification_root = create(:classification)
+    classification_leaf = create(:classification, parent: classification_root)
 
-    assert_raise(ActiveRecord::RecordInvalid) { FactoryGirl.create(:meeting_filing, classification: classification_root) }
+    assert_raise(ActiveRecord::RecordInvalid) { create(:meeting_filing, classification: classification_root) }
     assert classification_root.filings.count == 0
 
-    assert_nothing_raised { FactoryGirl.create(:meeting_filing, classification: classification_leaf) }
+    assert_nothing_raised { create(:meeting_filing, classification: classification_leaf) }
     assert classification_leaf.filings.count == 1
   end
 
@@ -213,9 +213,9 @@ class ClassificationSystemsRequirementTest < ActiveSupport::TestCase
 
     # REMARK: Obligatory if it is possible to finalise classes.
 
-    classification = FactoryGirl.create(:classification, :finalized)
+    classification = create(:classification, :finalized)
 
-    assert_raise(ActiveRecord::RecordInvalid) { FactoryGirl.create(:filing, classification: classification) }
+    assert_raise(ActiveRecord::RecordInvalid) { create(:filing, classification: classification) }
     assert classification.filings.count == 0
   end
 
@@ -229,7 +229,7 @@ class ClassificationSystemsRequirementTest < ActiveSupport::TestCase
     #         on an ongoing basis, something which is particularly relevant in
     #         the case of object-based classification.
 
-    classification = FactoryGirl.create(:classification)
+    classification = create(:classification)
 
     assert classification.audits.size == 1
 
@@ -243,7 +243,7 @@ class ClassificationSystemsRequirementTest < ActiveSupport::TestCase
     # A log must be kept of when a class was finalised and who finalised it.
     # Only authorised personnel can finalise classes.
 
-    classification = FactoryGirl.create(:classification, :finalized)
+    classification = create(:classification, :finalized)
 
     assert classification.audits.size == 1
     assert classification.audits.last.audited_changes['finalized_by_id'].present?

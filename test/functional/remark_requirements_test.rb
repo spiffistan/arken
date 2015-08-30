@@ -23,12 +23,12 @@ class RemarkRequirementsTest < ActiveSupport::TestCase
 
     # REMARK: Obligatory for case records, relevant to many task systems.
 
-    filing = FactoryGirl.create(:filing)
+    filing = create(:filing)
 
     assert filing.remarks.count == 0
 
-    FactoryGirl.create(:remark, remarkable: filing)
-    FactoryGirl.create(:remark, remarkable: filing)
+    create(:remark, remarkable: filing)
+    create(:remark, remarkable: filing)
 
     assert filing.remarks.count == 2
   end
@@ -39,12 +39,12 @@ class RemarkRequirementsTest < ActiveSupport::TestCase
 
     # REMARK: Obligatory for case records, relevant to many task systems.
 
-    record = FactoryGirl.create(:record, :for_filing)
+    record = create(:record, :for_filing)
 
     assert record.remarks.count == 0
 
-    FactoryGirl.create(:remark, remarkable: record)
-    FactoryGirl.create(:remark, remarkable: record)
+    create(:remark, remarkable: record)
+    create(:remark, remarkable: record)
 
     assert record.remarks.count == 2
   end
