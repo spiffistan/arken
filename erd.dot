@@ -1,0 +1,434 @@
+digraph Arken {
+rankdir = "LR";
+ranksep = "0.5";
+nodesep = "0.4";
+pad = "0.4,0.4";
+margin = "0,0";
+concentrate = "true";
+labelloc = "t";
+fontsize = "13";
+fontname = "Arial Bold";
+node[ shape  =  "Mrecord" , fontsize  =  "10" , fontname  =  "Arial" , margin  =  "0.07,0.05" , penwidth  =  "1.0"];
+edge[ fontname  =  "Arial" , fontsize  =  "7" , dir  =  "both" , arrowsize  =  "0.9" , penwidth  =  "1.0" , labelangle  =  "32" , labeldistance  =  "1.8"];
+label = "Arken domain model\n\n";
+"m_Audited::Adapters::ActiveRecord::Audit" [label = <<table border="0" align="center" cellspacing="0.5" cellpadding="0" width="134">
+  <tr><td align="center" valign="bottom" width="130"><font face="Arial Bold" point-size="11">Audited::Adapters::ActiveRecord::Audit</font></td></tr>
+</table>
+|
+<table border="0" align="left" cellspacing="2" cellpadding="0" width="134">
+  <tr><td align="left" width="130" port="action">action <font face="Arial Italic" color="grey60">string</font></td></tr>
+  <tr><td align="left" width="130" port="associated_id">associated_id <font face="Arial Italic" color="grey60">integer</font></td></tr>
+  <tr><td align="left" width="130" port="associated_type">associated_type <font face="Arial Italic" color="grey60">string</font></td></tr>
+  <tr><td align="left" width="130" port="auditable_id">auditable_id <font face="Arial Italic" color="grey60">integer</font></td></tr>
+  <tr><td align="left" width="130" port="auditable_type">auditable_type <font face="Arial Italic" color="grey60">string</font></td></tr>
+  <tr><td align="left" width="130" port="audited_changes">audited_changes <font face="Arial Italic" color="grey60">text</font></td></tr>
+  <tr><td align="left" width="130" port="comment">comment <font face="Arial Italic" color="grey60">string</font></td></tr>
+  <tr><td align="left" width="130" port="remote_address">remote_address <font face="Arial Italic" color="grey60">string</font></td></tr>
+  <tr><td align="left" width="130" port="request_uuid">request_uuid <font face="Arial Italic" color="grey60">string</font></td></tr>
+  <tr><td align="left" width="130" port="user_id">user_id <font face="Arial Italic" color="grey60">integer</font></td></tr>
+  <tr><td align="left" width="130" port="user_type">user_type <font face="Arial Italic" color="grey60">string</font></td></tr>
+  <tr><td align="left" width="130" port="username">username <font face="Arial Italic" color="grey60">string</font></td></tr>
+  <tr><td align="left" width="130" port="version">version <font face="Arial Italic" color="grey60">integer</font></td></tr>
+</table>
+>];
+m_BasicRecord [color = "grey60", fontcolor = "grey60", label = <<table border="0" align="center" cellspacing="0.5" cellpadding="0" width="134">
+  <tr><td align="center" valign="bottom" width="130"><font face="Arial Bold" point-size="11">BasicRecord</font></td></tr>
+</table>
+>];
+m_CaseFiling [color = "grey60", fontcolor = "grey60", label = <<table border="0" align="center" cellspacing="0.5" cellpadding="0" width="134">
+  <tr><td align="center" valign="bottom" width="130"><font face="Arial Bold" point-size="11">CaseFiling</font></td></tr>
+</table>
+>];
+m_Classification [label = <<table border="0" align="center" cellspacing="0.5" cellpadding="0" width="134">
+  <tr><td align="center" valign="bottom" width="130"><font face="Arial Bold" point-size="11">Classification</font></td></tr>
+</table>
+|
+<table border="0" align="left" cellspacing="2" cellpadding="0" width="134">
+  <tr><td align="left" width="130" port="ancestry">ancestry <font face="Arial Italic" color="grey60">string</font></td></tr>
+  <tr><td align="left" width="130" port="classification_system_id">classification_system_id <font face="Arial Italic" color="grey60">integer ∗</font></td></tr>
+  <tr><td align="left" width="130" port="created_by_id">created_by_id <font face="Arial Italic" color="grey60">integer</font></td></tr>
+  <tr><td align="left" width="130" port="finalized_at">finalized_at <font face="Arial Italic" color="grey60">datetime</font></td></tr>
+  <tr><td align="left" width="130" port="finalized_by_id">finalized_by_id <font face="Arial Italic" color="grey60">integer</font></td></tr>
+  <tr><td align="left" width="130" port="preservation_and_disposal_id">preservation_and_disposal_id <font face="Arial Italic" color="grey60">integer</font></td></tr>
+  <tr><td align="left" width="130" port="screening_id">screening_id <font face="Arial Italic" color="grey60">integer</font></td></tr>
+  <tr><td align="left" width="130" port="uuid">uuid <font face="Arial Italic" color="grey60">uuid</font></td></tr>
+</table>
+>];
+m_ClassificationSystem [label = <<table border="0" align="center" cellspacing="0.5" cellpadding="0" width="134">
+  <tr><td align="center" valign="bottom" width="130"><font face="Arial Bold" point-size="11">ClassificationSystem</font></td></tr>
+</table>
+|
+<table border="0" align="left" cellspacing="2" cellpadding="0" width="134">
+  <tr><td align="left" width="130" port="created_by_id">created_by_id <font face="Arial Italic" color="grey60">integer</font></td></tr>
+  <tr><td align="left" width="130" port="description">description <font face="Arial Italic" color="grey60">text</font></td></tr>
+  <tr><td align="left" width="130" port="finalized_at">finalized_at <font face="Arial Italic" color="grey60">datetime</font></td></tr>
+  <tr><td align="left" width="130" port="finalized_by_id">finalized_by_id <font face="Arial Italic" color="grey60">integer</font></td></tr>
+  <tr><td align="left" width="130" port="title">title <font face="Arial Italic" color="grey60">string</font></td></tr>
+  <tr><td align="left" width="130" port="uuid">uuid <font face="Arial Italic" color="grey60">uuid</font></td></tr>
+</table>
+>];
+m_CrossReference [label = <<table border="0" align="center" cellspacing="0.5" cellpadding="0" width="134">
+  <tr><td align="center" valign="bottom" width="130"><font face="Arial Bold" point-size="11">CrossReference</font></td></tr>
+</table>
+|
+<table border="0" align="left" cellspacing="2" cellpadding="0" width="134">
+  <tr><td align="left" width="130" port="from_id">from_id <font face="Arial Italic" color="grey60">integer</font></td></tr>
+  <tr><td align="left" width="130" port="from_type">from_type <font face="Arial Italic" color="grey60">string</font></td></tr>
+  <tr><td align="left" width="130" port="to_id">to_id <font face="Arial Italic" color="grey60">integer</font></td></tr>
+  <tr><td align="left" width="130" port="to_type">to_type <font face="Arial Italic" color="grey60">string</font></td></tr>
+</table>
+>];
+m_DocumentDescription [label = <<table border="0" align="center" cellspacing="0.5" cellpadding="0" width="134">
+  <tr><td align="center" valign="bottom" width="130"><font face="Arial Bold" point-size="11">DocumentDescription</font></td></tr>
+</table>
+|
+<table border="0" align="left" cellspacing="2" cellpadding="0" width="134">
+  <tr><td align="left" width="130" port="author_id">author_id <font face="Arial Italic" color="grey60">integer</font></td></tr>
+  <tr><td align="left" width="130" port="description">description <font face="Arial Italic" color="grey60">text</font></td></tr>
+  <tr><td align="left" width="130" port="document_status">document_status <font face="Arial Italic" color="grey60">integer</font></td></tr>
+  <tr><td align="left" width="130" port="document_type">document_type <font face="Arial Italic" color="grey60">integer</font></td></tr>
+  <tr><td align="left" width="130" port="preservation_and_disposal_id">preservation_and_disposal_id <font face="Arial Italic" color="grey60">integer</font></td></tr>
+  <tr><td align="left" width="130" port="screening_id">screening_id <font face="Arial Italic" color="grey60">integer</font></td></tr>
+  <tr><td align="left" width="130" port="title">title <font face="Arial Italic" color="grey60">string</font></td></tr>
+  <tr><td align="left" width="130" port="uuid">uuid <font face="Arial Italic" color="grey60">uuid</font></td></tr>
+</table>
+>];
+m_DocumentLink [label = <<table border="0" align="center" cellspacing="0.5" cellpadding="0" width="134">
+  <tr><td align="center" valign="bottom" width="130"><font face="Arial Bold" point-size="11">DocumentLink</font></td></tr>
+</table>
+|
+<table border="0" align="left" cellspacing="2" cellpadding="0" width="134">
+  <tr><td align="left" width="130" port="document_description_id">document_description_id <font face="Arial Italic" color="grey60">integer</font></td></tr>
+  <tr><td align="left" width="130" port="linked_at">linked_at <font face="Arial Italic" color="grey60">datetime</font></td></tr>
+  <tr><td align="left" width="130" port="linked_by_id">linked_by_id <font face="Arial Italic" color="grey60">integer</font></td></tr>
+  <tr><td align="left" width="130" port="record_id">record_id <font face="Arial Italic" color="grey60">integer</font></td></tr>
+  <tr><td align="left" width="130" port="role">role <font face="Arial Italic" color="grey60">integer</font></td></tr>
+</table>
+>];
+m_DocumentObject [label = <<table border="0" align="center" cellspacing="0.5" cellpadding="0" width="134">
+  <tr><td align="center" valign="bottom" width="130"><font face="Arial Bold" point-size="11">DocumentObject</font></td></tr>
+</table>
+|
+<table border="0" align="left" cellspacing="2" cellpadding="0" width="134">
+  <tr><td align="left" width="130" port="checksum">checksum <font face="Arial Italic" color="grey60">string</font></td></tr>
+  <tr><td align="left" width="130" port="checksum_algorithm">checksum_algorithm <font face="Arial Italic" color="grey60">string</font></td></tr>
+  <tr><td align="left" width="130" port="document_format">document_format <font face="Arial Italic" color="grey60">string</font></td></tr>
+  <tr><td align="left" width="130" port="document_format_details">document_format_details <font face="Arial Italic" color="grey60">string</font></td></tr>
+  <tr><td align="left" width="130" port="document_variant">document_variant <font face="Arial Italic" color="grey60">string</font></td></tr>
+  <tr><td align="left" width="130" port="document_version">document_version <font face="Arial Italic" color="grey60">string</font></td></tr>
+  <tr><td align="left" width="130" port="documentable_id">documentable_id <font face="Arial Italic" color="grey60">integer</font></td></tr>
+  <tr><td align="left" width="130" port="documentable_type">documentable_type <font face="Arial Italic" color="grey60">string</font></td></tr>
+  <tr><td align="left" width="130" port="file">file <font face="Arial Italic" color="grey60">string</font></td></tr>
+  <tr><td align="left" width="130" port="file_size">file_size <font face="Arial Italic" color="grey60">integer</font></td></tr>
+</table>
+>];
+m_Filing [label = <<table border="0" align="center" cellspacing="0.5" cellpadding="0" width="134">
+  <tr><td align="center" valign="bottom" width="130"><font face="Arial Bold" point-size="11">Filing</font></td></tr>
+</table>
+|
+<table border="0" align="left" cellspacing="2" cellpadding="0" width="134">
+  <tr><td align="left" width="130" port="ancestry">ancestry <font face="Arial Italic" color="grey60">string</font></td></tr>
+  <tr><td align="left" width="130" port="classification_id">classification_id <font face="Arial Italic" color="grey60">integer ∗</font></td></tr>
+  <tr><td align="left" width="130" port="created_by_id">created_by_id <font face="Arial Italic" color="grey60">integer</font></td></tr>
+  <tr><td align="left" width="130" port="description">description <font face="Arial Italic" color="grey60">text</font></td></tr>
+  <tr><td align="left" width="130" port="finalized_at">finalized_at <font face="Arial Italic" color="grey60">datetime</font></td></tr>
+  <tr><td align="left" width="130" port="finalized_by_id">finalized_by_id <font face="Arial Italic" color="grey60">integer</font></td></tr>
+  <tr><td align="left" width="130" port="identifier">identifier <font face="Arial Italic" color="grey60">string</font></td></tr>
+  <tr><td align="left" width="130" port="official_title">official_title <font face="Arial Italic" color="grey60">string</font></td></tr>
+  <tr><td align="left" width="130" port="preservation_and_disposal_id">preservation_and_disposal_id <font face="Arial Italic" color="grey60">integer</font></td></tr>
+  <tr><td align="left" width="130" port="screening_id">screening_id <font face="Arial Italic" color="grey60">integer</font></td></tr>
+  <tr><td align="left" width="130" port="series_id">series_id <font face="Arial Italic" color="grey60">integer ∗</font></td></tr>
+  <tr><td align="left" width="130" port="title">title <font face="Arial Italic" color="grey60">string</font></td></tr>
+  <tr><td align="left" width="130" port="uuid">uuid <font face="Arial Italic" color="grey60">uuid</font></td></tr>
+</table>
+>];
+m_Fonds [label = <<table border="0" align="center" cellspacing="0.5" cellpadding="0" width="134">
+  <tr><td align="center" valign="bottom" width="130"><font face="Arial Bold" point-size="11">Fonds</font></td></tr>
+</table>
+|
+<table border="0" align="left" cellspacing="2" cellpadding="0" width="134">
+  <tr><td align="left" width="130" port="ancestry">ancestry <font face="Arial Italic" color="grey60">string</font></td></tr>
+  <tr><td align="left" width="130" port="created_by_id">created_by_id <font face="Arial Italic" color="grey60">integer</font></td></tr>
+  <tr><td align="left" width="130" port="description">description <font face="Arial Italic" color="grey60">text</font></td></tr>
+  <tr><td align="left" width="130" port="finalized_at">finalized_at <font face="Arial Italic" color="grey60">datetime</font></td></tr>
+  <tr><td align="left" width="130" port="finalized_by_id">finalized_by_id <font face="Arial Italic" color="grey60">integer</font></td></tr>
+  <tr><td align="left" width="130" port="title">title <font face="Arial Italic" color="grey60">string</font></td></tr>
+  <tr><td align="left" width="130" port="uuid">uuid <font face="Arial Italic" color="grey60">uuid</font></td></tr>
+</table>
+>];
+m_FondsCreator [label = <<table border="0" align="center" cellspacing="0.5" cellpadding="0" width="134">
+  <tr><td align="center" valign="bottom" width="130"><font face="Arial Bold" point-size="11">FondsCreator</font></td></tr>
+</table>
+|
+<table border="0" align="left" cellspacing="2" cellpadding="0" width="134">
+  <tr><td align="left" width="130" port="description">description <font face="Arial Italic" color="grey60">text</font></td></tr>
+  <tr><td align="left" width="130" port="name">name <font face="Arial Italic" color="grey60">string</font></td></tr>
+  <tr><td align="left" width="130" port="uuid">uuid <font face="Arial Italic" color="grey60">uuid</font></td></tr>
+</table>
+>];
+m_HABTM_Fonds [label = <<table border="0" align="center" cellspacing="0.5" cellpadding="0" width="134">
+  <tr><td align="center" valign="bottom" width="130"><font face="Arial Bold" point-size="11">HABTM_Fonds</font></td></tr>
+</table>
+|
+<table border="0" align="left" cellspacing="2" cellpadding="0" width="134">
+  <tr><td align="left" width="130" port="fonds_creator_id">fonds_creator_id <font face="Arial Italic" color="grey60">integer</font></td></tr>
+  <tr><td align="left" width="130" port="fonds_id">fonds_id <font face="Arial Italic" color="grey60">integer</font></td></tr>
+</table>
+>];
+m_HABTM_FondsCreators [label = <<table border="0" align="center" cellspacing="0.5" cellpadding="0" width="134">
+  <tr><td align="center" valign="bottom" width="130"><font face="Arial Bold" point-size="11">HABTM_FondsCreators</font></td></tr>
+</table>
+|
+<table border="0" align="left" cellspacing="2" cellpadding="0" width="134">
+  <tr><td align="left" width="130" port="fonds_creator_id">fonds_creator_id <font face="Arial Italic" color="grey60">integer</font></td></tr>
+  <tr><td align="left" width="130" port="fonds_id">fonds_id <font face="Arial Italic" color="grey60">integer</font></td></tr>
+</table>
+>];
+m_MeetingFiling [color = "grey60", fontcolor = "grey60", label = <<table border="0" align="center" cellspacing="0.5" cellpadding="0" width="134">
+  <tr><td align="center" valign="bottom" width="130"><font face="Arial Bold" point-size="11">MeetingFiling</font></td></tr>
+</table>
+>];
+m_MeetingRecord [color = "grey60", fontcolor = "grey60", label = <<table border="0" align="center" cellspacing="0.5" cellpadding="0" width="134">
+  <tr><td align="center" valign="bottom" width="130"><font face="Arial Bold" point-size="11">MeetingRecord</font></td></tr>
+</table>
+>];
+m_Permission [label = <<table border="0" align="center" cellspacing="0.5" cellpadding="0" width="134">
+  <tr><td align="center" valign="bottom" width="130"><font face="Arial Bold" point-size="11">Permission</font></td></tr>
+</table>
+|
+<table border="0" align="left" cellspacing="2" cellpadding="0" width="134">
+  <tr><td align="left" width="130" port="action">action <font face="Arial Italic" color="grey60">string ∗</font></td></tr>
+  <tr><td align="left" width="130" port="description">description <font face="Arial Italic" color="grey60">text</font></td></tr>
+  <tr><td align="left" width="130" port="subject_id">subject_id <font face="Arial Italic" color="grey60">integer</font></td></tr>
+  <tr><td align="left" width="130" port="subject_type">subject_type <font face="Arial Italic" color="grey60">string ∗</font></td></tr>
+  <tr><td align="left" width="130" port="user_id">user_id <font face="Arial Italic" color="grey60">integer</font></td></tr>
+</table>
+>];
+m_PreservationAndDisposal [label = <<table border="0" align="center" cellspacing="0.5" cellpadding="0" width="134">
+  <tr><td align="center" valign="bottom" width="130"><font face="Arial Bold" point-size="11">PreservationAndDisposal</font></td></tr>
+</table>
+|
+<table border="0" align="left" cellspacing="2" cellpadding="0" width="134">
+  <tr><td align="left" width="130" port="disposal_authority">disposal_authority <font face="Arial Italic" color="grey60">text</font></td></tr>
+  <tr><td align="left" width="130" port="disposal_decision">disposal_decision <font face="Arial Italic" color="grey60">text</font></td></tr>
+  <tr><td align="left" width="130" port="disposed_of_at">disposed_of_at <font face="Arial Italic" color="grey60">datetime</font></td></tr>
+  <tr><td align="left" width="130" port="disposed_of_by_id">disposed_of_by_id <font face="Arial Italic" color="grey60">integer</font></td></tr>
+  <tr><td align="left" width="130" port="preservation_time">preservation_time <font face="Arial Italic" color="grey60">integer</font></td></tr>
+</table>
+>];
+"m_RailsSettings::CachedSettings" [label = <<table border="0" align="center" cellspacing="0.5" cellpadding="0" width="134">
+  <tr><td align="center" valign="bottom" width="130"><font face="Arial Bold" point-size="11">RailsSettings::CachedSettings</font></td></tr>
+</table>
+|
+<table border="0" align="left" cellspacing="2" cellpadding="0" width="134">
+  <tr><td align="left" width="130" port="thing_id">thing_id <font face="Arial Italic" color="grey60">integer</font></td></tr>
+  <tr><td align="left" width="130" port="thing_type">thing_type <font face="Arial Italic" color="grey60">string (30)</font></td></tr>
+  <tr><td align="left" width="130" port="value">value <font face="Arial Italic" color="grey60">text</font></td></tr>
+  <tr><td align="left" width="130" port="var">var <font face="Arial Italic" color="grey60">string ∗</font></td></tr>
+</table>
+>];
+"m_RailsSettings::ScopedSettings" [label = <<table border="0" align="center" cellspacing="0.5" cellpadding="0" width="134">
+  <tr><td align="center" valign="bottom" width="130"><font face="Arial Bold" point-size="11">RailsSettings::ScopedSettings</font></td></tr>
+</table>
+|
+<table border="0" align="left" cellspacing="2" cellpadding="0" width="134">
+  <tr><td align="left" width="130" port="thing_id">thing_id <font face="Arial Italic" color="grey60">integer</font></td></tr>
+  <tr><td align="left" width="130" port="thing_type">thing_type <font face="Arial Italic" color="grey60">string (30)</font></td></tr>
+  <tr><td align="left" width="130" port="value">value <font face="Arial Italic" color="grey60">text</font></td></tr>
+  <tr><td align="left" width="130" port="var">var <font face="Arial Italic" color="grey60">string ∗</font></td></tr>
+</table>
+>];
+"m_RailsSettings::Settings" [label = <<table border="0" align="center" cellspacing="0.5" cellpadding="0" width="134">
+  <tr><td align="center" valign="bottom" width="130"><font face="Arial Bold" point-size="11">RailsSettings::Settings</font></td></tr>
+</table>
+|
+<table border="0" align="left" cellspacing="2" cellpadding="0" width="134">
+  <tr><td align="left" width="130" port="thing_id">thing_id <font face="Arial Italic" color="grey60">integer</font></td></tr>
+  <tr><td align="left" width="130" port="thing_type">thing_type <font face="Arial Italic" color="grey60">string (30)</font></td></tr>
+  <tr><td align="left" width="130" port="value">value <font face="Arial Italic" color="grey60">text</font></td></tr>
+  <tr><td align="left" width="130" port="var">var <font face="Arial Italic" color="grey60">string ∗</font></td></tr>
+</table>
+>];
+m_Record [label = <<table border="0" align="center" cellspacing="0.5" cellpadding="0" width="134">
+  <tr><td align="center" valign="bottom" width="130"><font face="Arial Bold" point-size="11">Record</font></td></tr>
+</table>
+|
+<table border="0" align="left" cellspacing="2" cellpadding="0" width="134">
+  <tr><td align="left" width="130" port="classification_id">classification_id <font face="Arial Italic" color="grey60">integer ∗</font></td></tr>
+  <tr><td align="left" width="130" port="created_by_id">created_by_id <font face="Arial Italic" color="grey60">integer</font></td></tr>
+  <tr><td align="left" width="130" port="description">description <font face="Arial Italic" color="grey60">text</font></td></tr>
+  <tr><td align="left" width="130" port="filing_id">filing_id <font face="Arial Italic" color="grey60">integer</font></td></tr>
+  <tr><td align="left" width="130" port="finalized_at">finalized_at <font face="Arial Italic" color="grey60">datetime</font></td></tr>
+  <tr><td align="left" width="130" port="finalized_by_id">finalized_by_id <font face="Arial Italic" color="grey60">integer</font></td></tr>
+  <tr><td align="left" width="130" port="identifier">identifier <font face="Arial Italic" color="grey60">string</font></td></tr>
+  <tr><td align="left" width="130" port="official_title">official_title <font face="Arial Italic" color="grey60">string</font></td></tr>
+  <tr><td align="left" width="130" port="preservation_and_disposal_id">preservation_and_disposal_id <font face="Arial Italic" color="grey60">integer</font></td></tr>
+  <tr><td align="left" width="130" port="screening_id">screening_id <font face="Arial Italic" color="grey60">integer</font></td></tr>
+  <tr><td align="left" width="130" port="series_id">series_id <font face="Arial Italic" color="grey60">integer</font></td></tr>
+  <tr><td align="left" width="130" port="title">title <font face="Arial Italic" color="grey60">string</font></td></tr>
+  <tr><td align="left" width="130" port="uuid">uuid <font face="Arial Italic" color="grey60">uuid</font></td></tr>
+</table>
+>];
+m_RecordEntry [color = "grey60", fontcolor = "grey60", label = <<table border="0" align="center" cellspacing="0.5" cellpadding="0" width="134">
+  <tr><td align="center" valign="bottom" width="130"><font face="Arial Bold" point-size="11">RecordEntry</font></td></tr>
+</table>
+>];
+m_Remark [label = <<table border="0" align="center" cellspacing="0.5" cellpadding="0" width="134">
+  <tr><td align="center" valign="bottom" width="130"><font face="Arial Bold" point-size="11">Remark</font></td></tr>
+</table>
+|
+<table border="0" align="left" cellspacing="2" cellpadding="0" width="134">
+  <tr><td align="left" width="130" port="created_by_id">created_by_id <font face="Arial Italic" color="grey60">integer</font></td></tr>
+  <tr><td align="left" width="130" port="remarkable_id">remarkable_id <font face="Arial Italic" color="grey60">integer</font></td></tr>
+  <tr><td align="left" width="130" port="remarkable_type">remarkable_type <font face="Arial Italic" color="grey60">string</font></td></tr>
+  <tr><td align="left" width="130" port="text">text <font face="Arial Italic" color="grey60">text</font></td></tr>
+  <tr><td align="left" width="130" port="type">type <font face="Arial Italic" color="grey60">integer</font></td></tr>
+</table>
+>];
+m_Screening [label = <<table border="0" align="center" cellspacing="0.5" cellpadding="0" width="134">
+  <tr><td align="center" valign="bottom" width="130"><font face="Arial Bold" point-size="11">Screening</font></td></tr>
+</table>
+>];
+m_Series [label = <<table border="0" align="center" cellspacing="0.5" cellpadding="0" width="134">
+  <tr><td align="center" valign="bottom" width="130"><font face="Arial Bold" point-size="11">Series</font></td></tr>
+</table>
+|
+<table border="0" align="left" cellspacing="2" cellpadding="0" width="134">
+  <tr><td align="left" width="130" port="classification_system_id">classification_system_id <font face="Arial Italic" color="grey60">integer</font></td></tr>
+  <tr><td align="left" width="130" port="created_by_id">created_by_id <font face="Arial Italic" color="grey60">integer</font></td></tr>
+  <tr><td align="left" width="130" port="description">description <font face="Arial Italic" color="grey60">text</font></td></tr>
+  <tr><td align="left" width="130" port="finalized_at">finalized_at <font face="Arial Italic" color="grey60">datetime</font></td></tr>
+  <tr><td align="left" width="130" port="finalized_by_id">finalized_by_id <font face="Arial Italic" color="grey60">integer</font></td></tr>
+  <tr><td align="left" width="130" port="fonds_id">fonds_id <font face="Arial Italic" color="grey60">integer ∗</font></td></tr>
+  <tr><td align="left" width="130" port="precursor_id">precursor_id <font face="Arial Italic" color="grey60">integer</font></td></tr>
+  <tr><td align="left" width="130" port="preservation_and_disposal_id">preservation_and_disposal_id <font face="Arial Italic" color="grey60">integer</font></td></tr>
+  <tr><td align="left" width="130" port="records_period_end_at">records_period_end_at <font face="Arial Italic" color="grey60">datetime</font></td></tr>
+  <tr><td align="left" width="130" port="records_period_start_at">records_period_start_at <font face="Arial Italic" color="grey60">datetime</font></td></tr>
+  <tr><td align="left" width="130" port="screening_id">screening_id <font face="Arial Italic" color="grey60">integer</font></td></tr>
+  <tr><td align="left" width="130" port="successor_id">successor_id <font face="Arial Italic" color="grey60">integer</font></td></tr>
+  <tr><td align="left" width="130" port="title">title <font face="Arial Italic" color="grey60">string</font></td></tr>
+  <tr><td align="left" width="130" port="uuid">uuid <font face="Arial Italic" color="grey60">uuid</font></td></tr>
+</table>
+>];
+m_Setting [label = <<table border="0" align="center" cellspacing="0.5" cellpadding="0" width="134">
+  <tr><td align="center" valign="bottom" width="130"><font face="Arial Bold" point-size="11">Setting</font></td></tr>
+</table>
+|
+<table border="0" align="left" cellspacing="2" cellpadding="0" width="134">
+  <tr><td align="left" width="130" port="thing_id">thing_id <font face="Arial Italic" color="grey60">integer</font></td></tr>
+  <tr><td align="left" width="130" port="thing_type">thing_type <font face="Arial Italic" color="grey60">string (30)</font></td></tr>
+  <tr><td align="left" width="130" port="value">value <font face="Arial Italic" color="grey60">text</font></td></tr>
+  <tr><td align="left" width="130" port="var">var <font face="Arial Italic" color="grey60">string ∗</font></td></tr>
+</table>
+>];
+m_Tag [label = <<table border="0" align="center" cellspacing="0.5" cellpadding="0" width="134">
+  <tr><td align="center" valign="bottom" width="130"><font face="Arial Bold" point-size="11">Tag</font></td></tr>
+</table>
+|
+<table border="0" align="left" cellspacing="2" cellpadding="0" width="134">
+  <tr><td align="left" width="130" port="text">text <font face="Arial Italic" color="grey60">string</font></td></tr>
+</table>
+>];
+m_Tagging [label = <<table border="0" align="center" cellspacing="0.5" cellpadding="0" width="134">
+  <tr><td align="center" valign="bottom" width="130"><font face="Arial Bold" point-size="11">Tagging</font></td></tr>
+</table>
+|
+<table border="0" align="left" cellspacing="2" cellpadding="0" width="134">
+  <tr><td align="left" width="130" port="tag_id">tag_id <font face="Arial Italic" color="grey60">integer</font></td></tr>
+  <tr><td align="left" width="130" port="taggable_id">taggable_id <font face="Arial Italic" color="grey60">integer</font></td></tr>
+  <tr><td align="left" width="130" port="taggable_type">taggable_type <font face="Arial Italic" color="grey60">string</font></td></tr>
+</table>
+>];
+m_User [label = <<table border="0" align="center" cellspacing="0.5" cellpadding="0" width="134">
+  <tr><td align="center" valign="bottom" width="130"><font face="Arial Bold" point-size="11">User</font></td></tr>
+</table>
+|
+<table border="0" align="left" cellspacing="2" cellpadding="0" width="134">
+  <tr><td align="left" width="130" port="current_sign_in_at">current_sign_in_at <font face="Arial Italic" color="grey60">datetime</font></td></tr>
+  <tr><td align="left" width="130" port="current_sign_in_ip">current_sign_in_ip <font face="Arial Italic" color="grey60">string</font></td></tr>
+  <tr><td align="left" width="130" port="email">email <font face="Arial Italic" color="grey60">string ∗</font></td></tr>
+  <tr><td align="left" width="130" port="encrypted_password">encrypted_password <font face="Arial Italic" color="grey60">string ∗</font></td></tr>
+  <tr><td align="left" width="130" port="last_sign_in_at">last_sign_in_at <font face="Arial Italic" color="grey60">datetime</font></td></tr>
+  <tr><td align="left" width="130" port="last_sign_in_ip">last_sign_in_ip <font face="Arial Italic" color="grey60">string</font></td></tr>
+  <tr><td align="left" width="130" port="remember_created_at">remember_created_at <font face="Arial Italic" color="grey60">datetime</font></td></tr>
+  <tr><td align="left" width="130" port="reset_password_sent_at">reset_password_sent_at <font face="Arial Italic" color="grey60">datetime</font></td></tr>
+  <tr><td align="left" width="130" port="reset_password_token">reset_password_token <font face="Arial Italic" color="grey60">string</font></td></tr>
+  <tr><td align="left" width="130" port="sign_in_count">sign_in_count <font face="Arial Italic" color="grey60">integer</font></td></tr>
+</table>
+>];
+  m_Filing -> m_CaseFiling [color = "grey60", arrowtail = "onormal", arrowhead = "none", arrowsize = "1.2"];
+  m_Filing -> m_MeetingFiling [color = "grey60", arrowtail = "onormal", arrowhead = "none", arrowsize = "1.2"];
+  m_Record -> m_BasicRecord [color = "grey60", arrowtail = "onormal", arrowhead = "none", arrowsize = "1.2"];
+  m_Record -> m_MeetingRecord [color = "grey60", arrowtail = "onormal", arrowhead = "none", arrowsize = "1.2"];
+  m_Record -> m_RecordEntry [color = "grey60", arrowtail = "onormal", arrowhead = "none", arrowsize = "1.2"];
+  m_Classification -> "m_Audited::Adapters::ActiveRecord::Audit" [arrowhead = "normal", arrowtail = "none", weight = "1"];
+  m_ClassificationSystem -> "m_Audited::Adapters::ActiveRecord::Audit" [arrowhead = "normal", arrowtail = "none", weight = "1"];
+  m_CrossReference -> "m_Audited::Adapters::ActiveRecord::Audit" [arrowhead = "normal", arrowtail = "none", weight = "1"];
+  m_DocumentDescription -> "m_Audited::Adapters::ActiveRecord::Audit" [arrowhead = "normal", arrowtail = "none", weight = "1"];
+  m_DocumentLink -> "m_Audited::Adapters::ActiveRecord::Audit" [arrowhead = "normal", arrowtail = "none", weight = "1"];
+  m_DocumentObject -> "m_Audited::Adapters::ActiveRecord::Audit" [arrowhead = "normal", arrowtail = "none", weight = "1"];
+  m_Filing -> "m_Audited::Adapters::ActiveRecord::Audit" [arrowhead = "normal", arrowtail = "none", weight = "1"];
+  m_Fonds -> "m_Audited::Adapters::ActiveRecord::Audit" [arrowhead = "normal", arrowtail = "none", weight = "1"];
+  m_FondsCreator -> "m_Audited::Adapters::ActiveRecord::Audit" [arrowhead = "normal", arrowtail = "none", weight = "1"];
+  m_Permission -> "m_Audited::Adapters::ActiveRecord::Audit" [arrowhead = "normal", arrowtail = "none", weight = "1"];
+  m_PreservationAndDisposal -> "m_Audited::Adapters::ActiveRecord::Audit" [arrowhead = "normal", arrowtail = "none", weight = "1"];
+  m_Record -> "m_Audited::Adapters::ActiveRecord::Audit" [arrowhead = "normal", arrowtail = "none", weight = "1"];
+  m_Remark -> "m_Audited::Adapters::ActiveRecord::Audit" [arrowhead = "normal", arrowtail = "none", weight = "1"];
+  m_Screening -> "m_Audited::Adapters::ActiveRecord::Audit" [arrowhead = "normal", arrowtail = "none", weight = "1"];
+  m_Series -> "m_Audited::Adapters::ActiveRecord::Audit" [arrowhead = "normal", arrowtail = "none", weight = "1"];
+  m_Setting -> "m_Audited::Adapters::ActiveRecord::Audit" [arrowhead = "normal", arrowtail = "none", weight = "1"];
+  m_User -> "m_Audited::Adapters::ActiveRecord::Audit" [arrowhead = "normal", arrowtail = "none", weight = "1"];
+  m_User -> "m_Audited::Adapters::ActiveRecord::Audit" [arrowhead = "normal", arrowtail = "none", weight = "1"];
+  m_User -> m_Permission [arrowhead = "normal", arrowtail = "none", weight = "2"];
+  m_User -> m_Record [arrowhead = "normal", arrowtail = "none", weight = "4"];
+  m_Screening -> m_Record [arrowhead = "normal", arrowtail = "none", weight = "5"];
+  m_PreservationAndDisposal -> m_Record [arrowhead = "normal", arrowtail = "none", weight = "5"];
+  m_DocumentDescription -> m_DocumentObject [arrowhead = "normal", arrowtail = "none", weight = "1"];
+  m_Record -> m_DocumentObject [arrowhead = "normal", arrowtail = "none", weight = "1"];
+  m_DocumentDescription -> m_Remark [arrowhead = "normal", arrowtail = "none", weight = "1"];
+  m_Filing -> m_Remark [arrowhead = "normal", arrowtail = "none", weight = "1"];
+  m_Record -> m_Remark [arrowhead = "normal", arrowtail = "none", weight = "1"];
+  m_Filing -> m_Record [arrowhead = "normal", arrowtail = "none", weight = "7"];
+  m_Series -> m_Record [arrowhead = "normal", arrowtail = "none", weight = "5"];
+  m_Classification -> m_Record [arrowhead = "normal", arrowtail = "none", weight = "5"];
+  m_Record -> m_DocumentLink [arrowhead = "normal", arrowtail = "none", weight = "5"];
+  m_User -> m_Filing [arrowhead = "normal", arrowtail = "none", weight = "3"];
+  m_Screening -> m_Filing [arrowhead = "normal", arrowtail = "none", weight = "4"];
+  m_PreservationAndDisposal -> m_Filing [arrowhead = "normal", arrowtail = "none", weight = "4"];
+  m_BasicRecord -> m_Tagging [arrowhead = "normal", arrowtail = "none", weight = "1"];
+  m_Classification -> m_Tagging [arrowhead = "normal", arrowtail = "none", weight = "1"];
+  m_Filing -> m_Tagging [arrowhead = "normal", arrowtail = "none", weight = "1"];
+  m_BasicRecord -> m_CrossReference [arrowhead = "normal", arrowtail = "none", weight = "1"];
+  m_Classification -> m_CrossReference [arrowhead = "normal", arrowtail = "none", weight = "1"];
+  m_Filing -> m_CrossReference [arrowhead = "normal", arrowtail = "none", weight = "1"];
+  m_BasicRecord -> m_CrossReference [arrowhead = "normal", arrowtail = "none", weight = "1"];
+  m_Classification -> m_CrossReference [arrowhead = "normal", arrowtail = "none", weight = "1"];
+  m_Filing -> m_CrossReference [arrowhead = "normal", arrowtail = "none", weight = "1"];
+  m_Classification -> m_Filing [arrowhead = "normal", arrowtail = "none", weight = "4"];
+  m_Series -> m_Filing [arrowhead = "normal", arrowtail = "none", weight = "4"];
+  m_User -> m_Classification [arrowhead = "normal", arrowtail = "none", weight = "1"];
+  m_Screening -> m_Classification [arrowhead = "normal", arrowtail = "none", weight = "2"];
+  m_PreservationAndDisposal -> m_Classification [arrowhead = "normal", arrowtail = "none", weight = "2"];
+  m_ClassificationSystem -> m_Classification [arrowhead = "normal", arrowtail = "none", weight = "2"];
+  m_User -> m_ClassificationSystem [arrowhead = "normal", arrowtail = "none", weight = "1"];
+  m_ClassificationSystem -> m_Series [arrowhead = "normal", arrowtail = "none", weight = "2"];
+  m_PreservationAndDisposal -> m_DocumentDescription [arrowhead = "normal", arrowtail = "none", weight = "2"];
+  m_Screening -> m_DocumentDescription [arrowhead = "normal", arrowtail = "none", weight = "2"];
+  m_DocumentDescription -> m_DocumentLink [arrowhead = "none", arrowtail = "none", weight = "2"];
+  m_User -> m_DocumentLink [arrowhead = "normal", arrowtail = "none", weight = "1"];
+  m_User -> m_Fonds [arrowhead = "normal", arrowtail = "none", weight = "1"];
+  m_User -> m_Fonds [arrowhead = "normal", arrowtail = "none", weight = "1"];
+  m_Fonds -> m_FondsCreator [arrowhead = "normal", arrowtail = "normal", weight = "2"];
+  m_Fonds -> m_Series [arrowhead = "normal", arrowtail = "none", weight = "2"];
+  m_Fonds -> m_HABTM_FondsCreators [arrowhead = "normal", arrowtail = "none", weight = "1"];
+  m_FondsCreator -> m_HABTM_FondsCreators [arrowhead = "normal", arrowtail = "none", weight = "1"];
+  m_FondsCreator -> m_HABTM_Fonds [arrowhead = "normal", arrowtail = "none", weight = "1"];
+  m_Fonds -> m_HABTM_Fonds [arrowhead = "normal", arrowtail = "none", weight = "1"];
+  m_PreservationAndDisposal -> m_Series [arrowhead = "normal", arrowtail = "none", weight = "2"];
+  m_User -> m_Remark [arrowhead = "normal", arrowtail = "none", weight = "1"];
+  m_Screening -> m_Series [arrowhead = "normal", arrowtail = "none", weight = "2"];
+  m_User -> m_Series [arrowhead = "normal", arrowtail = "none", weight = "1"];
+  m_Series -> m_Series [arrowhead = "normal", arrowtail = "none", weight = "1"];
+  m_Series -> m_Series [arrowhead = "normal", arrowtail = "none", weight = "1"];
+  m_Tag -> m_Tagging [arrowhead = "normal", arrowtail = "none", weight = "2"];
+}
