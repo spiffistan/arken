@@ -8,13 +8,12 @@ class FileUploader < CarrierWave::Uploader::Base
   process :convert_to_pdfa, if: :pdf?
 
   def convert_to_pdfa
-    PDFUtils::convert_to_pdfa(current_path)
+    PDFUtils.convert_to_pdfa(current_path)
   end
 
   def pdf?(new_file)
-    unless new_file.try(:content_type).nil?
-      new_file.content_type.start_with?('application/pdf')
-    end
+    return false if new_file.try(:content_type).nil?
+    new_file.content_type.start_with?('application/pdf')
   end
 
 end
