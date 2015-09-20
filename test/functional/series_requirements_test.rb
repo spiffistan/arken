@@ -11,7 +11,7 @@ class SeriesRequirementsTest < ActiveSupport::TestCase
     assert_has_many :classification_system, :series
     assert_belongs_to :series, :classification_system
 
-    classification_system = ClassificationSystem.create!
+    classification_system = create(:classification_system)
     series = create(:series, classification_system: nil)
 
     assert classification_system.series.count == 0

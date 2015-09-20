@@ -4,6 +4,7 @@
 #
 #  id                           :integer          not null, primary key
 #  uuid                         :uuid
+#  key                          :string
 #  ancestry                     :string
 #  classification_system_id     :integer          not null
 #  screening_id                 :integer

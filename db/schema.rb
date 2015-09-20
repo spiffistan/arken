@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150216191135) do
+ActiveRecord::Schema.define(version: 20150920150849) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -42,6 +42,7 @@ ActiveRecord::Schema.define(version: 20150216191135) do
 
   create_table "classification_systems", force: :cascade do |t|
     t.uuid     "uuid",            default: "uuid_generate_v4()"
+    t.integer  "type"
     t.string   "title"
     t.text     "description"
     t.integer  "finalized_by_id"
@@ -53,9 +54,11 @@ ActiveRecord::Schema.define(version: 20150216191135) do
 
   add_index "classification_systems", ["created_by_id"], name: "index_classification_systems_on_created_by_id", using: :btree
   add_index "classification_systems", ["finalized_by_id"], name: "index_classification_systems_on_finalized_by_id", using: :btree
+  add_index "classification_systems", ["type"], name: "index_classification_systems_on_type", using: :btree
 
   create_table "classifications", force: :cascade do |t|
     t.uuid     "uuid",                         default: "uuid_generate_v4()"
+    t.string   "key"
     t.string   "ancestry"
     t.integer  "classification_system_id",                                    null: false
     t.integer  "screening_id"
@@ -71,6 +74,7 @@ ActiveRecord::Schema.define(version: 20150216191135) do
   add_index "classifications", ["classification_system_id"], name: "index_classifications_on_classification_system_id", using: :btree
   add_index "classifications", ["created_by_id"], name: "index_classifications_on_created_by_id", using: :btree
   add_index "classifications", ["finalized_by_id"], name: "index_classifications_on_finalized_by_id", using: :btree
+  add_index "classifications", ["key"], name: "index_classifications_on_key", using: :btree
   add_index "classifications", ["preservation_and_disposal_id"], name: "index_classifications_on_preservation_and_disposal_id", using: :btree
   add_index "classifications", ["screening_id"], name: "index_classifications_on_screening_id", using: :btree
 
@@ -135,6 +139,16 @@ ActiveRecord::Schema.define(version: 20150216191135) do
   end
 
   add_index "documents", ["documentable_type", "documentable_id"], name: "index_documents_on_documentable_type_and_documentable_id", using: :btree
+
+  create_table "facets", force: :cascade do |t|
+    t.string   "name"
+    t.text     "description"
+    t.integer  "classification_system_id"
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+  end
+
+  add_index "facets", ["classification_system_id"], name: "index_facets_on_classification_system_id", using: :btree
 
   create_table "filings", force: :cascade do |t|
     t.uuid     "uuid",                         default: "uuid_generate_v4()"
@@ -349,6 +363,7 @@ ActiveRecord::Schema.define(version: 20150216191135) do
   add_foreign_key "document_descriptions", "preservation_and_disposals"
   add_foreign_key "document_descriptions", "screenings"
   add_foreign_key "document_descriptions", "users", column: "author_id"
+  add_foreign_key "facets", "classification_systems"
   add_foreign_key "filings", "classifications"
   add_foreign_key "filings", "series"
   add_foreign_key "filings", "users", column: "created_by_id"

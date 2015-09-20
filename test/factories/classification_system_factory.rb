@@ -4,6 +4,7 @@
 #
 #  id              :integer          not null, primary key
 #  uuid            :uuid
+#  type            :integer
 #  title           :string
 #  description     :text
 #  finalized_by_id :integer
@@ -15,5 +16,6 @@
 
 FactoryGirl.define do
   factory :classification_system do
+    type :hierarchical
   end
 end

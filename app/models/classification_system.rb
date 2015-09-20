@@ -4,6 +4,7 @@
 #
 #  id              :integer          not null, primary key
 #  uuid            :uuid
+#  type            :integer
 #  title           :string
 #  description     :text
 #  finalized_by_id :integer
@@ -20,4 +21,28 @@ class ClassificationSystem < ActiveRecord::Base
 
   has_many :series
   has_many :classifications
+  has_many :facets # Used in multifaceted classification systems
+
+  enum type: %i(
+    hierarchical
+    flat
+    multifaceted_hierarchical
+    multifaceted_flat
+  )
+
+  validates :type, presence: true
+  validates :facets, absence: true, unless: :any_multifaceted?
+
+  def any_hierarchical?
+    hierarchical? || multifaceted_hierarchical?
+  end
+
+  def any_multifaceted?
+    multifaceted_hierarchical? || multifaceted_flat?
+  end
+
+  def any_flat?
+    multifaceted_flat? || flat?
+  end
+
 end

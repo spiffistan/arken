@@ -44,7 +44,7 @@ class ClassificationSystemsRequirementTest < ActiveSupport::TestCase
     # A Class can be included in a hierarchy of Classes (outlined in the model
     # via a self-relation).
 
-    classification_system = create(:classification_system)
+    classification_system = create(:classification_system, type: :hierarchical)
 
     parent = create(:classification, classification_system: classification_system)
     child = create(:classification, classification_system: classification_system, parent: parent)
@@ -150,14 +150,60 @@ class ClassificationSystemsRequirementTest < ActiveSupport::TestCase
     #   "Topic-based, one level", "K codes", "Multifaceted, not hierarchy",
     #   "Object-based", "National ID number", "Property and house number".
 
-    NOT_YET_IMPLEMENTED
+    classification_system = create(:classification_system)
+    assert classification_system.type = :hierarchical # Default value
+
+    classification_system.type = :flat
+    assert_nothing_raised { classification_system.save! }
+
+    assert ClassificationSystem.find(classification_system.id).type = :flat
+
+    # NOTE -- figure out what these types actually mean
+
+    IMPLEMENTATION_NOT_FINISHED
   end
 
   test '5.3.9 (O)' do
     # It must be possible to establish hierarchical classification systems. The
     # following is standard:
     #   - Common archive key for the state administration
-    NOT_YET_IMPLEMENTED
+
+    classification_system = create(:classification_system)
+    assert classification_system.type = :hierarchical
+
+    classification = create(:classification, classification_system: classification_system)
+
+    assert classification.root?
+    assert classification.is_childless?
+
+    child = create(:classification, parent: classification, classification_system: classification_system)
+    assert classification.has_children?
+    assert child.is_childless?
+
+    grandchild = create(:classification, parent: child, classification_system: classification_system)
+    assert child.has_children?
+    assert grandchild.is_childless?
+
+    assert classification.descendants.count == 2
+    assert classification.descendants.map(&:classification_system_id).uniq == [classification_system.id]
+
+    # It should not be possible to add a classification with a separate system
+    # as a child.
+    flat_classification_system = create(:classification_system, type: :flat)
+    assert_raise(ActiveRecord::RecordInvalid) {
+      create(:classification, parent: classification, classification_system: flat_classification_system)
+    }
+
+    # It should not be possible to switch classification system to a non-
+    # hierarchical system if there are descendants or ancestors.
+    assert classification.has_children?
+    assert_raise(ActiveRecord::RecordInvalid) {
+      classification.classification_system = flat_classification_system
+      classification.save!
+      # classification.update_attributes!(classification_system: flat_classification_system)
+    }
+
+    IMPLEMENTATION_NOT_FINISHED
   end
 
   test '5.3.10 (B)' do
@@ -197,8 +243,10 @@ class ClassificationSystemsRequirementTest < ActiveSupport::TestCase
 
     # REMARK: A class cannot therefore contain both other classes and files.
 
-    classification_root = create(:classification)
-    classification_leaf = create(:classification, parent: classification_root)
+    classification_system = create(:classification_system, type: :hierarchical)
+
+    classification_root = create(:classification, classification_system: classification_system)
+    classification_leaf = create(:classification, classification_system: classification_system, parent: classification_root)
 
     assert_raise(ActiveRecord::RecordInvalid) { create(:meeting_filing, classification: classification_root) }
     assert classification_root.filings.count == 0

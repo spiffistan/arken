@@ -3,6 +3,7 @@ class CreateClassificationSystems < ActiveRecord::Migration
     create_table :classification_systems do |t|
       t.uuid :uuid, default: 'uuid_generate_v4()', null: false
 
+      t.integer :type, index: true
       t.string :title
       t.text :description
 
@@ -11,6 +12,5 @@ class CreateClassificationSystems < ActiveRecord::Migration
       t.belongs_to :created_by, index: true
       t.timestamps null: false
     end
-
   end
 end

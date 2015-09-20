@@ -2,7 +2,7 @@ class CreateClassifications < ActiveRecord::Migration
   def change
     create_table :classifications do |t|
       t.uuid :uuid, default: 'uuid_generate_v4()', null: false
-
+      t.string :key, index: true
       t.string :ancestry, index: true
       t.belongs_to :classification_system, index: true, null: false
 

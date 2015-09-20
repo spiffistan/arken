@@ -4,7 +4,9 @@ require 'rails/test_help'
 
 class ActiveSupport::TestCase
 
+  # Used for fast searching purposes, and quick recognition
   NOT_YET_IMPLEMENTED = false
+  IMPLEMENTATION_NOT_FINISHED = false
 
   self.use_transactional_fixtures = true
 
