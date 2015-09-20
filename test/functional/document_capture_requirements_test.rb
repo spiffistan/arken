@@ -6,13 +6,13 @@ class DocumentCaptureRequirementsTest < ActiveSupport::TestCase
     # independently of file format, methods for technical coding, sources or
     # other technical characteristics.
 
-    document_object = create(:document_object, :for_record)
-    uploader = FileUploader.new(document_object, :file)
+    document = create(:document, :for_record)
+    uploader = FileUploader.new(document, :file)
 
-    document_object.file = open_test_file('empty_file.txt')
+    document.file = open_test_file('empty_file.txt')
 
-    assert_nothing_raised { document_object.save! }
-    assert File.exist? Rails.root.join(document_object.file.current_path)
+    assert_nothing_raised { document.save! }
+    assert File.exist? Rails.root.join(document.file.current_path)
 
     NOT_YET_IMPLEMENTED
   end

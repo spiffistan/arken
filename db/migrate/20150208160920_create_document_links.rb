@@ -1,6 +1,7 @@
 class CreateDocumentLinks < ActiveRecord::Migration
   def change
     create_table :document_links do |t|
+      t.uuid :uuid, default: 'uuid_generate_v4()', null: false
 
       t.belongs_to :document_description, index: true
       t.belongs_to :record, index: true

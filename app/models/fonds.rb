@@ -22,7 +22,8 @@ class Fonds < ActiveRecord::Base
   has_ancestry
 
   belongs_to :created_by, class_name: 'User'
-  has_and_belongs_to_many :fonds_creators
+  has_many :fonds_creations
+  has_many :fonds_creators, through: :fonds_creations
   has_many :series
 
   attr_readonly :created_at

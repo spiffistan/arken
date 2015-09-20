@@ -1,6 +1,7 @@
-class CreateDocumentObjects < ActiveRecord::Migration
+class CreateDocuments < ActiveRecord::Migration
   def change
-    create_table :document_objects do |t|
+    create_table :documents do |t|
+      t.uuid :uuid, default: 'uuid_generate_v4()', null: false
 
       t.belongs_to :documentable, index: true, polymorphic: true
 

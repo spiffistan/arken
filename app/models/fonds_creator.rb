@@ -13,5 +13,6 @@
 class FondsCreator < ActiveRecord::Base
   audited
 
-  has_and_belongs_to_many :fonds
+  has_many :fonds_creations
+  has_many :fonds, through: :fonds_creations
 end

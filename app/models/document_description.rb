@@ -26,5 +26,5 @@ class DocumentDescription < ActiveRecord::Base
   has_one :document_link
   has_one :record, through: :document_link
 
-  has_many :document_objects, as: :documentable
+  has_many :documents, as: :documentable
 end

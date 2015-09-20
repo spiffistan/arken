@@ -16,8 +16,14 @@ class FondsRequirementsTest < ActiveSupport::TestCase
     # (activity) and it must be possible to specify that several fonds creators
     # together create a Fonds entity.
 
-    assert_has_and_belongs_to_many :fonds_creators, :fonds
-    assert_has_and_belongs_to_many :fonds, :fonds_creators
+    assert_has_many :fonds, :fonds_creations
+    assert_has_many :fonds, :fonds_creators, through: :fonds_creations
+
+    assert_belongs_to :fonds_creations, :fonds_creator
+    assert_belongs_to :fonds_creations, :fonds
+
+    assert_has_many :fonds_creators, :fonds_creations
+    assert_has_many :fonds_creators, :fonds, through: :fonds_creations
 
     fonds_creator_a = create(:fonds_creator)
     fonds_creator_b = create(:fonds_creator)

@@ -44,7 +44,7 @@ class GeneralRequirementsTest < ActiveSupport::TestCase
     # records.
 
     models = %w(Fonds Series Record BasicRecord
-                RecordEntry MeetingRecord DocumentObject)
+                RecordEntry MeetingRecord Document)
 
     assert models.map { |m| Module.const_get(m).is_a?(Class) }.all?
 

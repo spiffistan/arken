@@ -17,7 +17,7 @@
 #  updated_at              :datetime         not null
 #
 
-class DocumentObject < ActiveRecord::Base
+class Document < ActiveRecord::Base
   audited
 
   mount_uploader :file, FileUploader

@@ -104,20 +104,22 @@ ActiveRecord::Schema.define(version: 20150216191135) do
   add_index "document_descriptions", ["screening_id"], name: "index_document_descriptions_on_screening_id", using: :btree
 
   create_table "document_links", force: :cascade do |t|
+    t.uuid     "uuid",                    default: "uuid_generate_v4()"
     t.integer  "document_description_id"
     t.integer  "record_id"
     t.integer  "role"
     t.datetime "linked_at"
     t.integer  "linked_by_id"
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
+    t.datetime "created_at",                                             null: false
+    t.datetime "updated_at",                                             null: false
   end
 
   add_index "document_links", ["document_description_id"], name: "index_document_links_on_document_description_id", using: :btree
   add_index "document_links", ["linked_by_id"], name: "index_document_links_on_linked_by_id", using: :btree
   add_index "document_links", ["record_id"], name: "index_document_links_on_record_id", using: :btree
 
-  create_table "document_objects", force: :cascade do |t|
+  create_table "documents", force: :cascade do |t|
+    t.uuid     "uuid",                    default: "uuid_generate_v4()"
     t.integer  "documentable_id"
     t.string   "documentable_type"
     t.string   "document_version"
@@ -128,11 +130,11 @@ ActiveRecord::Schema.define(version: 20150216191135) do
     t.integer  "file_size"
     t.string   "checksum"
     t.string   "checksum_algorithm"
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
+    t.datetime "created_at",                                             null: false
+    t.datetime "updated_at",                                             null: false
   end
 
-  add_index "document_objects", ["documentable_type", "documentable_id"], name: "index_document_objects_on_documentable_type_and_documentable_id", using: :btree
+  add_index "documents", ["documentable_type", "documentable_id"], name: "index_documents_on_documentable_type_and_documentable_id", using: :btree
 
   create_table "filings", force: :cascade do |t|
     t.uuid     "uuid",                         default: "uuid_generate_v4()"
@@ -177,6 +179,16 @@ ActiveRecord::Schema.define(version: 20150216191135) do
   add_index "fonds", ["created_by_id"], name: "index_fonds_on_created_by_id", using: :btree
   add_index "fonds", ["finalized_by_id"], name: "index_fonds_on_finalized_by_id", using: :btree
 
+  create_table "fonds_creations", force: :cascade do |t|
+    t.integer  "fonds_creator_id"
+    t.integer  "fonds_id"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+  end
+
+  add_index "fonds_creations", ["fonds_creator_id"], name: "index_fonds_creations_on_fonds_creator_id", using: :btree
+  add_index "fonds_creations", ["fonds_id"], name: "index_fonds_creations_on_fonds_id", using: :btree
+
   create_table "fonds_creators", force: :cascade do |t|
     t.uuid     "uuid",        default: "uuid_generate_v4()"
     t.string   "name"
@@ -184,16 +196,6 @@ ActiveRecord::Schema.define(version: 20150216191135) do
     t.datetime "created_at",                                 null: false
     t.datetime "updated_at",                                 null: false
   end
-
-  create_table "fonds_fonds_creators", force: :cascade do |t|
-    t.integer  "fonds_creator_id"
-    t.integer  "fonds_id"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
-  end
-
-  add_index "fonds_fonds_creators", ["fonds_creator_id"], name: "index_fonds_fonds_creators_on_fonds_creator_id", using: :btree
-  add_index "fonds_fonds_creators", ["fonds_id"], name: "index_fonds_fonds_creators_on_fonds_id", using: :btree
 
   create_table "permissions", force: :cascade do |t|
     t.integer  "user_id"
@@ -247,13 +249,14 @@ ActiveRecord::Schema.define(version: 20150216191135) do
   add_index "records", ["series_id"], name: "index_records_on_series_id", using: :btree
 
   create_table "remarks", force: :cascade do |t|
+    t.uuid     "uuid",            default: "uuid_generate_v4()"
     t.string   "remarkable_type"
     t.integer  "remarkable_id"
     t.text     "text"
     t.integer  "type"
     t.integer  "created_by_id"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.datetime "created_at",                                     null: false
+    t.datetime "updated_at",                                     null: false
   end
 
   add_index "remarks", ["created_by_id"], name: "index_remarks_on_created_by_id", using: :btree

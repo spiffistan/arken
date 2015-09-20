@@ -24,6 +24,7 @@
 # NOTE: This corresponds to the concept 'Basic file' in Noark 5 (v3.1)
 
 class Filing < ActiveRecord::Base
+  
   include Finalizable
   include Screenable
   include PreservableAndDisposable

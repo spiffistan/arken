@@ -17,10 +17,13 @@
 #  updated_at              :datetime         not null
 #
 
-require 'test_helper'
-
-class DocumentObjectTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+FactoryGirl.define do
+  factory :document do
+    trait :for_record do
+      association :documentable, factory: [:record, :for_series]
+    end
+    trait :for_document_description do
+      association :documentable, factory: :document_description
+    end
+  end
 end

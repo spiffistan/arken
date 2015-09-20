@@ -1,6 +1,7 @@
 class CreateRemarks < ActiveRecord::Migration
   def change
     create_table :remarks do |t|
+      t.uuid :uuid, default: 'uuid_generate_v4()', null: false
 
       t.string :remarkable_type
       t.integer :remarkable_id, index: true
