@@ -149,6 +149,8 @@ class RecordRequirementsTest < ActiveSupport::TestCase
   end
 
   test '5.5.9 (?)' do
+    # NOTE: For some reason this section is empty, seems to be removed in this
+    # version of the NOARK spec.
     skip
   end
 

@@ -3,6 +3,7 @@
 # Table name: remarks
 #
 #  id              :integer          not null, primary key
+#  uuid            :uuid
 #  remarkable_type :string
 #  remarkable_id   :integer
 #  text            :text

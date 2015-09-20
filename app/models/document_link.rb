@@ -3,6 +3,7 @@
 # Table name: document_links
 #
 #  id                      :integer          not null, primary key
+#  uuid                    :uuid
 #  document_description_id :integer
 #  record_id               :integer
 #  role                    :integer

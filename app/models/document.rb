@@ -1,8 +1,9 @@
 # == Schema Information
 #
-# Table name: document_objects
+# Table name: documents
 #
 #  id                      :integer          not null, primary key
+#  uuid                    :uuid
 #  documentable_id         :integer
 #  documentable_type       :string
 #  document_version        :string
