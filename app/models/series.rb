@@ -22,6 +22,7 @@
 #
 
 class Series < ActiveRecord::Base
+
   include Screenable
   include PreservableAndDisposable
   include Finalizable
@@ -38,12 +39,16 @@ class Series < ActiveRecord::Base
   has_many :filings
 
   validates :fonds, presence: true
+  validate :validate_unable_to_add_to_finalized_fonds
 
-  validate :validate_unable_to_add_to_finalized_parent
+  def finalizable_parents
+    [fonds, classification_system].flatten.compact
+  end
 
-  protected
+  private
 
-  def validate_unable_to_add_to_finalized_parent
+  # TODO generalize
+  def validate_unable_to_add_to_finalized_fonds
     errors.add(:base, 'Unable to add series to finalized fonds') if fonds.finalized?
   end
 end

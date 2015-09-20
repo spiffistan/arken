@@ -60,6 +60,7 @@ ActiveRecord::Schema.define(version: 20150920150849) do
     t.uuid     "uuid",                         default: "uuid_generate_v4()"
     t.string   "key"
     t.string   "ancestry"
+    t.integer  "facet_id"
     t.integer  "classification_system_id",                                    null: false
     t.integer  "screening_id"
     t.integer  "preservation_and_disposal_id"
@@ -73,6 +74,7 @@ ActiveRecord::Schema.define(version: 20150920150849) do
   add_index "classifications", ["ancestry"], name: "index_classifications_on_ancestry", using: :btree
   add_index "classifications", ["classification_system_id"], name: "index_classifications_on_classification_system_id", using: :btree
   add_index "classifications", ["created_by_id"], name: "index_classifications_on_created_by_id", using: :btree
+  add_index "classifications", ["facet_id"], name: "index_classifications_on_facet_id", using: :btree
   add_index "classifications", ["finalized_by_id"], name: "index_classifications_on_finalized_by_id", using: :btree
   add_index "classifications", ["key"], name: "index_classifications_on_key", using: :btree
   add_index "classifications", ["preservation_and_disposal_id"], name: "index_classifications_on_preservation_and_disposal_id", using: :btree
@@ -180,6 +182,7 @@ ActiveRecord::Schema.define(version: 20150920150849) do
   create_table "fonds", force: :cascade do |t|
     t.uuid     "uuid",            default: "uuid_generate_v4()"
     t.string   "ancestry"
+    t.integer  "status"
     t.string   "title"
     t.text     "description"
     t.integer  "finalized_by_id"
@@ -192,6 +195,7 @@ ActiveRecord::Schema.define(version: 20150920150849) do
   add_index "fonds", ["ancestry"], name: "index_fonds_on_ancestry", using: :btree
   add_index "fonds", ["created_by_id"], name: "index_fonds_on_created_by_id", using: :btree
   add_index "fonds", ["finalized_by_id"], name: "index_fonds_on_finalized_by_id", using: :btree
+  add_index "fonds", ["status"], name: "index_fonds_on_status", using: :btree
 
   create_table "fonds_creations", force: :cascade do |t|
     t.integer  "fonds_creator_id"

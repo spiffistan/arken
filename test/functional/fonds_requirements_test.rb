@@ -59,10 +59,11 @@ class FondsRequirementsTest < ActiveSupport::TestCase
   test '5.2.4 (B)' do
     # If a Fonds entity is registered as 'Finalised', it must not be possible
     # to add more underlying Fonds sections.
-
+    #
     # REMARK: Obligatory if fonds status is used.
 
     fonds = create(:fonds, :finalized)
+    assert fonds.finalized?
 
     assert_raise(ActiveRecord::RecordInvalid) { create(:series, fonds: fonds) }
     assert fonds.series.count == 0
@@ -73,11 +74,8 @@ class FondsRequirementsTest < ActiveSupport::TestCase
     # underlying levels, this must be logged.
 
     fonds = create(:fonds)
-
     assert fonds.audits.size == 1
-
     fonds.destroy
-
     assert fonds.audits.size == 2
   end
 
@@ -87,7 +85,7 @@ class FondsRequirementsTest < ActiveSupport::TestCase
     fonds = create(:fonds)
     original_datetime = fonds.read_attribute_before_type_cast('created_at')
 
-    fonds.update_attributes!(created_at: DateTime.now)
+    assert_raise(ActiveRecord::RecordInvalid) { fonds.update_attributes!(created_at: DateTime.now) }
     new_datetime = Fonds.find(fonds.id).read_attribute_before_type_cast('created_at')
 
     assert_equal original_datetime, new_datetime
@@ -99,7 +97,7 @@ class FondsRequirementsTest < ActiveSupport::TestCase
     fonds = create(:fonds)
     original_datetime = fonds.read_attribute_before_type_cast('created_at')
 
-    fonds.update_attributes!(created_at: nil)
+    assert_raise(ActiveRecord::RecordInvalid) { fonds.update_attributes!(created_at: nil) }
     new_datetime = Fonds.find(fonds.id).read_attribute_before_type_cast('created_at')
 
     assert_equal original_datetime, new_datetime
@@ -108,10 +106,10 @@ class FondsRequirementsTest < ActiveSupport::TestCase
   test '5.2.8 (O)' do
     # It must not be possible to delete the date of closure of the Fonds entity.
 
-    fonds = create(:fonds)
+    fonds = create(:fonds, :finalized)
     original_datetime = fonds.read_attribute_before_type_cast('finalized_at')
 
-    fonds.update_attributes!(finalized_at: nil)
+    assert_raise(ActiveRecord::ReadOnlyRecord) { fonds.update_attributes!(finalized_at: nil) }
     new_datetime = Fonds.find(fonds.id).read_attribute_before_type_cast('finalized_at')
 
     assert_equal original_datetime, new_datetime
@@ -122,9 +120,17 @@ class FondsRequirementsTest < ActiveSupport::TestCase
     # The following values are recommended:
     #  - Created
     #  - Finalised
-
+    #
     # REMARK: Obligatory for case fonds.
-    NOT_YET_IMPLEMENTED
+
+    # NOTE: -- Question: must they be user-defined?
+
+    fonds = create(:fonds)
+    assert fonds.status == :created
+    fonds.status = :finalized
+    assert fonds.status == :finalized
+
+    IMPLEMENTATION_NOT_FINISHED
   end
 
   test '5.2.10 (V)' do
@@ -155,7 +161,7 @@ class FondsRequirementsTest < ActiveSupport::TestCase
   test '5.2.12 (B)' do
     # A Subrecord must only be created and altered through the
     # Administration system for Noark 5.
-
+    #
     # REMARK: Obligatory if subfonds are used.
 
     # NOTE: Probably means Subfonds instead of Subrecord here.

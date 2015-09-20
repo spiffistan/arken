@@ -15,6 +15,7 @@
 #
 
 class Fonds < ActiveRecord::Base
+
   include Finalizable
 
   audited
@@ -22,6 +23,7 @@ class Fonds < ActiveRecord::Base
   has_ancestry
 
   belongs_to :created_by, class_name: 'User'
+
   has_many :fonds_creations
   has_many :fonds_creators, through: :fonds_creations
   has_many :series
@@ -29,4 +31,22 @@ class Fonds < ActiveRecord::Base
   attr_readonly :created_at
 
   validates :fonds_creators, presence: true
+
+  # validate :validate_created_at_frozen, if: :persisted?
+
+  enum status: %i(
+    created
+    finalized
+  )
+
+  def finalizable_parents
+    ancestors
+  end
+
+  # private
+  #
+  # def validate_created_at_frozen
+  #   errors.add(:base, 'Cannot alter `created_at` once set!') if created_at_changed?
+  # end
+
 end

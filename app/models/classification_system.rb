@@ -15,6 +15,7 @@
 #
 
 class ClassificationSystem < ActiveRecord::Base
+
   include Finalizable
 
   audited
@@ -32,6 +33,10 @@ class ClassificationSystem < ActiveRecord::Base
 
   validates :type, presence: true
   validates :facets, absence: true, unless: :any_multifaceted?
+
+  def finalizable_parents
+    []
+  end
 
   def any_hierarchical?
     hierarchical? || multifaceted_hierarchical?

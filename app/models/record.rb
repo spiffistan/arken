@@ -23,6 +23,7 @@
 
 # This is the Noark 5 concept 'Simplified record'
 class Record < ActiveRecord::Base
+
   include Finalizable
   include Screenable
   include PreservableAndDisposable
@@ -43,7 +44,11 @@ class Record < ActiveRecord::Base
   validate :validate_series_xor_filing_present
   validate :validate_unable_to_add_to_finalized_parent
 
-  protected
+  def finalizable_parents
+    [classification, filing, series].flatten.compact
+  end
+
+  private
 
   def validate_series_xor_filing_present
     return if series.nil? ^ filing.nil?

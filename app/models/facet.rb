@@ -12,4 +12,5 @@
 
 class Facet < ActiveRecord::Base
   belongs_to :classification_system
+  has_many :classifications
 end

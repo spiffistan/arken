@@ -5,17 +5,17 @@ module Finalizable
     belongs_to :finalized_by, class_name: 'User'
 
     before_destroy { fail ActiveRecord::ReadOnlyRecord if finalized? }
+    before_save    { fail ActiveRecord::ReadOnlyRecord if persisted? && finalized? }
 
     validates :finalized_by, presence: true, if: -> { finalized? }
-  end
+    validates :finalized_at, presence: true, if: -> { finalized? }
 
-  def finalized?
-    finalized_at.present? ||
-      ancestors.map(&:finalized?).any? rescue false ||
-        finalizable_parents.map(&:finalized?).any? rescue false
-  end
+    def finalized?
+      finalized_at.present? || finalizable_parents.map(&:finalized?).any?
+    end
 
-  def readonly?
-    persisted? && finalized?
+    def readonly?
+      persisted? && finalized?
+    end
   end
 end

@@ -168,9 +168,7 @@ class ClassificationSystemsRequirementTest < ActiveSupport::TestCase
     # following is standard:
     #   - Common archive key for the state administration
 
-    classification_system = create(:classification_system)
-    assert classification_system.type = :hierarchical
-
+    classification_system = create(:classification_system, type: :hierarchical)
     classification = create(:classification, classification_system: classification_system)
 
     assert classification.root?
@@ -198,12 +196,12 @@ class ClassificationSystemsRequirementTest < ActiveSupport::TestCase
     # hierarchical system if there are descendants or ancestors.
     assert classification.has_children?
     assert_raise(ActiveRecord::RecordInvalid) {
-      classification.classification_system = flat_classification_system
-      classification.save!
-      # classification.update_attributes!(classification_system: flat_classification_system)
+      classification.update_attributes!(classification_system: flat_classification_system)
     }
 
     IMPLEMENTATION_NOT_FINISHED
+
+    # TODO: add inability to edit key, facet
   end
 
   test '5.3.10 (B)' do
@@ -212,7 +210,55 @@ class ClassificationSystemsRequirementTest < ActiveSupport::TestCase
     # It must be possible to establish faceted, hierarchical classification
     # systems. The following is standard:
     #   - The K code key
-    NOT_YET_IMPLEMENTED
+
+    classification_system = create(:classification_system, type: :multifaceted_hierarchical)
+
+    # Make sure we cannot create a classification in a multifaceted hierarchical
+    # classification system without a facet
+    assert_raise(ActiveRecord::RecordInvalid) {
+      create(:classification, classification_system: classification_system, facet: nil)
+    }
+
+    facet_a = create(:facet, name: 'A', classification_system: classification_system)
+    facet_b = create(:facet, name: 'B', classification_system: classification_system)
+
+    assert classification_system.facets.count == 2
+
+    classification_a = create(:classification, classification_system: classification_system, facet: facet_a)
+
+    assert classification_a.root?
+    assert classification_a.is_childless?
+
+    create(:classification, parent: classification_a, facet: facet_a, classification_system: classification_system)
+    create(:classification, parent: classification_a, facet: facet_a, classification_system: classification_system)
+
+    assert classification_a.children.count == 2
+    assert facet_a.classifications.count == 3
+
+    # Make sure we cannot add a record without the parent having the same facet
+    assert_raise(ActiveRecord::RecordInvalid) {
+      create(:classification, parent: classification_a, facet: facet_b, classification_system: classification_system)
+    }
+
+    # Make sure we can create another classification within the same hierarchy
+    # using another facet
+    classification_b = create(:classification, classification_system: classification_system, facet: facet_b)
+
+    create(:classification, parent: classification_b, facet: facet_b, classification_system: classification_system)
+    create(:classification, parent: classification_b, facet: facet_b, classification_system: classification_system)
+
+    assert classification_b.children.count == 2
+    assert facet_b.classifications.count == 3
+
+    assert classification_system.classifications.count == 6
+
+    # We should have two roots and 4 leaves as a result
+    assert classification_system.classifications.map(&:root?).count(true) == 2
+    assert classification_system.classifications.map(&:is_childless?).count(true) == 4
+
+    IMPLEMENTATION_NOT_FINISHED
+    # TODO: add inability to edit key
+
   end
 
   test '5.3.11 (O)' do
@@ -220,7 +266,37 @@ class ClassificationSystemsRequirementTest < ActiveSupport::TestCase
     # The following is standard:
     #   - Legal person (private individual or business)
     #   - Property and house number
-    NOT_YET_IMPLEMENTED
+
+    classification_system_a = create(:classification_system, type: :flat)
+    classification_system_b = create(:classification_system, type: :flat)
+
+    # Make sure we cannot create a classification in a flat classification
+    # system without a key
+    assert_raise(ActiveRecord::RecordInvalid) {
+      create(:classification, classification_system: classification_system_a, key: nil)
+    }
+
+    # Make sure we can create classifications with identical keys in different
+    # classification systems
+    create(:classification, classification_system: classification_system_a, key: '1234-5678')
+    create(:classification, classification_system: classification_system_b, key: '1234-5678')
+
+    assert classification_system_a.classifications.count == 1
+    assert classification_system_b.classifications.count == 1
+
+    # Make sure we cannot create a classification in a flat classification
+    # system with the same key as another record in the same system
+    assert_raise(ActiveRecord::RecordInvalid) {
+      create(:classification, classification_system: classification_system_a, key: '1234-5678')
+    }
+
+    create(:classification, classification_system: classification_system_a, key: '8765-4321')
+
+    assert classification_system_a.classifications.count == 2
+
+    IMPLEMENTATION_NOT_FINISHED
+    # TODO: add inability to edit ancestry, facet
+
   end
 
   test '5.3.12 (O)' do
@@ -229,18 +305,29 @@ class ClassificationSystemsRequirementTest < ActiveSupport::TestCase
   end
 
   test '5.3.13 (B)' do
+    # There must be a service/function for specifying whether a value of Class
+    # must/must not be used in connection with the classification of cases.
+    #
     # REMARK: For case archives, it must be possible to close (end) classes so
     #         that they can no longer be used.
 
-    # There must be a service/function for specifying whether a value of Class
-    # must/must not be used in connection with the classification of cases.
-    NOT_YET_IMPLEMENTED
+    # NOTE: This is interpreted as finalization
+
+    classification = create(:classification, :finalized)
+
+    assert classification.finalized?
+    assert_raise(ActiveRecord::ReadOnlyRecord) {
+      classification.update_attributes!(updated_at: DateTime.now)
+    }
+
+    IMPLEMENTATION_NOT_FINISHED
+    # TODO: probably needs a GUI test?
   end
 
   test '5.3.14 (O)' do
     # In order for a Class to be assigned a File, it must be situated at the
     # bottom level in the class hierarchy.
-
+    #
     # REMARK: A class cannot therefore contain both other classes and files.
 
     classification_system = create(:classification_system, type: :hierarchical)
@@ -258,7 +345,7 @@ class ClassificationSystemsRequirementTest < ActiveSupport::TestCase
   test '5.3.15 (B)' do
     # If the value in Class is registered as finalised (finalisedDate), it must
     # not be possible to assign new Files to the Class.
-
+    #
     # REMARK: Obligatory if it is possible to finalise classes.
 
     classification = create(:classification, :finalized)
@@ -271,7 +358,7 @@ class ClassificationSystemsRequirementTest < ActiveSupport::TestCase
     # A log must be kept of when a class was created and who created it. Only
     # authorised personnel can create classes. Other users can be given
     # permission to create classes.
-
+    #
     # REMARK: Often, all classes will be entered before the system is taken into
     #         use. However, permission can be given for classes to be created
     #         on an ongoing basis, something which is particularly relevant in
@@ -286,14 +373,17 @@ class ClassificationSystemsRequirementTest < ActiveSupport::TestCase
   end
 
   test '5.3.17 (B)' do
-    # REMARK: Obligatory if it is possible to finalise classes.
-
     # A log must be kept of when a class was finalised and who finalised it.
     # Only authorised personnel can finalise classes.
+    #
+    # REMARK: Obligatory if it is possible to finalise classes.
 
     classification = create(:classification, :finalized)
 
     assert classification.audits.size == 1
     assert classification.audits.last.audited_changes['finalized_by_id'].present?
+
+    IMPLEMENTATION_NOT_FINISHED
+    # TODO: add inability of unpermitted users to finalized
   end
 end

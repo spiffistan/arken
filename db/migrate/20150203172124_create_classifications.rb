@@ -4,6 +4,7 @@ class CreateClassifications < ActiveRecord::Migration
       t.uuid :uuid, default: 'uuid_generate_v4()', null: false
       t.string :key, index: true
       t.string :ancestry, index: true
+      t.belongs_to :facet, index: true
       t.belongs_to :classification_system, index: true, null: false
 
       t.belongs_to :screening, index: true
