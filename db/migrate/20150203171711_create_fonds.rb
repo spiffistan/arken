@@ -4,7 +4,7 @@ class CreateFonds < ActiveRecord::Migration
       t.uuid :uuid, default: 'uuid_generate_v4()', null: false
 
       t.string :ancestry, index: true
-      t.integer :status, index: true
+      t.integer :status, index: true, default: 0 # Defaults to :created
 
       t.string :title
       t.text :description

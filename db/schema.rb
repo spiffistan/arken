@@ -182,7 +182,7 @@ ActiveRecord::Schema.define(version: 20150920150849) do
   create_table "fonds", force: :cascade do |t|
     t.uuid     "uuid",            default: "uuid_generate_v4()"
     t.string   "ancestry"
-    t.integer  "status"
+    t.integer  "status",          default: 0
     t.string   "title"
     t.text     "description"
     t.integer  "finalized_by_id"

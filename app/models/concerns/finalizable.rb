@@ -4,8 +4,11 @@ module Finalizable
   included do
     belongs_to :finalized_by, class_name: 'User'
 
-    before_destroy { fail ActiveRecord::ReadOnlyRecord if finalized? }
-    before_save    { fail ActiveRecord::ReadOnlyRecord if persisted? && finalized? }
+    attr_readonly :finalized_by
+    attr_readonly :finalized_at
+
+    before_destroy    { fail ActiveRecord::ReadOnlyRecord if finalized? }
+    before_validation { fail ActiveRecord::ReadOnlyRecord if persisted? && (finalized? || finalization_changed?) }
 
     validates :finalized_by, presence: true, if: -> { finalized? }
     validates :finalized_at, presence: true, if: -> { finalized? }
@@ -16,6 +19,12 @@ module Finalizable
 
     def readonly?
       persisted? && finalized?
+    end
+
+    private
+
+    def finalization_changed?
+      finalized_at_changed? || finalized_by_id_changed?
     end
   end
 end

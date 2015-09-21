@@ -86,6 +86,7 @@ class FondsRequirementsTest < ActiveSupport::TestCase
     original_datetime = fonds.read_attribute_before_type_cast('created_at')
 
     assert_raise(ActiveRecord::RecordInvalid) { fonds.update_attributes!(created_at: DateTime.now) }
+
     new_datetime = Fonds.find(fonds.id).read_attribute_before_type_cast('created_at')
 
     assert_equal original_datetime, new_datetime
@@ -98,6 +99,7 @@ class FondsRequirementsTest < ActiveSupport::TestCase
     original_datetime = fonds.read_attribute_before_type_cast('created_at')
 
     assert_raise(ActiveRecord::RecordInvalid) { fonds.update_attributes!(created_at: nil) }
+
     new_datetime = Fonds.find(fonds.id).read_attribute_before_type_cast('created_at')
 
     assert_equal original_datetime, new_datetime
@@ -110,7 +112,8 @@ class FondsRequirementsTest < ActiveSupport::TestCase
     original_datetime = fonds.read_attribute_before_type_cast('finalized_at')
 
     assert_raise(ActiveRecord::ReadOnlyRecord) { fonds.update_attributes!(finalized_at: nil) }
-    new_datetime = Fonds.find(fonds.id).read_attribute_before_type_cast('finalized_at')
+
+    new_datetime = fonds.reload.read_attribute_before_type_cast('finalized_at')
 
     assert_equal original_datetime, new_datetime
   end
@@ -126,9 +129,9 @@ class FondsRequirementsTest < ActiveSupport::TestCase
     # NOTE: -- Question: must they be user-defined?
 
     fonds = create(:fonds)
-    assert fonds.status == :created
-    fonds.status = :finalized
-    assert fonds.status == :finalized
+    assert fonds.status == 'created'
+    fonds.status = 'finalized'
+    assert fonds.status == 'finalized'
 
     IMPLEMENTATION_NOT_FINISHED
   end

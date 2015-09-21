@@ -32,7 +32,7 @@ class Fonds < ActiveRecord::Base
 
   validates :fonds_creators, presence: true
 
-  # validate :validate_created_at_frozen, if: :persisted?
+  validate :validate_created_at_frozen, on: :update
 
   enum status: %i(
     created
@@ -43,10 +43,10 @@ class Fonds < ActiveRecord::Base
     ancestors
   end
 
-  # private
-  #
-  # def validate_created_at_frozen
-  #   errors.add(:base, 'Cannot alter `created_at` once set!') if created_at_changed?
-  # end
+  private
+
+  def validate_created_at_frozen
+    errors.add(:base, 'Cannot alter `created_at` once set!') if created_at_changed?
+  end
 
 end
